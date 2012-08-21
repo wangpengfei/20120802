@@ -5,10 +5,11 @@
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.13.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar" sourcepath="G:/115网盘/Java源代码/poi-src-3.8-20120326.zip"/>
 	<classpathentry kind="lib" path="lib/poi-excelant-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-scratchpad-3.8-20120326.jar" sourcepath="G:/115网盘/Java源代码/poi-src-3.8-20120326.zip"/>
+	<classpathentry kind="lib" path="lib/poi-examples-3.8-20120326.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
