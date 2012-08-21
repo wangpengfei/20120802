@@ -16,10 +16,10 @@ public class TestMain {
 	public static void main(String[] args) {
 
 		try {
-			FileInputStream fin = new FileInputStream("g:\\2011.xls");
-
+			//
+			FileInputStream fin = new FileInputStream("D:\\2011.xls");
+			
 			ToHtml toHtml = ToHtml.create(fin, System.out);
-
 			toHtml.setCompleteHTML(true);
 			toHtml.printPage();
 
