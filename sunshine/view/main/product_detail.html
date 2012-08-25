@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="阳光团购中心,中秋月饼,员工福利,礼品,礼券,上海团购,年会" />
+<meta name="description" content="阳光团购中心,中秋月饼,员工福利,礼品,礼券,上海团购,年会" />
+<title>阳光团购中心</title>
+<link href="css/main/header.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/main/i_banner.js"></script>
+<script type="text/javascript" src="js/main/header.js"></script> 
+<script type="text/javascript" src="js/dialog.js"></script>
+<style type="text/css">
+<!--
+*                              {margin:0;padding:0;}
+.main                          {width:1003px;margin:0 auto;}
+.center                        {width:1003px;padding:0px 0px 0px 13px;}
+.prodlist                      {width:174px;text-align:left;}                       
+.prodlist1                     {width:174px;text-align:left;border-bottom:1px solid #FCD999;}
+.prodlist1 .title              {background:url(images/main/i_c_title_1.gif) no-repeat;height:21px;text-align:left;padding:5px 0px 0px 0px;font-size:15px;color:#fff; font-weight:bold;text-align:center;}
+.prodlist1 .info               {text-align:left;border:0;}
+.prodlist2                     {width:180px;text-align:center;border:1px solid #D3D2D2;margin:10px 0px 10px 0px;display:inherit;}
+.prodlist2 .title              {background:url(images/main/l_icon_2.gif) no-repeat;height:21px;text-align:left;padding:5px 0px 0px 0px;font-size:15px;color:#fff; font-weight:bold;text-align:center;}
+.prodlist2 .info               {text-align:left;border:0;}
+.p_list1                       {padding:5px 0; background:url(images/main/l_icon_1.gif) repeat-x bottom;width:960px;font-weight:bold;font-size:16px;}
+.pro_l_info_all                {border:0px solid #D3D2D2;}
+.pro_2_info_all                {border-bottom:1px solid #65D27A;border-top:0;background:url(images/main/main2_r_info_bg.gif) repeat-y;border-left:1px solid #65D27A; border-right:1px solid #65D27A;}
+.pro_l_info                    {border-top:0;}
+.pro_l_info ul                 {padding:0;margin-left:0px;}
+.pro_l_info li                 {border-bottom:1px dotted #CCC;width:180px;line-height:2em;background:url(images/main/circule.gif) no-repeat 0 9px;list-style:none;}
+.pro_l_info                    {padding:5px;}
+.pro_l_info_img img            {width:100px;height:100px;padding:2px;border:1px solid #CCC; margin-right:2%;}
+.pro_l_info_info               {float:left;width:165px;padding-left:5px;line-height:1.7em; text-align:center;}
+.prodlist4                     {width:186px;text-align:left; margin:8px 0px 8px 0px;}
+.prodlist4 .title              {background:url(images/main/i_c_title_10.gif)  no-repeat;height:21px;text-align:left;padding:5px 0px 0px 0px; font-size:15px; color:#fff; font-weight:bold; text-align:center;width:186px;}
+
+.p_list_box_con               {height:300px;margin:8px;width:780px;}
+.p_list_box_con_img           {width:260px; height:260px; float:left;border:0px solid #D3D2D2;}
+.pimg						  {width:260px; height:260px;border:1px solid #D3D2D2;}
+.p_list_box_con_info          {width:260px; height:30px; float:left; margin-top:8px;} 
+.p_list_info                  {text-align:left; line-height:24px; width:490px; float:left; margin:10px 0px 0px 20px;}
+.p_list_info_bot              {width:300px; height:60px; float:left; margin:12px 0px 0px 0px;}
+.p_list_info_bot img          {vertical-align:middle;}
+
+.p_list_bot                   {margin:8px;width:780px;}
+.p_list_bot_tit               {height:30px;background:url(images/main/l_icon_7.gif) no-repeat; border-bottom:4px solid #4AC621;}
+.p_list_info_d                {padding:8px; border-bottom:1px dashed #ccc; text-align:left; line-height:24px;}
+.input_w                      {width:40px;}
+.fengelan					  {margin:12px 0px 12px 0px;}
+.catefont					  {font-weight:bold;font-size:13px;}
+-->
+</style>
+</head>
+
+<body>
+
+<div class="login" id="logID" style="display:none;">
+	<form name="userLoginForm" id="userlogin" action="" method="post" onsubmit="return false;">
+		<div class="login_l lef">						
+				<div id="login">
+		  			<div id="loginform">用户名:
+		    			<input name="username" id="username" type="text" dataType="Require" msg="用户名不能为空"/><br />
+		    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果没有帐号，请先注册！<br />
+            			&nbsp;&nbsp;密&nbsp;&nbsp;码:
+        				<input name="upasswd" id="upasswd" type="password" dataType="Require" msg="密码不能为空"/>&nbsp;&nbsp;
+		  			</div>
+		  		<br/>
+		  		<div id="buttom">
+        			<div>
+		      		<input type="image" src="images/main/b_c_title_3.gif" class="inline_midl" onclick="userLogin()"/>
+		      		</div>
+		      		<div>
+		      		<input type="image" src="images/main/c_c_title_4.gif" class="inline_midl" onclick="closedialog()"/>
+		      		<br/>		      
+	     		</div>
+		 </div>
+  	</div>
+ 	</div>
+ 	</form>
+	</div>
+	
+	<div class="login_l lef" id="regID" style="display:none;">	
+		<form name="reguserForm" id="reguser" action="" method="post" onsubmit="return false;">		
+		<div id="login_1">
+		  <div id="loginform">&nbsp;&nbsp;&nbsp;&nbsp;用户名:
+		    <input name="udspname" id="udspname" type="text" size="27" dataType="Require" msg="用户名不能为空"/>&nbsp;<span class="red">*</span><br />    
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;码:
+            <input name="upasswd" id="upasswd" type="password" size="27" dataType="Require" msg="密码不能为空"/>&nbsp;<span class="red">*</span>
+            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码设置六位以上字母或数字
+			<br />
+			确认密码:
+            <input name="qrupasswd" id="qrupasswd" type="password" size="27" dataType="Require" msg="确认密码不能为空"/>&nbsp;<span class="red">*</span>
+			<br />
+			 公司名称:
+            <input name="ucompany" id="ucompany" type="text" size="27" dataType="Require" msg="公司名称不能为空"/>&nbsp;<span class="red">*</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部&nbsp;&nbsp;门: 
+            <input name="udepart" id="udepart" type="text" size="27" dataType="Require" msg="部门不能为空"/>&nbsp;<span class="red">*</span><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;联系人: 
+            <input name="ulinkman" id="ulinkman" type="text" size="27" dataType="Require" msg="联系人不能为空"/>&nbsp;<span class="red">*</span><br />
+			联系电话: 
+            <input name="uphone" id="uphone" type="text" size="27" dataType="Phone" msg="不是合法的电话号码"/>&nbsp;<span class="red">*</span><br />			
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: 
+            <input name="uemail" id="uemail" type="text" size="27" dataType="Email" msg="不是合法的Email地址"/>&nbsp;<span class="red">*</span>
+		  </div>
+		<br/>
+		  <div id="buttom">
+            <div align="center">
+		      <input type="image" src="images/main/b_c_title_4.gif" class="inline_midl1" onclick="regeditUser()"/>
+		      </div>
+		    <div>		      	
+		      <input type="image" src="images/main/c_c_title_4.gif" class="inline_midl1" onclick="closedialog()" />
+		      <br/>	        
+	     	</div>
+		 </div>
+	 </div>
+	 </form>
+ </div>
+
+<div class="main">
+	<div class="head">
+	  <div class="head_top">
+			<div class="logo lef"><a href="" target="_blank"><img src="images/main/logo.gif" alt="阳光团购中心"/></a></div>
+			<div class="tel lef"></div>
+			<div class="top_menu_login1 lef">
+				<input type="hidden" name="userid" id="userid" value="{userid}"/>
+				<input type="hidden" name="isreg" id="isreg" value="{isreg}"/>
+				&nbsp;&nbsp;&nbsp;您好，<span class="red" id="dspusername">{custname}</span>				
+				&nbsp;&nbsp;欢迎您登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+			<div class="top_menu_login lef">
+				<div class="top_menu_login2">&nbsp;</div>
+				<div class="list1 lef"><a style="cursor:hand" href="javascript:dialog('登录','id:logID','300px','220px',120);">登录</a></div>
+				<div class="list2 lef"><a style="cursor:hand" href="javascript:dialog('注册新用户','id:regID','330px','340px',120);" >注册</a></div>				
+				<div class="list4 lef"><a href="#">我的帐户</a></div>
+				<div class="list6 lef"><a href="#">我的收藏夹</a></div>
+			</div>
+		</div>
+		<div class="h_menu">
+			<div>
+			  <div>
+			  	<ul id="h_menu">
+					<li  id="index" class="h_menu1_down lef" onclick="ChangedItime('index')" ><a href="">首页</a></li>
+					<li  id="recommend"  class="h_menu2 lef"  onclick="ChangedItime('recommend')">
+					<a id="menu1" href="javascript:gotoCategory('menu1');">时令推荐</a></li>
+					<li  id="brand"  class="h_menu3 lef"  onclick="ChangedItime('brand')">
+					<a id="menu2" href="javascript:gotoCategory('menu2');">品牌家电</a></li>
+					<li  id="textile" class="h_menu4 lef"  onclick="ChangedItime('textile')">
+					<a id="menu3" href="javascript:gotoCategory('menu3');">时尚纺织</a></li>
+					<li  id="ticket" class="h_menu5 lef" onclick="ChangedItime('ticket')">
+					<a id="menu4" href="javascript:gotoCategory('menu4');">西点礼券</a></li>
+					<li  id="life" class="h_menu6 lef" onclick="ChangedItime('life')">
+					<a id="menu5" href="javascript:gotoCategory('menu5');">生活用品</a></li>
+					<li  id="kitchen" class="h_menu7 lef"  onclick="ChangedItime('kitchen')">
+					<a id="menu6" href="javascript:gotoCategory('menu6');">厨房用品</a></li>
+					<li  id="movement" class="h_menu8 lef"  onclick="ChangedItime('movement')">
+					<a id="menu7" href="javascript:gotoCategory('menu7');">运动保健</a></li>
+					<li  id="promotions"  class="h_menu9 lef"  onclick="ChangedItime('promotions')">
+					<a id="menu8" href="javascript:gotoCategory('menu8');">促销礼品</a></li>
+					<li  id="about" class="h_menu11 lef"  onclick="ChangedItime('about')">
+					<a id="menu9" href="javascript:gotoCategory('menu9');">关于我们</a></li>
+				</ul>
+			  </div>
+			
+			<div class="h_search lef">
+					<div class="h_search_all">
+						<div class="m nsearch lef">							
+							<span class="nfdj lef"><img alt="" src="images/main/i_h_icon_6.gif"/>&nbsp;</span>&nbsp;
+							<div class="lef">
+							<input type="text" autocomplete="off" name="keyword" value="货号或关键词" onfocus="this.value=''" class="ninput_search" id="keyword" />&nbsp;
+							</div>
+							<div class="lef"><input type="image" class="nsearch_m" name="imageField" onclick="searchbykey('keyword')" src="images/main/i_h_icon_7.gif" alt="按关键字搜索" id="imageField"/>&nbsp;</div>
+							<div class="h_search_gao"></div>
+							
+					  </div>
+						<div class="keywords lef" ><a href="" target="_blank"></a>&nbsp;&nbsp;<a href="" target="_blank" ></a></div>
+				</div>
+				<div class="h_banner lef"><img src="images/main/i_h_banner_1.jpg" alt="" name="" /></div>
+			</div>
+			
+			<div class="c_b"></div>
+			<div class="h_down lef"></div>
+		 </div>
+		</div>
+	</div>
+	
+    <div class="center">
+		<div class="p_list1 lef">{pname}</div>
+		<div>
+		
+			<div class="prodlist2 lef">
+				<div class="title"><a class="size12"  target="_blank">热销产品</a></div>
+				<div class="pro_l_info_all">
+					<div class="pro_l_info">
+					<div class="pro_l_info_img "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=181" ><img src="images/main/162311847.jpg" alt="" name=""/></a></div>
+					<div class="pro_l_info_info "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=181">自然木藤席三件套</a><br /><span class="red">￥119</span></div>
+					<div class="c_b"></div>
+					</div>
+					<div class="pro_l_info">
+					<div class="pro_l_info_img "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=186"><img src="images/main/162902457.jpg" alt="" name=""/></a></div>
+					<div class="pro_l_info_info "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=186">黄金健康席</a><br /><span class="red">￥180</span></div>
+					<div class="c_b"></div>
+					</div>
+					<div class="pro_l_info">
+					<div class="pro_l_info_img "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=184" ><img src="images/main/162642910.jpg" alt="" name=""/></a></div>
+					<div class="pro_l_info_info "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=184" >怡华雪域天丝席</a><br />宝路华 13粒<br /><span class="red">￥197</span></div>
+					<div class="c_b"></div>
+					</div>
+					<div class="pro_l_info">
+					<div class="pro_l_info_img "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=470" ><img src="images/main/16244233.jpg" alt="" name=""/></a></div>
+					<div class="pro_l_info_info "><a href="http://www.gtoyg.com/index.php?action=frontproduct&method=getprodetail&pid=470" >双立人TWIN IVI GL 浅烧锅(20cm)</a><br /><span class="red">￥898</span></div>
+					<div class="c_b"></div>
+					</div>
+				<div class="c_b"></div>
+				</div>
+			</div>
+			
+			<div class="p_list_box_con lef">
+				<div class="p_list_box_con_img">
+					<div class="p_list_box_con_img"><img class="pimg" src="{pimage}" alt=""/></div>
+					<div class="p_list_box_con_info"><!--<a href=""  onclick="GetShowImgUrl()"><img src="images/main/l_icon_3.gif" alt="" /></a>--></div>
+				</div>
+				<div class="p_list_info">					
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;货号:&nbsp;&nbsp;&nbsp;&nbsp;{pcode}</span></div>
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;品牌:&nbsp;&nbsp;&nbsp;&nbsp;{pname}</span></div>
+					<!--  
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;单位:&nbsp;&nbsp;&nbsp;&nbsp;瓶</span></div>
+					-->
+					<div class="fengelan"><img src="images/main/l_icon_4.gif" alt="" /></div>
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;规格:&nbsp;&nbsp;&nbsp;&nbsp;{pspec}</span></div>					
+					<div class="fengelan"><img src="images/main/l_icon_4.gif" alt="" /></div>					
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;市场价:&nbsp;&nbsp;<span class="gray cancel">￥{pmarketprice}</span></span></div>
+					<div><span class="red size14">&gt;&gt;</span><span class="size14">&nbsp;团购价:&nbsp;&nbsp;<span class="red2">￥{pteamprice}</span></span></div>					
+					<div class="fengelan"><img src="images/main/l_icon_4.gif" alt="" /></div>					
+				</div>
+				<div class="p_list_info_bot">
+					<a href=""><img src="images/main/l_icon_8.gif"  alt="" />&nbsp;</a>
+					<!--<a href=""><img src="images/main/l_icon_6.gif"  alt="" /></a>-->
+				</div>
+			</div>
+			
+			<div class="p_list_bot lef">
+				<div class="p_list_bot_tit"></div>
+			  <div  class="p_list_info_d">
+			  	<span class="catefont">规格:</span><br/>{pspec}
+			  	<br/>
+				<span class="catefont">详细说明：</span><br/>{pdesc}			    
+			    </div>
+			</div>
+			
+		</div>
+		<!-- 
+		<div id="topadbox">
+			<div class="topadbox_1"><b>安全放心的网购</b><br />
+		  <a class="size19"><b>货到付款</b></a></div>
+			<div class="topadbox_2"><b>购物满100元包邮费</b><br />
+		  <a class="size19"><b>满百包邮</b></a></div>
+			<div class="topadbox_3"><b>不满意就可退换</b><br />
+		  <a class="size19"><b>30天包换</b></a></div>
+		</div>
+		 -->
+	</div>
+	
+	<div class="foot">
+		<p>阳光团购中心联系地址：浦东新区沪南公路1087号莲珠大厦2204室
+		<br />投诉邮箱：<a href="mailto:yangguangtuangou@gmail.com">yangguangtuangou@gmail.com</a>&nbsp;&nbsp;&nbsp;&nbsp;联系电话：021-33191309
+		<br />Copyright&copy; 2010-2011 上海爱可迅实业有限公司 版权所有　备案号:沪ICP备10034930号</p>
+	</div>
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>menu</title>
+<link rel="stylesheet" href="css/base.css" type="text/css" />
+<link rel="stylesheet" href="css/menu.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<script language='javascript'>
+	var curopenItem = '1';
+</script>
+<script language="javascript" type="text/javascript" src="js/admin/menu.js"></script>
+<base target="main"/>
+</head>
+<body target="main">
+<table width='99%' height="100%" border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td style='padding-left:3px;padding-top:8px' valign="top">
+	<!-- Item 1 Strat -->
+      <dl class='bitem'>
+        <dt onclick='showHide("items1_1")'><b>常用操作</b></dt>
+        <dd style='display:block' class='sitem' id='items1_1'>
+          <ul class='sitemu'>           
+            <li><a href='index.php?action=category' target='main'>产品分类管理</a></li>
+            <li><a href='index.php?action=channel' target='main'>网站栏目管理</a></li>
+            <li><a href='index.php?action=product' target='main'>产品信息管理</a></li>                        
+          </ul>
+        </dd>
+      </dl>
+      <!-- Item 1 End -->
+      <!-- Item 2 Strat -->
+      <dl class='bitem'>
+        <dt onclick='showHide("items2_1")'><b>系统管理</b></dt>
+        <dd style='display:block' class='sitem' id='items2_1'>
+          <ul class='sitemu'>
+            <li><a href='index.php?action=adminUser&method=usermanage' target='main'>用户管理</a></li>
+            <li><a href='index.php?action=adminUser&method=viewsysconfig' target='main'>查看系统配置</a></li>
+          </ul>
+        </dd>
+      </dl>
+      <!-- Item 2 End -->
+	  </td>
+  </tr>
+</table>
+</body>
+</html>

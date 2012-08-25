@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用户管理</title>
+<link rel="stylesheet" type="text/css" href="css/base.css"/>
+<link rel="stylesheet" type="text/css" href="css/admin_list.css"/>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	//增加产品分类
+	function addCategory(){
+		var ctitle=$("#ctitle").val();
+		if(ctitle==""){
+			alert("请填写产品分类名称");
+			return;
+		}
+		var pdesc=$("#pdesc").val();
+		if(pdesc==""){
+			alert("请填写产品分类描述");
+			return;
+		}
+		$("#editForm").submit();
+	}
+	
+</script>
+</head>
+<body leftmargin="0" topmargin="1" background='images/admin/allbg.gif'>
+<!--  搜索表单  -->
+<form name='form3' action='' method='get'>
+<input type='hidden' name='dopost' value='' />
+<table width='98%'  border='0' cellpadding='1' cellspacing='1' bgcolor='#CBD8AC' align="center" style="margin-top:8px">
+  <tr bgcolor='#EEF4EA'>
+    <td background='images/admin/wbg.gif' align='left'>
+      <table border='0' cellpadding='0' cellspacing='0'>
+        <tr>
+          <td width='90' align='center'>搜索条件：</td>
+          <td width='160'>
+          <select name='cid' style='width:150'>
+          <option value='0'>选择类型...</option>
+          	<option value='1'>名称</option>
+          </select>
+        </td>
+        <td width='70'>
+          关键字：
+        </td>
+        <td width='160'>
+          	<input type='text' name='keyword' value='' style='width:150px' />
+        </td>
+        <td width='110'>
+    		<select name='orderby' style='width:80px'>
+            <option value='id'>排序...</option>
+            <option value='pubdate'>发布时间</option>
+      	</select>
+        </td>
+        <td>
+          <input name="imageField" type="image" src="images/admin/search.gif" width="45" height="20" border="0" class="np" />
+        </td>
+       </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</form>
+  
+<!--  内容列表   -->
+<table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
+<tr bgcolor="#E7E7E7">
+	<td height="24" colspan="8">
+	&nbsp;<a href="">产品分类列表</a>&nbsp;
+	&gt;&gt;<a href="">用户列表</a>&nbsp;
+	</td>
+</tr>
+<tr align="center" bgcolor="#FAFAF1" height="22">
+	<td width="6%">ID</td>	
+	<td width="20%">用户账号</td>
+	<td width="40%">用户姓名</td>
+	<td width="12%">Email</td>
+	<td width="10%">用户地址</td>	
+	<td width="6%">公司</td>
+</tr>
+
+<!-- BEGIN list -->
+<tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#7EC657';" onmouseout="javascript:this.bgColor='#FFFFFF';" height="22" >
+	<td>{uid}</td>	
+	<td>{uname}</td>
+	<td>{udspname}</td>
+	<td>{uemail}</td>
+	<td>{uaddress}</td>
+	<td>{ucompany}</td>
+</tr>
+<!-- END list -->
+
+<tr align="right" bgcolor="#EEF4EA">
+	<td height="24" colspan="8" align="right">
+		&nbsp;
+		<a href="javascript:selAll()" class="coolbg">首页</a>
+		<a href="javascript:noSelAll()" class="coolbg">上一页</a>
+		<a href="javascript:updateArc(0)" class="coolbg">&nbsp;下一页&nbsp;</a>
+		<a href="javascript:checkArc(0)" class="coolbg">&nbsp;末页&nbsp;</a>		
+	</td>	
+</tr>
+</table>
+
+<!--编辑区域-->
+<form name="editForm" id="editForm" action="index.php?action=category&method=addCategory" method="post">
+<input type="hidden" name="cur_cpid"  value="{cur_cpid}"/>
+<table border="0" cellpadding="2" cellspacing="1" width="98%"  align="center" class="tableEditArea">
+	<tr bgcolor="#E7E7E7">
+		<td height="24" colspan="4" background="images/admin/tbg.gif">&nbsp;编辑区域&nbsp;</td>
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="4" height="6"></td>		    
+	</tr>
+	<tr>
+		<td nowrap align="right" width="10%">产品分类名称:</td>
+		<td width="30%"><input name="ctitle" id="ctitle" class="text" style="width:60%" type="text" size="40" />
+	        <span style="color:#FF0000"> *</span></td>
+	    <td align="right" width="10%">产品分类描述:</td>
+	    <td width="50%"><input name="cdesc" id="pdesc" class="text" style="width:80%" type="text"/></td>	 
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="4" height="6"></td>		    
+	</tr>		
+</table>
+</form>
+
+<!--编辑按钮  -->
+<table width="98%" border="0" cellpadding="0" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
+<tr>
+ <td height="26" background="images/admin/newlinebg3.gif">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td align="center">
+    <input type='button' class="coolbg np" onclick="addCategory()" value='添加产品分类' />
+    <input type='button' class="coolbg np" onclick="location='';" value='删除产品分类' />    
+ </td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

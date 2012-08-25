@@ -1,0 +1,47 @@
+<table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" class="tableList">
+<tr bgcolor="#E7E7E7">
+	<td height="24" colspan="11">
+	&nbsp;<a href="index.php?action=channel">产品栏目列表</a>&nbsp;
+	</td>
+</tr>
+<tr align="center" bgcolor="#FAFAF1" height="22">
+	<td width="4%">选择</td>
+	<td width="4%">ID</td>	
+	<td width="15%">产品名称</td>
+	<td width="10%">产品编号</td>
+	<td width="5%">市场价</td>
+	<td width="5%">团购价</td>	
+	<td width="10%">产品规格</td>
+	<td width="15%">产品介绍</td>
+	<td width="10%">登记时间</td>
+	<td width="12%">产品图片</td>
+	<td width="10%">产品所属类别</td>
+</tr>
+
+<!-- BEGIN list -->
+<tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#7EC657';" 
+	 onmouseout="javascript:this.bgColor='#FFFFFF';">
+	<td><input name="cid" type="checkbox" id="cid" value="{pid}" class="np"/></td>
+	<td>{pid}</td>	
+	<td>{pname}</td>
+	<td>{pcode}</td>
+	<td>{pmarketprice}</td>
+	<td>{pteamprice}</td>
+	<td>{pspec}</td>
+	<td>{pdesc}</td>
+	<td>{pregtime}</td>
+	<td><img src="{pimage}"  name="" width="50px" height="50px"/></td>
+	<td>{cid}</td>
+</tr>
+<!-- END list -->
+
+<tr align="right" bgcolor="#EEF4EA">
+	<td height="24" colspan="11" align="right">
+		&nbsp;
+		<a href="javascript:selAll()" class="coolbg">首页</a>
+		<a href="javascript:noSelAll()" class="coolbg">上一页</a>
+		<a href="javascript:updateArc(0)" class="coolbg">&nbsp;下一页&nbsp;</a>
+		<a href="javascript:checkArc(0)" class="coolbg">&nbsp;末页&nbsp;</a>		
+	</td>	
+</tr>
+</table>

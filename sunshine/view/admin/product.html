@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<title>文档管理</title>
+<link rel="stylesheet" type="text/css" href="css/base.css"/>
+<link rel="stylesheet" type="text/css" href="css/admin_self.css"/>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/dialog.js"></script>
+<script type="text/javascript" src="js/validator.js"></script>
+<script type="text/javascript" src="js/imagecheck.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+
+<script type="text/javascript">
+
+	//增加产品
+	function addProduct(){
+		var eform=$("#editForm")[0];		
+		if(!Validator.Validate(eform,3)) return;
+		if(!checkimage("pimage")) return;				
+		$("#editForm").submit();
+	}
+	
+	//产品分类选择器
+	var catevalue = {			
+			ajax:function(cateid, E){
+				if(!cateid)cateid=0
+				$.ajax({
+					url: 'index.php?action=category&method=getCateDlg&cpid='+cateid,
+					cache: false,
+					dataType: "text",
+					type:"get",
+					async:false, 
+					success: function(xml){						
+						var message=xml;
+						dialog("请选择分类","text:message","474px","auto",100,message);						
+					}
+				});
+			},
+			cateOk:function(id,title){
+				$('#cid').val(id);
+				$('#cname').val(title);
+				closedialog();
+			}
+		}
+	
+	//分页访问
+	function gotoPage(ipage){		
+		var zurl="index.php?action=product&method=dodefault";
+		pagevisit(ipage,zurl);		
+	}
+	
+	//把产品加到栏目下
+	var producttoch = {			
+		ajax:function(){			
+			$.ajax({
+				url: 'index.php?action=channel&method=getChlDlg',
+				cache: false,
+				dataType: "text",
+				type:"get",
+				async:false, 
+				success: function(xml){						
+					var message=xml;
+					dialog("请选择分类","text:message","474px","auto",100,message);						
+				}
+			});
+		},
+		cateOk:function(schid,title){
+			var cids="";
+			var selin=$("input:checked");		
+			for(i=0;i<selin.size();i++){
+				cids=cids+selin.get(i).value+"-";
+			}
+			if(cids==""){
+				alert("请选择你要添加到栏目的产品 ");
+				return;
+			}
+			if(cids.endwithStr('-')){
+				cids=cids.substring(0,cids.length-1);
+			}
+			var url="index.php?action=channel&method=addproductToCh";
+			$.get(url, { pids : cids , chid : schid },function(data){
+				alert("已把指定产品加到所选栏目下");
+				var selin=$("input:checked");
+				selin.attr("checked",false);					
+			});
+			closedialog();						
+		}
+	}
+	//批量删除产品
+	function delprod(){
+		var cids="";
+		var selin=$("input:checked");		
+		for(i=0;i<selin.size();i++){
+			cids=cids+selin.get(i).value+"-";
+		}
+		if(cids==""){
+			alert("请选择你要删除的记录 ");
+			return;
+		}
+		if(cids.endwithStr('-')){
+			cids=cids.substring(0,cids.length-1);
+		}
+		var url="index.php?action=product&method=delProducts&pids="+cids;
+		location.href=url;
+	}
+	//设置列表要修改的数据
+	$(document).ready(function(){
+		$("#tplist tr").click(function() { 
+			$("#tplist tr").each(function(){ 
+				if($(this).hasClass("altrow")){ 
+					$(this).removeClass("altrow"); 
+			}}); 
+			$(this).addClass("altrow");
+			var spid=this.childNodes[1].innerText;
+			var surl="index.php?action=product&method=jsongetprodbyid";
+			$.ajax({				   
+				   url: surl,
+				   cache: false,				   
+				   data: { pid : spid },
+				   dataType: "json",
+				   success: function(data){
+					   	$("#pid").val(data['pid']);
+						$("#pname").val(data['pname']);
+						$("#pmarketprice").val(data['pmarketprice']);
+						$("#pteamprice").val(data['pteamprice']);
+						$("#pcode").val(data['pcode']);
+						$("#cid").val(data['cid']);
+						$("#cname").val(data['ctitle']);
+						$("#pspec").val(data['pspec']);
+						$("#pdesc").val(data['pdesc']);
+						$("#pimage").attr("disabled",true);		
+				   }
+				});			
+		}); 
+	});
+	//修改产品信息
+	function editprod(){
+		$("#pimage").attr("require","false");
+		var eform=$("#editForm")[0];		
+		if(!Validator.Validate(eform,3)) return;
+		$("#editForm").attr("action","index.php?action=product&method=updateprodinfo");
+		$("#editForm").submit();
+	}
+	//取消修改
+	function canceledit(){
+		$("#pid").val("");
+		$("#pname").val("");
+		$("#pmarketprice").val("");
+		$("#pteamprice").val("");
+		$("#pcode").val("");
+		$("#cid").val("");
+		$("#cname").val("");
+		$("#pspec").val("");
+		$("#pdesc").val("");
+		$("#pimage").attr("disabled",false);	
+		$("#pimage").attr("require","true");
+	}
+</script>
+</head>
+<body leftmargin="0" topmargin="1" background='images/admin/allbg.gif'>
+
+<!--  搜索表单  -->
+<form name='form3' action='' method='get'>
+<input type='hidden' name='dopost' value='' />
+<table width='98%'  border='0' cellpadding='1' cellspacing='1' bgcolor='#CBD8AC' align="center" style="margin-top:8px">
+  <tr bgcolor='#EEF4EA'>
+    <td background='images/admin/wbg.gif' align='left'>
+      <table border='0' cellpadding='0' cellspacing='0'>
+        <tr>
+          <td width='90' align='center'>搜索条件：</td>
+          <td width='160'>
+          <select name='cid' style='width:150'>
+          <option value='0'>选择类型...</option>
+          	<option value='1'>名称</option>
+          </select>
+        </td>
+        <td width='70'>
+          关键字：
+        </td>
+        <td width='160'>
+          	<input type='text' name='keyword' value='' style='width:150px' />
+        </td>
+        <td width='110'>
+    		<select name='orderby' style='width:80px'>
+            <option value='id'>排序...</option>
+            <option value='pubdate'>发布时间</option>
+      	</select>
+        </td>
+        <td>
+          <input name="imageField" type="image" src="images/admin/search.gif" width="45" height="20" border="0" class="np" />
+        </td>
+       </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</form>
+  
+<!--  内容列表   -->
+<table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" class="tableList" id="tplist">
+<tr bgcolor="#E7E7E7">
+	<td height="24" colspan="11">
+	&nbsp;<a href="index.php?action=product">产品列表</a>&nbsp;
+	</td>
+</tr>
+<tr align="center" bgcolor="#FAFAF1" height="22">
+	<td width="4%">选择</td>
+	<td width="4%">ID</td>	
+	<td width="15%">产品名称</td>
+	<td width="10%">产品编号</td>
+	<td width="5%">市场价</td>
+	<td width="5%">团购价</td>	
+	<td width="10%">产品规格</td>
+	<td width="15%">产品介绍</td>
+	<td width="10%">登记时间</td>
+	<td width="12%">产品图片</td>
+	<td width="10%">产品所属类别</td>
+</tr>
+
+<!-- BEGIN list -->
+<tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#7EC657';" 
+	 onmouseout="javascript:this.bgColor='#FFFFFF';">
+	<td><input name="pid" type="checkbox" value="{pid}" class="np"/></td>
+	<td>{pid}</td>	
+	<td>{pname}</td>
+	<td>{pcode}</td>
+	<td>{pmarketprice}</td>
+	<td>{pteamprice}</td>
+	<td>{pspec}</td>
+	<td>{pdesc}</td>
+	<td>{pregtime}</td>
+	<td><img src="{pimage}"  name="" width="50px" height="50px"/></td>
+	<td>{cid}</td>
+</tr>
+<!-- END list -->
+
+<tr align="right" bgcolor="#EEF4EA">
+	<td height="24" colspan="11" align="right">
+		<input type="hidden" name="cur_page" id="cur_page" value="{cur_page}" />
+		<input type="hidden" name="max_page" id="max_page" value="{max_page}" />
+		共&nbsp;{max_page}&nbsp;页&nbsp;&nbsp;&nbsp;当前第&nbsp;{cur_page}&nbsp;页&nbsp;&nbsp;		
+		<a href="javascript:gotoPage(1)" class="coolbg">首页</a>
+		<a href="javascript:gotoPage(2)" class="coolbg">上一页</a>
+		<a href="javascript:gotoPage(3)" class="coolbg">&nbsp;下一页&nbsp;</a>
+		<a href="javascript:gotoPage(4)" class="coolbg">&nbsp;末页&nbsp;</a>		
+	</td>	
+</tr>
+</table>
+
+<!--编辑区域-->
+<form name="editForm" id="editForm" action="index.php?action=product&method=addproduct" method="post" enctype="multipart/form-data">
+<input type="hidden" name="pid" id="pid" />
+<table border="0" cellpadding="2" cellspacing="1" width="98%"  align="center" class="tableEditArea">
+	<tr bgcolor="#E7E7E7">
+		<td height="24" colspan="6" background="images/admin/tbg.gif">&nbsp;编辑区域&nbsp;</td>
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="6" height="6"></td>		    
+	</tr>
+	<tr>
+		<td nowrap align="right" width="6%">产品名称:</td>
+		<td width="28%"><input name="pname" id="pname" style="width:60%" type="text" dataType="Require" msg="请输入产品名称"/></td>
+	    <td align="right" width="7%">市场价:</td>
+	    <td width="28%">
+	    	<input name="pmarketprice" id="pmarketprice" style="width:60%" type="text" dataType="Double" msg="输入有误"/>&nbsp;元	    	
+	    </td>
+	    <td align="right" width="6%">团购价:</td>
+		<td width="25%">
+			<input name="pteamprice" id="pteamprice" style="width:60%" type="text" dataType="Double" msg="输入有误"/>&nbsp;元	
+		</td>
+	</tr>
+	<tr>
+		<td nowrap align="right">产品编号:</td>
+		<td >
+			<input name="pcode" id="pcode" style="width:60%" type="text" dataType="Require" msg="请输入产品编号"/>
+		</td>
+	    <td align="right">所属分类:</td>
+	    <td >
+	    	<input type="hidden" id="cid" name="cid"/>
+			<input name="cname" id="cname" style="width:60%" type="text" onfocus="javascript:catevalue.ajax(0,this);" dataType="Require" msg="请选择产品分类"/>	    	
+	    </td>
+	    <td align="right"></td>
+		<td >			
+		</td>
+	</tr>
+	<tr>
+		<td nowrap align="center" width="100%" colspan="6" valign="middle">
+			<table border="0" width="100%">
+				<tr>
+					<td width="6%">产品规格:</td>
+					<td width="44%">
+						<textarea id="pspec" name="pspec" rows="6" cols="45" dataType="Require" msg="请填写产品规格"></textarea>
+					</td>
+					<td width="6%">产品介绍:</td>
+					<td width="44%">
+						<textarea id="pdesc" name="pdesc" rows="6" cols="45" dataType="Require" msg="请填写产品介绍"></textarea>
+					</td>
+				</tr>
+			</table>
+		</td>			    
+	</tr>
+	<tr>
+		<td nowrap align="right">图片路径:</td>
+		<td colspan="5">
+			<input name="pimage" id="pimage" style="width:60%;" type="file" accept="image/gif" dataType="Require" msg="请选择要上传的图片"/>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="6" height="6"></td>		    
+	</tr>		
+</table>
+</form>
+
+<!--编辑按钮  -->
+<table width="98%" border="0" cellpadding="0" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
+<tr>
+ <td height="26" background="images/admin/newlinebg3.gif">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td align="center">
+    <input type='button' class="coolbg np" onclick="addProduct()" value='添加产品' />
+    <input type='button' class="coolbg np" onclick="editprod()" value='修改产品信息' />
+    <input type='button' class="coolbg np" onclick="canceledit()" value='取消修改' />
+    <input type='button' class="coolbg np" onclick="delprod()" value='删除产品' />
+    <input type='button' class="coolbg np" onclick="producttoch.ajax()" value='加入指定栏目' />    
+ </td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

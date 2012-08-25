@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<title>文档管理</title>
+<link rel="stylesheet" type="text/css" href="css/base.css"/>
+<link rel="stylesheet" type="text/css" href="css/admin_self.css"/>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+
+<script type="text/javascript">
+	//增加产品栏目
+	function addChannel(){
+		var chname=$("#chname").val();
+		if(chname==""){
+			alert("请填写栏目名称");
+			return;
+		}
+		$("#editForm").submit();
+	}
+	//删除产品栏目
+	function delChannel(){
+		var cids="";
+		var selin=$("input:checked");		
+		for(i=0;i<selin.size();i++){
+			cids=cids+selin.get(i).value+"-";
+		}
+		if(cids==""){
+			alert("请选择你要删除的记录 ");
+			return;
+		}
+		if(cids.endwithStr('-')){
+			cids=cids.substring(0,cids.length-1);
+		}
+		var url="index.php?action=channel&method=delChannel&chids="+cids;
+		location.href=url;
+	}
+	//双击行事件
+	function ondkRow(obj){
+		var chid=obj.childNodes[1].innerHTML;		
+		var url="index.php?action=channel&method=getProductByChid&chid="+chid;
+		location.href=url;		
+	}
+	//删除栏目下的产品
+	function delProductOfCh(){
+		var cids="";
+		var selin=$("input:checked");		
+		for(i=0;i<selin.size();i++){
+			cids=cids+selin.get(i).value+"-";
+		}
+		if(cids==""){
+			alert("请选择你要删除的记录 ");
+			return;
+		}
+		if(cids.endwithStr('-')){
+			cids=cids.substring(0,cids.length-1);
+		}
+		var url="index.php?action=channel&method=delProductOfCh&pids="+cids;
+		location.href=url;
+	}
+</script>
+</head>
+<body leftmargin="0" topmargin="1" background='images/admin/allbg.gif'>
+
+<!--  搜索表单  -->
+<form name='form3' action='' method='get'>
+<input type='hidden' name='dopost' value='' />
+<table width='98%'  border='0' cellpadding='1' cellspacing='1' bgcolor='#CBD8AC' align="center" style="margin-top:8px">
+  <tr bgcolor='#EEF4EA'>
+    <td background='images/admin/wbg.gif' align='left'>
+      <table border='0' cellpadding='0' cellspacing='0'>
+        <tr>
+          <td width='90' align='center'>搜索条件：</td>
+          <td width='160'>
+          <select name='cid' style='width:150'>
+          <option value='0'>选择类型...</option>
+          	<option value='1'>名称</option>
+          </select>
+        </td>
+        <td width='70'>
+          关键字：
+        </td>
+        <td width='160'>
+          	<input type='text' name='keyword' value='' style='width:150px' />
+        </td>
+        <td width='110'>
+    		<select name='orderby' style='width:80px'>
+            <option value='id'>排序...</option>
+            <option value='pubdate'>发布时间</option>
+      	</select>
+        </td>
+        <td>
+          <input name="imageField" type="image" src="images/admin/search.gif" width="45" height="20" border="0" class="np" />
+        </td>
+       </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</form>
+  
+<!--  内容列表   -->
+{content_list}
+<!--  内容列表   -->
+
+<!--编辑区域-->
+<form name="editForm" id="editForm" action="index.php?action=channel&method=addChannel" method="post">
+<table border="0" cellpadding="2" cellspacing="1" width="98%"  align="center" class="tableEditArea">
+	<tr bgcolor="#E7E7E7">
+		<td height="24" colspan="4" background="images/admin/tbg.gif">&nbsp;编辑区域&nbsp;</td>
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="4" height="6"></td>		    
+	</tr>
+	<tr>
+		<td nowrap align="right" width="10%">栏目名称:</td>
+		<td width="30%"><input name="chname" id="chname" class="text" style="width:60%" type="text" size="40" />
+	        <span style="color:#FF0000"> *</span></td>
+	    <td align="right" width="10%">栏目说明:</td>
+	    <td width="50%"><input name="chdesc" id="chdesc" class="text" style="width:80%" type="text"/></td>	 
+	</tr>
+	<tr>
+		<td nowrap align="right" colspan="4" height="6"></td>		    
+	</tr>		
+</table>
+</form>
+
+<!--编辑按钮  -->
+<table width="98%" border="0" cellpadding="0" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
+<tr>
+ <td height="26" background="images/admin/newlinebg3.gif">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td align="center">
+    <input type='button' class="coolbg np" onclick="addChannel()" value='添加栏目' />
+    <input type='button' class="coolbg np" onclick="delChannel()" value='删除栏目' />
+    <input type='button' class="coolbg np" onclick="delProductOfCh()" value='删除栏目下产品' />
+ </td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

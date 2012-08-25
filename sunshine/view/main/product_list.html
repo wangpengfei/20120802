@@ -1,0 +1,492 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="阳光团购中心,中秋月饼,员工福利,礼品,礼券,上海团购,年会" />
+<meta name="description" content="阳光团购中心,中秋月饼,员工福利,礼品,礼券,上海团购,年会" />
+<title>阳光团购中心</title>
+<link href="css/main/header.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/main/i_banner.js"></script>
+<script type="text/javascript" src="js/main/header.js"></script> 
+<script type="text/javascript" src="js/dialog.js"></script>
+<style type="text/css">
+<!--
+.main                          {width:1003px;margin:0 auto;}
+.center                        {width:1003px;padding:0px 0px 0px 13px;}
+.c_up                          {width:821px; margin-bottom:8px;}
+.center_l                      {width:1003px;margin-top:8px;}
+.center_c                      {width:588px;margin-left:8px;margin-right:8px;display:inline;}
+.center_c_img                  {display: block; width: 585px; height: 218px; position:relative; overflow: hidden;}
+.center_c_img ul               {margin:0pt;width:540px;position:absolute;z-index: 999;right:5px;overflow:hidden;bottom:-1px;height:16px;border-right:1px solid rgb(255, 255, 255);background: url(&quot;images/main/bg.png&quot;) no-repeat scroll right 1px transparent;}
+.center_c_img ul li            {list-style-type:none;margin:0pt;padding:0pt;float:right;}
+.center_r                      {width:186px;}
+
+.prodlist                      {width:174px;text-align:left;}                       
+.prodlist1                     {width:174px;text-align:left;border-bottom:1px solid #FCD999;}
+.prodlist1 .title              {background:url(images/main/i_c_title_1.gif) no-repeat;height:21px;text-align:left;padding:5px 0px 0px 0px;font-size:15px;color:#fff; font-weight:bold;text-align:center;}
+.prodlist1 .info               {text-align:left;border:0;}
+.title a,.title a:link,.title a:visited{color:#fff;text-decoration:none;font-size:14px; font-weight:bold;}
+
+.pro_l_info_all                {border-bottom:1px solid #EAEAEA;border-top:0;background:url(images/main/main2_r_info_bg.gif) repeat-y;border-left:1px solid #42CCFF; border-right:1px solid #42CCFF;}
+.pro_2_info_all                {border-bottom:1px solid #65D27A;border-top:0;background:url(images/main/main2_r_info_bg.gif) repeat-y;border-left:1px solid #65D27A; border-right:1px solid #65D27A;}
+.pro_l_info                    {border-top:0;background:url(images/main/i_c_icon_2.gif) no-repeat;}
+.pro_l_info ul                 {padding:5px 0;margin-left:6px;}
+.pro_l_info li                 {border-bottom:1px dotted #CCC;width:180px;line-height:2em;padding-left:10px;background:url(images/main/circule.gif) no-repeat 0 9px;list-style:none;}
+.pro_l_info                    {padding:5px;}
+.mpro_l_info_img               {float:left;width:60px;}
+.pro_l_info_img img            {width:65px;height:65px;padding:2px;border:1px solid #CCC; float:left;}
+.pro_l_info_info               {float:left;width:75px;padding-left:5px;line-height:1.7em;}
+
+.pro_search                    {height:219px;width:186px;}   
+.pro_search_tit                {width:186px;height:33px; background:url(images/main/i_c_title_7.gif) no-repeat;}
+.pro_search_tit a,.pro_search_tit a:link,.pro_search_tit a:visited{color:#fff;text-decoration:none;font-size:14px; font-weight:bold; line-height:24px;}
+.pro_search_cen                {width:184px;height:181px;border-left:1px solid #FFC875;border-right:1px solid #FFC875;background:url(images/main/i_c_title_8.gif) repeat-x;font-family:Arial;padding-left:0px;}
+.pro_search_cen ul ,.search_result_controltext{padding:0px;}
+.pro_search_cen ul li          {float:left;height:18px;margin:0;padding:5px 0 0 2px;list-style:none;}
+
+.list_2                        {border-top:1px solid #FFE3BB;color:#666666;width:172px;height:25px;float:left;}
+.list_2 a                      {float:left;}
+.prodlistimg .info img         {width:201px;height:65px;border:1px solid #E3E3E3;padding:2px;}
+.prodlistimg .info a           {display:block;margin:3px 0;}
+ 
+.showwaystyle                  {width:100px;}
+#txtPriceFrom, #txtPriceTo     {height:12px;width:40px;}
+
+.prodlist_r                    {margin-top:4px; width:820px; float:left;}
+.prodlist_r_total              {width:197px; height:258px; margin-bottom:40px;}
+.prodlist_r_total .img         { border:1px solid #DDDDDD;}
+.prodlist_r_total .img,.prodlist_r_total .info{width:180px;margin:0 auto;}
+
+.prodlist_r_total .img img{width:180px;height:180px;margin:0 auto;}
+.prodlist_r_total .info{line-height:1.5em; text-align:left;}
+.prodlist_r_total .info .gift .green2{display:block;float:left;height:15px;line-height:15px;width:35px;text-align:center;background:#F0FAFB;border:1px solid #E5F1F1;margin-right:4px;color:#269187;}
+.dbhigh                       {height:24px;line-height:24px;overflow:hidden;}
+.dbhigh a,.dbhigh a:link,.dbhigh a:visited,.dbhigh a:hover,.dbhigh a:active{color:#2222CC;border:0;padding:0;background:none;display: inline;}
+.search_result_control        { background:url(images/main/p_c_iaon_3.gif) repeat-x ;font-family:Arial;height:30px; overflow:hidden; margin:0px 0px 8px 6px; border:1px solid #FFB866;display:inherit;}
+.search_result_control ul     {width:780px;}
+.search_result_control ul li  {float:left;height:26px;margin:0;padding:4px 0 0 2px; list-style:none; line-height:26px;;}
+#charshow, #ibtnsmall, #imgshow, #ibtn18page, #ibtn33page {margin-bottom:-3px;}
+.page                         {width:780px; background-color:#F8F8F8; border:1px solid #ddd; height:26px; margin:0px 0px 8px 6px; text-align:left; line-height:26px;}
+.page_1                       {margin-right: 5px; font-weight: bold; color: red;}
+.page_2                       {margin-right: 5px; font-weight: bold;}
+.page_input                   {width: 30px; text-align: center;}
+.page_i_pad                   {margin-right: 5px; padding-right: 5px;}
+
+.input_w                      {width:100px; height:12px;}
+.width_1                       {width:90px; margin-top:3px;}
+.width_2                       {width:86px; margin-top:3px;}
+.width_3                       {width:35px; margin-top:3px;}
+.pro_search_cen dl             {width:170px; float:left;}
+.pro_search_cen dt             {width:70px; float:left;}
+
+-->
+</style>
+</head>
+
+<body>
+
+<div class="login" id="logID" style="display:none;">
+	<form name="userLoginForm" id="userlogin" action="" method="post" onsubmit="return false;">
+		<div class="login_l lef">						
+				<div id="login">
+		  			<div id="loginform">用户名:
+		    			<input name="username" id="username" type="text" dataType="Require" msg="用户名不能为空"/><br />
+		    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果没有帐号，请先注册！<br />
+            			&nbsp;&nbsp;密&nbsp;&nbsp;码:
+        				<input name="upasswd" id="upasswd" type="password" dataType="Require" msg="密码不能为空"/>&nbsp;&nbsp;
+		  			</div>
+		  		<br/>
+		  		<div id="buttom">
+        			<div>
+		      		<input type="image" src="images/main/b_c_title_3.gif" class="inline_midl" onclick="userLogin()"/>
+		      		</div>
+		      		<div>
+		      		<input type="image" src="images/main/c_c_title_4.gif" class="inline_midl" onclick="closedialog()"/>
+		      		<br/>		      
+	     		</div>
+		 </div>
+  	</div>
+ 	</div>
+ 	</form>
+	</div>
+	
+	<div class="login_l lef" id="regID" style="display:none;">	
+		<form name="reguserForm" id="reguser" action="" method="post" onsubmit="return false;">		
+		<div id="login_1">
+		  <div id="loginform">&nbsp;&nbsp;&nbsp;&nbsp;用户名:
+		    <input name="udspname" id="udspname" type="text" size="27" dataType="Require" msg="用户名不能为空"/>&nbsp;<span class="red">*</span><br />    
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;码:
+            <input name="upasswd" id="upasswd" type="password" size="27" dataType="Require" msg="密码不能为空"/>&nbsp;<span class="red">*</span>
+            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码设置六位以上字母或数字
+			<br />
+			确认密码:
+            <input name="qrupasswd" id="qrupasswd" type="password" size="27" dataType="Require" msg="确认密码不能为空"/>&nbsp;<span class="red">*</span>
+			<br />
+			 公司名称:
+            <input name="ucompany" id="ucompany" type="text" size="27" dataType="Require" msg="公司名称不能为空"/>&nbsp;<span class="red">*</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部&nbsp;&nbsp;门: 
+            <input name="udepart" id="udepart" type="text" size="27" dataType="Require" msg="部门不能为空"/>&nbsp;<span class="red">*</span><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;联系人: 
+            <input name="ulinkman" id="ulinkman" type="text" size="27" dataType="Require" msg="联系人不能为空"/>&nbsp;<span class="red">*</span><br />
+			联系电话: 
+            <input name="uphone" id="uphone" type="text" size="27" dataType="Phone" msg="不是合法的电话号码"/>&nbsp;<span class="red">*</span><br />			
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: 
+            <input name="uemail" id="uemail" type="text" size="27" dataType="Email" msg="不是合法的Email地址"/>&nbsp;<span class="red">*</span>
+		  </div>
+		<br/>
+		  <div id="buttom">
+            <div align="center">
+		      <input type="image" src="images/main/b_c_title_4.gif" class="inline_midl1" onclick="regeditUser()"/>
+		      </div>
+		    <div>		      	
+		      <input type="image" src="images/main/c_c_title_4.gif" class="inline_midl1" onclick="closedialog()" />
+		      <br/>	        
+	     	</div>
+		 </div>
+	 </div>
+	 </form>
+ </div>
+
+
+<div class="main">
+	<div class="head">
+	  <div class="head_top">
+			<div class="logo lef"><a href="" target="_blank"><img src="images/main/logo.gif" alt="阳光团购中心"/></a></div>
+			<div class="tel lef"></div>
+			<div class="top_menu_login1 lef">
+				<input type="hidden" name="userid" id="userid" value="{userid}"/>
+				<input type="hidden" name="isreg" id="isreg" value="{isreg}"/>
+				&nbsp;&nbsp;&nbsp;您好，<span class="red" id="dspusername">{custname}</span>				
+				&nbsp;&nbsp;欢迎您登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+			<div class="top_menu_login lef">
+				<div class="top_menu_login2">&nbsp;</div>
+				<div class="list1 lef"><a style="cursor:hand" href="javascript:dialog('登录','id:logID','300px','220px',120);">登录</a></div>
+				<div class="list2 lef"><a style="cursor:hand" href="javascript:dialog('注册新用户','id:regID','330px','340px',120);" >注册</a></div>				
+				<div class="list4 lef"><a href="#">我的帐户</a></div>
+				<div class="list6 lef"><a href="#">我的收藏夹</a></div>
+			</div>
+		</div>
+		<div class="h_menu">
+			<div>
+			  <div>
+			  	<ul id="h_menu">
+					<li  id="index" class="h_menu1_down lef" onclick="ChangedItime('index')" ><a href="">首页</a></li>
+					<li  id="recommend"  class="h_menu2 lef"  onclick="ChangedItime('recommend')">
+					<a id="menu1" href="javascript:gotoCategory('menu1');">时令推荐</a></li>
+					<li  id="brand"  class="h_menu3 lef"  onclick="ChangedItime('brand')">
+					<a id="menu2" href="javascript:gotoCategory('menu2');">品牌家电</a></li>
+					<li  id="textile" class="h_menu4 lef"  onclick="ChangedItime('textile')">
+					<a id="menu3" href="javascript:gotoCategory('menu3');">时尚纺织</a></li>
+					<li  id="ticket" class="h_menu5 lef" onclick="ChangedItime('ticket')">
+					<a id="menu4" href="javascript:gotoCategory('menu4');">西点礼券</a></li>
+					<li  id="life" class="h_menu6 lef" onclick="ChangedItime('life')">
+					<a id="menu5" href="javascript:gotoCategory('menu5');">生活用品</a></li>
+					<li  id="kitchen" class="h_menu7 lef"  onclick="ChangedItime('kitchen')">
+					<a id="menu6" href="javascript:gotoCategory('menu6');">厨房用品</a></li>
+					<li  id="movement" class="h_menu8 lef"  onclick="ChangedItime('movement')">
+					<a id="menu7" href="javascript:gotoCategory('menu7');">运动保健</a></li>
+					<li  id="promotions"  class="h_menu9 lef"  onclick="ChangedItime('promotions')">
+					<a id="menu8" href="javascript:gotoCategory('menu8');">促销礼品</a></li>
+					<li  id="about" class="h_menu11 lef"  onclick="ChangedItime('about')">
+					<a id="menu9" href="javascript:gotoCategory('menu9');">关于我们</a></li>
+				</ul>
+			  </div>
+			  
+			<div class="h_search lef">
+					<div class="h_search_all">
+						<div class="m nsearch lef">							
+							<span class="nfdj lef"><img alt="" src="images/main/i_h_icon_6.gif"/>&nbsp;</span>&nbsp;
+							<div class="lef">
+							<input type="text" autocomplete="off" name="keyword" value="货号或关键词" onfocus="this.value=''" class="ninput_search" id="keyword" />&nbsp;
+							</div>
+							<div class="lef"><input type="image" class="nsearch_m" name="imageField" onclick="searchbykey('keyword')" src="images/main/i_h_icon_7.gif" alt="按关键字搜索" id="imageField"/>&nbsp;</div>
+							<div class="h_search_gao"></div>
+							
+					  </div>
+						<div class="keywords lef" ><a href="" target="_blank"></a>&nbsp;&nbsp;<a href="" target="_blank" ></a></div>
+				</div>
+				<div class="h_banner lef"><img src="images/main/i_h_banner_1.jpg" alt="" name="" /></div>
+			</div>
+
+			<div class="c_b"></div>
+			<div class="h_down lef"></div>
+		 </div>
+		</div>
+	</div>
+	
+  <div class="center">
+		<div class="center_l lef">
+		   <div class="prodlist lef">
+			<div class="prodlist1 lef">
+				<div class="title"><span class="left size14">按品类查找</span></div>
+				
+				<div class="info lef">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu1" href="javascript:gotoCategory('submenu1');">&nbsp;防暑降温</a></span>  
+						<div class="list_2">
+							<a id="submenu11" href="javascript:gotoCategory('submenu11');" >生活日化</a>
+							<a id="submenu12" href="javascript:gotoCategory('submenu12');" >绚丽阳伞</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu13" href="javascript:gotoCategory('submenu13');" >馨香毛巾</a>
+				 			<a id="submenu14" href="javascript:gotoCategory('submenu14');" >夏凉被服</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu15" href="javascript:gotoCategory('submenu15');" >清爽凉席</a>
+							<a id="submenu16" href="javascript:gotoCategory('submenu16');" >清凉风扇</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu17" href="javascript:gotoCategory('submenu17');" >杂粮南北货</a>
+							<a id="submenu18" href="javascript:gotoCategory('submenu18');" >茶叶饮料</a>
+						</div>
+					</div>
+				</div>
+				</div>
+
+
+
+
+
+				
+				
+				
+				<div class="info lef">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu2" href="javascript:gotoCategory('submenu2');">&nbsp;时尚纺织</a></span>  
+						<div class="list_2">
+							<a id="submenu21" href="javascript:gotoCategory('submenu21');" >全棉毛巾</a>
+							<a id="submenu22" href="javascript:gotoCategory('submenu22');" >竹纤维毛巾</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu23" href="javascript:gotoCategory('submenu23');" >床上件套</a>
+				 			<a id="submenu24" href="javascript:gotoCategory('submenu24');" >极品蚕丝被</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu25" href="javascript:gotoCategory('submenu25');" >健康毯类</a>
+							<a id="submenu26" href="javascript:gotoCategory('submenu26');" >舒柔床垫</a>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="info">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu3" href="javascript:gotoCategory('submenu3');">&nbsp;品牌家电</a></span>  
+						<div class="list_2">
+							<a id="submenu31" href="javascript:gotoCategory('submenu31');" >美&nbsp;&nbsp;&nbsp;的</a>
+							<a id="submenu32" href="javascript:gotoCategory('submenu32');" >三&nbsp;&nbsp;&nbsp;洋</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu33" href="javascript:gotoCategory('submenu33');" >九&nbsp;&nbsp;&nbsp;阳</a>
+				 			<a id="submenu34" href="javascript:gotoCategory('submenu34');" >红&nbsp;&nbsp;&nbsp;心</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu35" href="javascript:gotoCategory('submenu35');" >奔&nbsp;&nbsp;&nbsp;腾</a>
+							<a id="submenu36" href="javascript:gotoCategory('submenu36');" >伊莱克斯</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu37" href="javascript:gotoCategory('submenu37');" >泰&nbsp;&nbsp;&nbsp;昌</a>
+				 			<a id="submenu38" href="javascript:gotoCategory('submenu38');" >礼想家</a>
+				 		</div>
+					</div>
+				</div>
+				</div>
+				
+
+				
+				<div class="info">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu6" href="javascript:gotoCategory('submenu6');">&nbsp;厨房用品</a></span>  
+						<div class="list_2">
+							<a id="submenu61" href="javascript:gotoCategory('submenu61');" >欧式厨具</a>
+							<a id="submenu62" href="javascript:gotoCategory('submenu62');" >压力锅</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu63" href="javascript:gotoCategory('submenu63');" >电饭煲</a>
+				 			<a id="submenu64" href="javascript:gotoCategory('submenu64');" >咖啡机</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu65" href="javascript:gotoCategory('submenu65');" >电热水壶</a>
+							<a id="submenu66" href="javascript:gotoCategory('submenu66');" >保鲜盒</a>
+						</div>
+					</div>
+				</div>
+				</div>
+
+				<div class="info">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu4" href="javascript:gotoCategory('submenu4');">&nbsp;西点礼券</a></span>  
+						<div class="list_2">
+							<a id="submenu41" href="javascript:gotoCategory('submenu41');" >杏花楼</a>
+							<a id="submenu42" href="javascript:gotoCategory('submenu42');" >克莉丝汀</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu43" href="javascript:gotoCategory('submenu43');" >新&nbsp;&nbsp;&nbsp;雅</a>
+				 			<a id="submenu44" href="javascript:gotoCategory('submenu44');" >可颂坊</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu45" href="javascript:gotoCategory('submenu45');" >宜芝多</a>
+							<a id="submenu46" href="javascript:gotoCategory('submenu46');" >功德林</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu47" href="javascript:gotoCategory('submenu47');" >哈根达斯</a>
+							<a id="submenu48" href="javascript:gotoCategory('submenu48');" >面包新语</a>
+						</div>
+					</div>
+				</div>
+				</div>
+
+				
+				<div class="info lef">
+				<div class="sdmenu lef" id="my_menu">
+					<div class="lef">
+						<span><a id="submenu7" href="javascript:gotoCategory('submenu7');">&nbsp;2011时令推荐</a></span>  
+						<div class="list_2">
+							<a id="submenu71" href="javascript:gotoCategory('submenu71');" >2011年货</a>
+							<a id="submenu72" href="javascript:gotoCategory('submenu72');" >野味</a>
+						</div>
+				 		<div class="list_2">
+				 			<a id="submenu73" href="javascript:gotoCategory('submenu73');" >阿格利司</a>
+				 			<a id="submenu74" href="javascript:gotoCategory('submenu74');" >阿西娅</a>
+				 		</div>
+						<div class="list_2">
+							<a id="submenu75" href="javascript:gotoCategory('submenu75');" >爱博士保鲜</a>
+							<a id="submenu76" href="javascript:gotoCategory('submenu76');" >美的厨具</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu77" href="javascript:gotoCategory('submenu77');" >酷菲偲</a>
+							<a id="submenu78" href="javascript:gotoCategory('submenu78');" >锅宝</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu79" href="javascript:gotoCategory('submenu79');" >爱仕达</a>
+							<a id="submenu710" href="javascript:gotoCategory('submenu710');" >乐扣乐扣</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu711" href="javascript:gotoCategory('submenu711');" >护手霜</a>
+							<a id="submenu712" href="javascript:gotoCategory('submenu712');" >欧姆龙</a>
+						</div>
+						<div class="list_2">
+							<a id="submenu713" href="javascript:gotoCategory('submenu713');" >修甲套装</a>
+							<a id="submenu714" href="javascript:gotoCategory('submenu714');" >朗琴音响</a>
+						</div>
+					</div>
+				</div>
+				</div>
+
+				<div class="info"></div>
+				<div class="info"></div>
+				<div class="info"></div>
+		</div>
+		
+		</div>
+	  <div class="c_up lef">
+		<div class="center_c lef">
+			<div id="imgADPlayer"></div>
+				<script type="text/javascript">
+				 PImgPlayer.addItem( "test4", "", "images/main/6.jpg");					 
+				 PImgPlayer.addItem( "test", "", "images/main/1.jpg");
+				 PImgPlayer.addItem( "test2", "", "images/main/2.jpg");
+                                 PImgPlayer.addItem( "test3", "", "images/main/3.jpg");
+				 PImgPlayer.addItem( "test4", "", "images/main/4.jpg");
+				 PImgPlayer.init( "imgADPlayer", 585, 219 );
+				 </script>
+		</div>
+		<div class="center_r lef">
+			<div class="pro_search">
+				<div class="pro_search_tit"><a href="" target="_blank">产品搜索</a></div>
+				<div class="pro_search_cen">
+					<dl>
+						<dt><b>产品搜索:</b><dd><select type="text" name="1" class="width_1" id="1"></select>
+						<dt><b>市场价格:</b><dd><input type="text" name="2" id="2"  class="width_3">至<input type="text" name="3" id="3"  style="width:35px;" >
+						<dt><b>团购价格:</b><dd><input type="text" name="4" id="4"   class="width_3" >至<input type="text" name="5" id="5" style="width:35px;" >
+						<dt><b>产品编号:</b><dd><input type="text" name="6"  class="width_2" id="6">
+						<dt><b>排列方式:</b><dd><select type="text" name="7"  class="width_1" id="7"></select>
+						<dt><b>关键字:</b><dd><input type="text" name="8" class="width_2" id="8">
+						<dt><input type="image" src="images/main/i_c_icon_4.gif" class="inline_mid" style="margin-left:40px; margin-top:3px;"/>
+					</dl>
+				</div>
+				<div><img src="images/main/i_c_title_9.gif" alt="" /></div>
+			</div>
+		</div>
+	</div>	
+	<div class="prodlist_r">
+		<div class="search_result_control lef">
+			<ul>
+				<li>&nbsp;&nbsp;显示方式</li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_4.gif" id="charshow" name="charshow"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_5.gif" id="charshow" name="charshow"/></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;显示数量</li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_6.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_7.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_8.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_9.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;排列方式</li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_11.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_10.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li><input border="0" type="image" alt="" src="images/main/p_c_iaon_12.gif" id="ibtn18page" name="ibtn18page"/></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;<input border="0" type="image" alt="" src="images/main/p_c_iaon_13.gif" id="ibtn18page" name="ibtn18page"/></li>
+			</ul>
+		</div>
+		<div  class="page lef" id="anpPageUp">
+			&nbsp;第&nbsp;<span class="page_1">1</span>/
+			<a class="textalignright" href="javascript:__doPostBack('anpPageUp','2')">2</a>页
+			<a class="textalignright" href="javascript:__doPostBack('anpPageUp','1')">首页</a>
+			<a class="textalignright" href="javascript:__doPostBack('anpPageUp','1')">上一页</a>
+			&nbsp;第&nbsp;<input type="text" class="page_input" onkeydown="ANP_keydown(event,'anpPageUp_btn');" id="anpPageUp_input" name="anpPageUp_input" value="1"/>&nbsp;2页
+			<a class="textalignright" href="javascript:__doPostBack('anpPageUp','2')">下一页</a>
+			<a class="textalignright" href="javascript:__doPostBack('anpPageUp','36')">尾页</a>
+			<a class="border_right page_i_pad" >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="showway" onchange="__doPostBack('showway','')" language="javascript" id="showway" class="showwaystyle"></select></a>
+		</div>
+		
+		<!-- BEGIN list -->
+		<div class="lef prodlist_r_total">
+            <div class="img"><a href="index.php?action=frontproduct&method=getprodetail&pid={pid}" target="_blank">
+            <img src="{pimage}" alt="" /></a></div>
+            <div class="info">
+				<div class="price">市场价：<span class="cancel gray">￥<span class="size16">{pmarketprice}</span></span></div>
+				<div class="price">团购价：<span class="red">￥<span  class="size16"><b>{pteamprice}</b></span></span></div>
+                <div class="dbhigh"><a href="index.php?action=frontproduct&method=getprodetail&pid={pid}" target="_blank">{pname}</a></div>                
+				<div class="dbhigh">&nbsp;
+				<a href="" target="_blank"><img src="images/main/p_c_iaon_2.gif" alt="" /></a></div>
+                <div class="gift"></div>
+            </div>
+            <div class="c_b"></div>
+        </div>		
+		<!-- END list -->
+		
+		<div  class="page lef" id="anpPageUp">
+			<input type="hidden" name="cur_page" id="cur_page" value="{cur_page}" />
+			<input type="hidden" name="max_page" id="max_page" value="{max_page}" />
+			<input type="hidden" name="bcmethod" id="bcmethod" value="{bcmethod}" />
+			<input type="hidden" name="bcparam" id="bcparam" value="{bcparam}" />
+			&nbsp;第&nbsp;<span class="page_1">{cur_page}</span>/&nbsp;<span class="page_2">{max_page}</span>页
+			<a class="textalignright" href="javascript:gotoPage(1)">首页</a>
+			<a class="textalignright" href="javascript:gotoPage(2)">上一页</a>
+			&nbsp;第&nbsp;<input type="text" class="page_input" onkeydown="ANP_keydown(event,'anpPageUp_btn');" id="anpPageUp_input" name="anpPageUp_input" value="1"/>&nbsp;页
+			<a class="textalignright" href="javascript:gotoPage(3)">下一页</a>
+			<a class="textalignright" href="javascript:gotoPage(4)">尾页</a>
+			<a class="border_right page_i_pad">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="showway" onchange="__doPostBack('showway','')" language="javascript" id="showway" class="showwaystyle"></select></a>
+		</div>
+	</div>
+	
+    </div>
+	</div>
+	
+	<div class="foot">
+		<p>阳光团购中心联系地址：浦东新区沪南公路1087号莲珠大厦2204室
+		<br />投诉邮箱：<a href="mailto:yangguangtuangou@gmail.com">yangguangtuangou@gmail.com</a>&nbsp;&nbsp;&nbsp;&nbsp;联系电话：021-33191309
+		<br />Copyright&copy; 2010-2011 上海爱可迅实业有限公司 版权所有　备案号:沪ICP备10034930号</p>
+	</div>
+		
+</div>
+</body>
+</html>
