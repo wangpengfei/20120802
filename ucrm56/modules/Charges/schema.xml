@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_charges</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_charges` (
+  `chargesid` int(11) DEFAULT NULL,
+  `chargesno` varchar(100) DEFAULT NULL,
+  `chargesname` varchar(100) DEFAULT NULL,
+  `vendor_id` varchar(100) DEFAULT NULL,
+  `purchaseorder_id` varchar(100) DEFAULT NULL,
+  `plandate` date DEFAULT NULL,
+  `planamount` varchar(100) DEFAULT NULL,
+  `actualdate` date DEFAULT NULL,
+  `actualamount` varchar(100) DEFAULT NULL,
+  `chargesstatus` varchar(100) DEFAULT NULL,
+  `isinvoice` varchar(100) DEFAULT NULL,
+  `chargestimes` varchar(100) DEFAULT NULL,
+  `remark` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_chargescf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_chargescf` (
+  `chargesid` int(11) NOT NULL,
+  PRIMARY KEY (`chargesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_chargesgrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_chargesgrouprel` (
+  `chargesid` int(11) NOT NULL,
+  `groupname` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`chargesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

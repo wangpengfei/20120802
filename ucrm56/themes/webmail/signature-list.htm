@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Signature"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#sign_title#}</title>
+</head>
+
+{$JSSource}
+{$ListJSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 method=post action=signature.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name="opt" value="">
+				
+				<tr height="22">
+					<td width="3%" class="list_title" align="center"><input type=checkbox name=chkall onclick="sel()"></td>
+					<td width="35%" class="list_title" align=center><b>{#sign_name_hea#}</b></td>
+					<td width="40%" class="list_title" align=center><b>{#sign_content_hea#}</b></td>
+					<td width="10%" class="list_title" align=center><b>{#sign_edit_hea#}</b></td>
+					<td width="10%" class="list_title" align=center><b>{#sign_dele_hea#}</b></td>
+				</tr>
+				{section name=i loop=$SignatureList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value" align="center">{$SignatureList[i].checkbox}</td>
+						<td class="list_value">&nbsp;<a href="{$SignatureList[i].viewlink}">{$SignatureList[i].name}</a>{if $SignatureList[i].default}&nbsp;<image src="themes/common/images/start.gif" width=12 height=12 align=absmiddle alt="{#sign_default#}">{/if}</td>
+						<td class="list_value">&nbsp;{$SignatureList[i].content|truncate:40:"...":true}</td>
+						<td class="list_value" align="center"><a href="{$SignatureList[i].editlink}"><img src="themes/common/images/edit.gif" width=15 height=12 border=0 alt="{#sign_edit_hea#}"></a></td>
+						<td class="list_value" align="center"><a href="{$SignatureList[i].dellink}"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#sign_dele_hea#}"></a></td>
+					</tr>
+				{/section}
+				<form>
+				<tr height="30">
+					<td colspan=5 class="list_btn" align=left>
+						&nbsp;<input type=button value="{#sign_new_entry#}" class=button onClick="location = '{$New}'">
+						&nbsp;<input type=button value="{#sign_dele_hea#}" class=button onClick="javascript:delsignature('')">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

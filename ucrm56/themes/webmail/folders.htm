@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Folders"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#folders_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+		{if $DispPrivateFolder}
+			<table cellspacing=0 cellpadding=0 width="98%" border=0>
+			<tr height=25>
+			{if $QuotaEnabled eq 1}
+			    <td width="100%" colspan=6 class="list_header" align="center"><b>{#fld_prifolders#}</b></td>
+			{else}
+			    <td width="100%" colspan=5 class="list_header" align="center"><b>{#fld_prifolders#}</b></td>
+			{/if}
+			</tr>
+			<tr height=22>
+			    <td width="*%" class="list_title" align="center"><b>{#fld_name_hea#}</b></td>
+			    <td width="20%" class="list_title" align="center"><b>{#fld_messages_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_size_hea#}</b></td>
+			{if $QuotaEnabled eq 1}
+			    <td width="15%" class="list_title" align="center"><b>{#fld_usedrate_hea#}</b></td>
+			{/if}
+			    <td width="15%" class="list_title" align="center"><b>{#fld_empty_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_delete_hea#}</b></td>
+			</tr>
+
+			{section name=i loop=$PrivateFolderList}
+			<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+				<td class="list_value">&nbsp;<a href="{$PrivateFolderList[i].chlink}"><img src="themes/common/images/{$PrivateFolderList[i].images}" border=0 width=16 height=16 align=absmiddle> {$PrivateFolderList[i].name|escape:"html"}</a></td>
+				<td class="list_value" align="center">{$PrivateFolderList[i].msgs}</td>
+				<td class="list_value" align="right">{$PrivateFolderList[i].boxsize}KB &nbsp;</td>
+				{if $QuotaEnabled eq 1}
+					<td class="list_value" align="center">{$PrivateFolderList[i].usedrate}%</td>
+				{/if}
+				{if $PrivateFolderList[i].emptylink eq ""}
+					<td class="list_value" align="center">&nbsp;</td>
+				{else}
+					<td class="list_value" align="center"><a href="{$PrivateFolderList[i].emptylink}"><img src="themes/common/images/empty.gif" width=15 height=12 border=0 alt="{#fld_empty_hea#}"></a></td>
+				{/if}
+				{if $PrivateFolderList[i].dellink eq ""}
+					<td class="list_value" align="center">&nbsp;</td>
+				{else}
+					<td class="list_value" align="center"><a href="{$PrivateFolderList[i].dellink}"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#fld_delete_hea#}"></a></td>
+				{/if}
+			</tr>
+			{/section}
+			<tr height=20>
+				<td class="list_value">&nbsp;</td>
+				<td class="list_value" align="right"><b>{#fld_total#}</b> &nbsp;</td>
+				<td class="list_value" align="right"><b>{$FolderTotalUsed}</b>KB &nbsp;</td>
+				{if $QuotaEnabled eq 1}
+				<td class="list_value" align="center">&nbsp;</td>
+				{/if}
+				<td class="list_value" align="center">&nbsp;</td>
+				<td class="list_value" align="center">&nbsp;</td>
+			</tr>
+
+			<tr height=40>
+				<td class="list_value" align="center" colspan=6>
+					{#quota_usage_info#}: {#quota_usage_used#} <b>{$TotalUsed}</b>MB {#quota_usage_avail#} {if $QuotaEnabled eq 1}<b>{$QuotaLimit}</b>MB{else}<b>{#quota_usage_unlimited#}</b>{/if}<br>
+					{if $QuotaEnabled eq 1}{$UsageGraph}{/if}
+				</td>
+			</tr>
+			</table>
+			
+			<table cellspacing=0 cellpadding=0 width="98%" border=0>
+			<form name="form1" action="folders.php" method="POST" onsubmit="return create();">
+			<tr height=40 align="center">
+				<td class="list_empty">
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=text name=newfolder value="" class="textbox">
+				&nbsp;
+				<input type=button value="{#fld_make_new#}" class=button onClick="create()">
+				</td>
+			</tr>
+			</form>
+			</table>
+		{/if}
+		{if $DispPublicFolder}
+			<br>
+			<table cellspacing=0 cellpadding=0 width="98%" border=0>
+			<tr height=25>
+			    <td width="100%" colspan=6 class="list_header" align="center"><b>{#fld_pubfolders#}</b></td>
+			</tr>
+			<tr height=22>
+			    <td width="*%" class="list_title" align="center"><b>{#fld_name_hea#}</b></td>
+			    <td width="20%" class="list_title" align="center"><b>{#fld_messages_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_size_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_usedrate_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_empty_hea#}</b></td>
+			    <td width="15%" class="list_title" align="center"><b>{#fld_right_hea#}</b></td>
+			</tr>
+			{section name=i loop=$PublicFolderList}
+			<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+				<td class="list_value">&nbsp;<a href="{$PublicFolderList[i].chlink}"><img src="themes/common/images/{$PublicFolderList[i].images}" border=0 width=16 height=16 align=absmiddle> {$PublicFolderList[i].name|escape:"html"}</a></td>
+				<td class="list_value" align="center">{$PublicFolderList[i].msgs}</td>
+				<td class="list_value" align="right">{$PublicFolderList[i].boxsize}KB &nbsp;</td>
+				{if $PublicFolderList[i].usedrate eq ""}
+				<td class="list_value" align="center">&nbsp;</td>
+				{else}
+				<td class="list_value" align="center">{$PublicFolderList[i].usedrate}%</td>
+				{/if}
+				{if $PublicFolderList[i].emptylink eq ""}
+				<td class="list_value" align="center">&nbsp;</td>
+				{else}
+				<td class="list_value" align="center"><a href="{$PublicFolderList[i].emptylink}"><img src="themes/common/images/empty.gif" width=15 height=12 border=0 alt="{#fld_empty_hea#}"></a></td>
+				{/if}
+				<td class="list_value" align="center">
+				{if $PublicFolderList[i].right eq 0}
+				{#fld_right_all#}
+				{elseif $PublicFolderList[i].right eq 1}
+				{#fld_right_write#}
+				{elseif $PublicFolderList[i].right eq 2}
+				{#fld_right_read#}
+				{else}
+				&nbsp;
+				{/if}
+				</td>
+			</tr>
+			{/section}
+			</table>
+		{/if}
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

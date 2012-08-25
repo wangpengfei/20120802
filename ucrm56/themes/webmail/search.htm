@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Search"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#sch_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+		   <!--
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name="form1" action="search.php" method="POST">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=searched value="yes">
+				
+				<tr height="25">
+					<td class="tb_header" colspan="2">&nbsp;&nbsp;<b>{#sch_information_text#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right" width="20%">{#sch_from_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=srcFrom value="{$InputFrom|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#sch_to_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=srcTo value="{$InputTo|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#sch_cc_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=srcCc value="{$InputCc|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#sch_subject_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=srcSubject value="{$InputSubject|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#sch_body_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=srcBody value="{$InputBody|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+				</tr>
+				<tr height="30">
+					<td class="tb_btn">&nbsp;</td>
+					<td class="tb_btn">&nbsp;<input type=submit value="{#sch_button_text#}" class=button><br></td>
+				</tr>
+				
+				</form>
+			</table>
+			-->
+			
+			{if $DoSearch}
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>
+			    <tr height="25">
+					<td colspan="6" class="list_header">&nbsp;{$FolderInfo}</td>
+				</tr>
+				<tr height="22">
+				    <td width="5%"  class="list_title" align=center><img src="images/msg_read.gif" border="0" width="17" height="14" align=absmiddle>&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" align=absmiddle>&nbsp;<img src="images/prior_high.gif" width=5 height=11 border=0 align=absmiddle></td>
+			    	<td width="15%" class="list_title" align=center><b>{#sch_from_hea#}</b></td>
+			    	<td width="15%" class="list_title" align=center><b>{#sch_to_hea#}</b></td>
+				    <td width="*%" class="list_title" align=center><b>{#sch_subject_hea#}</b></td>
+				    <td width="20%" class="list_title" align=center><b>{#sch_date_hea#}</b></td>
+				    <td width="15%" class="list_title" align=center><b>{#sch_folder_hea#}</b></td>
+				</tr>
+
+				{section name=i loop=$MessageList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">{$MessageList[i].statusimg}&nbsp;{$MessageList[i].attachimg}&nbsp;{$MessageList[i].priorimg}</td>
+						{if $AllowFromUrl}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].composelink}" title="{$MessageList[i].frommail|escape:"html"}">{$MessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_sender_text#} </a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].composelinksent}" title="{$MessageList[i].tomail|escape:"html"}">{$MessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_recipient_text#} </a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{else}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<span title="{$MessageList[i].frommail|escape:"html"}">{$MessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_sender_text#}</span>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<span title="{$MessageList[i].tomail|escape:"html"}">{$MessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_recipient_text#}</span>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{/if}
+						<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].readlink}">{$MessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#} </a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						<td class="list_value" align="center">{if $MessageList[i].read eq "false"}<b>{/if}{$MessageList[i].date}{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].folderlink}">{$MessageList[i].folder}</a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+					</tr>
+				{sectionelse}
+					<tr height="50">
+					    <td width="100%" class="list_value" colspan="6"><center><br>{#sch_no_results#}<br><br></center></td>
+					</tr>
+				{/section}
+			</table>
+			{/if}
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

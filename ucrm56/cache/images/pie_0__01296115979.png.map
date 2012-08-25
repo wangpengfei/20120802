@@ -1,0 +1,5 @@
+<img src="cache/images/pie_0__01296115979.png" border="0" usemap="#cache/images/pie_0__01296115979.png">
+<map name="cache/images/pie_0__01296115979.png">
+	<area shape="polygon" coords="444,282,607,282,585,364,526,423,444,445,362,423" href="index.php?module=Accounts&action=index&from_dashboard=true&search_text=sm&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=4" alt="sm - 2" title="sm - 2">
+	<area shape="polygon" coords="444,282,362,423,303,364,281,282,303,200,362,141,444,119,526,141,585,200,607,282" href="index.php?module=Accounts&action=index&from_dashboard=true&search_text=s&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=4" alt="s - 4" title="s - 4">
+</map>

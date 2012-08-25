@@ -1,0 +1,5 @@
+<img src="cache/images/pie_0__01289454948.png" border="0" usemap="#cache/images/pie_0__01289454948.png">
+<map name="cache/images/pie_0__01289454948.png">
+	<area shape="polygon" coords="444,282,607,282,585,364,526,423,444,445,362,423,303,364,281,282,303,200,362,141,444,119,526,141,584,198" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=+&search_field=leadsource&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="没有被分配 - 43" title="没有被分配 - 43">
+	<area shape="polygon" coords="444,282,584,198,607,279,607,282" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=--None--&search_field=leadsource&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="无 - 4" title="无 - 4">
+</map>

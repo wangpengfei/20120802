@@ -1,0 +1,5 @@
+<img src="cache/images/hor_0__01296118323.png" border="0" usemap="#cache/images/hor_0__01296118323.png">
+<map name="cache/images/hor_0__01296118323.png">
+	<area shape="rect" coords="39,48,39,241" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=s&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="s - 1" title="s - 1">
+	<area shape="rect" coords="39,268,767,461" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=admin&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="admin - 1756" title="admin - 1756">
+</map>

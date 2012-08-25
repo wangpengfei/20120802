@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Preferences"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#prf_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script>
+function chgColorStyle(styleIndex){
+	document.getElementById('colorstyle_preview').src = "themes/xp/images/" + styleIndex + "_preview.gif";
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 action=preferences.php method=POST>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=save value="yes">
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_general_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right" width="25%">{#prf_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=f_real_name size=30 value="{$RealName|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#prf_reply_to#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=f_reply_to size=30 value="{$ReplyTo|escape:"html"}" class="textbox"></td>
+				</tr>
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_loginpage_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;{#prf_login_defaultpage#}</td>
+					<td class="tb_value">&nbsp;<select name=f_login_defaultpage>
+					<option value="today"{if $DefaultPage eq "today"} selected{/if}>{#prf_login_defaultpage_0#}</option>
+					<option value="inbox"{if $DefaultPage eq "inbox"} selected{/if}>{#prf_login_defaultpage_1#}</option>
+					<option value="onlynew"{if $DefaultPage eq "onlynew"} selected{/if}>{#prf_login_defaultpage_2#}</option>
+					<option value="folder"{if $DefaultPage eq "folder"} selected{/if}>{#prf_login_defaultpage_3#}</option>
+					</select>
+					</td>
+				</tr>
+				{if $HavePublicBox eq 1}
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_display_pubboard value="1"{$DisplayPubboard}><acronym style="cursor: hand;" OnClick="f_display_pubboard.click()">{#prf_login_defaultpage_ext1#}</acronym>
+						{#prf_login_defaultpage_ext1_tip#}
+						<select name="pubboardfolder">
+							{section name=i loop=$PublicBoxList}
+						 		<option value="{$PublicBoxList[i].name}"{if $PubboardFolder eq $PublicBoxList[i].name} selected{/if}>{$PublicBoxList[i].display}</option>
+							{/section}
+						</select>
+					</td>
+				</tr>
+				{else}
+					<input type=hidden name=f_display_pubboard value="1">
+					<input type=hidden name=pubboardfolder value="">
+				{/if}
+				
+				{if $MultiColor eq 1}
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_color_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#prf_current_color#}&nbsp;</td>
+					<td class="tb_value">
+						<table border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+							 <td>&nbsp;<select name="f_colorstyle" onchange="javascript: chgColorStyle(this.options[this.selectedIndex].value);" size="6">
+								{section name=i loop=$ColorStyle}
+					 			<option value="{$ColorStyle[i].id}"{if $ColorStyle[i].id eq $CurrentColorStyle} selected{/if}>{$ColorStyle[i].name}</option>
+								{/section}
+								</select>
+							</td>
+							<td>&nbsp;
+								<img name="colorstyle_preview" id="colorstyle_preview" src="themes/xp/images/{$CurrentColorStyle}_preview.gif" width="268" height="94" border=0>
+							</td>
+						  </tr>
+						</table>
+					</td>
+				</tr>
+				{/if}
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_messages_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#prf_page_limit#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$RecordsPerPage}</td>
+				</tr>
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_readmail_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_display_images value="1"{$DisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+				</tr>
+
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_compose_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#prf_default_editor_mode#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="f_editor_mode">
+						<option value="text"{if $EditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
+						<option value="html"{if $EditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+					</select>
+					</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_autosave value="1"{$AutoSave}><acronym style="cursor: hand;" OnClick="f_autosave.click()">{#prf_autosave#}</acronym>
+						&nbsp;&nbsp;{#prf_autosave_time1#}&nbsp;<input type=text name=f_autosave_timespan size=5 maxlength=3 value="{$AutoSaveTimespan}" class="textbox">&nbsp;{#prf_autosave_time2#}
+					</td>
+				</tr>
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_sent_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_save_sent value="1"{$SaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+				</tr>
+				
+				<tr height="30">
+					<td colspan=2 class="tb_field" align=center><b>{#prf_trash_title#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_save_trash value="1"{$SaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=f_empty_on_exit value="1"{$EmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+				</tr>
+
+				{if $Result neq ""}
+				<tr height="30">
+					<td class="tb_field" colspan=2 align=center>
+						<font color=#ff0000>
+						{if $Result eq "success"}
+						{#prf_success#}
+						{else}
+						{#prf_failure#}
+						{/if}
+						</font>
+					</td>
+				</tr>
+				{/if}
+				
+				<tr height="30">
+					<td class="tb_btn" colspan=2 align=center><input type=submit value="{#prf_save_button#}" class="button"></td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

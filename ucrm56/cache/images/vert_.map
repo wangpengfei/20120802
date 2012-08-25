@@ -1,0 +1,11 @@
+<img src="cache/images/vert_" border="0" usemap="#cache/images/vert_">
+<map name="cache/images/vert_">
+	<area shape="rect" coords="45,155,70,167" href="index.php?module=Contacts&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=7" alt="联系人 - 1" title="联系人 - 1">
+	<area shape="rect" coords="111,54,135,167" href="index.php?module=Leads&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=1" alt="潜在客户 - 10" title="潜在客户 - 10">
+	<area shape="rect" coords="176,155,201,167" href="index.php?module=SalesOrder&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=26" alt="销售订单 - 1" title="销售订单 - 1">
+	<area shape="rect" coords="242,155,267,167" href="index.php?module=PurchaseOrder&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=25" alt="采购订单 - 1" title="采购订单 - 1">
+	<area shape="rect" coords="307,144,332,167" href="index.php?module=Invoice&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=21" alt="发票 - 2" title="发票 - 2">
+	<area shape="rect" coords="373,133,398,167" href="index.php?module=HelpDesk&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=13" alt="问题单 - 3" title="问题单 - 3">
+	<area shape="rect" coords="439,144,463,167" href="index.php?module=Calendar&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=19" alt="日程安排 - 2" title="日程安排 - 2">
+	<area shape="rect" coords="504,155,529,167" href="index.php?module=Campaigns&action=ListView&from_homepagedb=true&type=dbrd&query=true&owner=admin&viewname=29" alt="营销活动 - 1" title="营销活动 - 1">
+</map>

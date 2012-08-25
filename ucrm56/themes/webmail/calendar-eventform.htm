@@ -1,0 +1,662 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+function save_check()
+{
+	var formname = document.form1;
+
+	var title = formname.title.value;
+	
+	if (title == ""){
+{/literal}
+		alert("{#cal_empty#}");
+{literal}
+		return;
+	}
+	
+	if (!formname.tododaterepeat.checked){
+		if (formname.everyweekrepeat.checked || formname.specifiedweekrepeat.checked){
+			if (!formname.weekdays0.checked && !formname.weekdays1.checked
+				&& !formname.weekdays2.checked && !formname.weekdays3.checked
+				&& !formname.weekdays4.checked && !formname.weekdays5.checked
+				&& !formname.weekdays6.checked){
+	{/literal}
+				alert("{#cal_weekdays_empty#}");
+	{literal}
+				return;
+			}
+		}
+		
+		if (formname.everymonthrepeat.checked || formname.specifiedmonthrepeat.checked){
+			if (!formname.monthweek1.checked && !formname.monthweek2.checked
+				&& !formname.monthweek3.checked && !formname.monthweek4.checked
+				&& !formname.monthweek5.checked){
+	{/literal}
+				alert("{#cal_monthweek_empty#}");
+	{literal}
+				return;
+			}
+		}
+		
+		if (formname.everyyearrepeat.checked){
+			if (!formname.yearmonth1.checked && !formname.yearmonth2.checked
+				&& !formname.yearmonth3.checked && !formname.yearmonth4.checked
+				&& !formname.yearmonth5.checked && !formname.yearmonth6.checked
+				&& !formname.yearmonth7.checked && !formname.yearmonth8.checked
+				&& !formname.yearmonth9.checked && !formname.yearmonth10.checked
+				&& !formname.yearmonth11.checked && !formname.yearmonth12.checked){
+	{/literal}
+				alert("{#cal_yearmonth_empty#}");
+	{literal}
+				return;
+			}
+		}
+	}
+	
+	document.form1.submit();
+}
+
+function checkwholeday()
+{
+	if (document.form1.wholedayevent.checked){
+		document.form1.starthour.disabled = true;
+		document.form1.startminute.disabled = true;
+		document.form1.endhour.disabled = true;
+		document.form1.endminute.disabled = true;
+	}
+	else{
+		document.form1.starthour.disabled = false;
+		document.form1.startminute.disabled = false;
+		document.form1.endhour.disabled = false;
+		document.form1.endminute.disabled = false;
+	}
+}
+
+function checkrepeatend()
+{
+	if (!document.form1.repeatend.checked){
+		document.form1.repeatendyear.disabled = true;
+		document.form1.repeatendmonth.disabled = true;
+		document.form1.repeatendday.disabled = true;
+	}
+	else{
+		document.form1.repeatendyear.disabled = false;
+		document.form1.repeatendmonth.disabled = false;
+		document.form1.repeatendday.disabled = false;
+	}
+}
+
+function selectday(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 1:
+			if ( formname.norepeat.checked ) {
+				formname.everydayrepeat.disabled = true;
+				formname.everydayrepeat.checked = false;
+				selectweek(0);
+				selectmonth(0);
+				selectyear(0);
+				selecttododate(0);
+			} 
+			else {
+				formname.everydayrepeat.disabled = false;
+				selectweek(1);
+				selectmonth(1);
+				selectyear(1);
+				selecttododate(1);
+			}
+			break;
+		case 2:
+			if ( formname.everydayrepeat.checked ) {
+				selectweek(0);
+				selectmonth(0);
+				selectyear(0);
+				selecttododate(0);
+			} 
+			else {
+				selectweek(1);
+				selectmonth(1);
+				selectyear(1);
+				selecttododate(1);
+			}
+			break;
+	}
+}
+
+function selectweek(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.everyweekrepeat.disabled = true;
+			formname.specifiedweekrepeat.disabled = true;
+			
+			formname.everyweekrepeat.checked = false;
+			formname.specifiedweekrepeat.checked = false;
+			
+			selectweekday(0);
+			break;
+		case 1:
+			formname.everyweekrepeat.disabled = false;
+			formname.specifiedweekrepeat.disabled = false;
+			
+			selectweekday(1);
+			break;
+		case 2:
+			if ( formname.everyweekrepeat.checked ) {
+				formname.specifiedweekrepeat.checked = false;
+				selectmonth(0);
+				selectyear(0);
+			} 
+			else {
+				selectmonth(1);
+				selectyear(1);
+			}
+			break;
+		case 3:
+			if ( formname.specifiedweekrepeat.checked ) {
+				formname.everyweekrepeat.checked = false;
+				selectmonth(1);
+				formname.everymonthrepeat.checked = true;
+				selectmonth(2);
+			}
+			break;
+		case 4:
+			if ( !formname.everyweekrepeat.checked 
+				&& !formname.specifiedweekrepeat.checked ) {
+				formname.everyweekrepeat.checked = true;
+				selectweek(2);
+			}
+			break;
+	}
+}
+
+function selectmonth(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.everymonthrepeat.disabled = true;
+			formname.specifiedmonthrepeat.disabled = true;
+			
+			formname.everymonthrepeat.checked = false;
+			formname.specifiedmonthrepeat.checked = false;
+			
+			selectmonthweek(0);
+			break;
+		case 1:
+			formname.everymonthrepeat.disabled = false;
+			formname.specifiedmonthrepeat.disabled = false;
+			
+			selectmonthweek(1);
+			break;
+		case 2:
+			if ( formname.everymonthrepeat.checked ) {
+				formname.specifiedmonthrepeat.checked = false;
+				formname.everyweekrepeat.checked = false;
+				formname.specifiedweekrepeat.checked = true;
+				
+				selectyear(0);
+			} 
+			else {
+				selectyear(1);				
+			}
+			break;
+		case 3:
+			if ( formname.specifiedmonthrepeat.checked ) {
+				formname.everymonthrepeat.checked = false;
+				formname.everyweekrepeat.checked = false;
+				formname.specifiedweekrepeat.checked = true;
+				selectyear(1);
+				formname.everyyearrepeat.checked = true;
+			}
+			break;
+		case 4:
+			if ( !formname.everymonthrepeat.checked
+				&& !formname.specifiedmonthrepeat.checked ) {
+				formname.everyweekrepeat.checked = false;
+				formname.specifiedweekrepeat.checked = true;
+				formname.everymonthrepeat.checked = true;
+				formname.specifiedmonthrepeat.checked = false;
+				selectmonth(2);
+			}
+			break;
+	}
+}
+
+function selectyear(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.everyyearrepeat.disabled = true;
+			formname.everyyearrepeat.checked = false;
+			selectyearmonth(0);
+			break;
+		case 1:
+			formname.everyyearrepeat.disabled = false;
+			selectyearmonth(1);
+			break;
+		case 2:
+			if ( formname.everyyearrepeat.checked ) {
+				selectyearmonth(1);
+			}
+			break;
+		case 3:
+			formname.everyweekrepeat.checked = false;
+			formname.specifiedweekrepeat.checked = true;
+			formname.everymonthrepeat.checked = false;
+			formname.specifiedmonthrepeat.checked = true;
+			formname.everyyearrepeat.checked = true;
+			break;
+	}
+}
+
+function selecttododate(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.tododaterepeat.disabled = true;
+			formname.tododaterepeat.checked = false;
+			break;
+		case 1:
+			formname.tododaterepeat.disabled = false;
+			break;
+		case 2:
+			if (formname.tododaterepeat.checked){
+				selectweekday(0);
+				selectmonthweek(0);
+				selectyear(1);
+				
+				formname.everyweekrepeat.checked = false;
+				formname.specifiedweekrepeat.checked = true;
+				formname.everymonthrepeat.checked = false;
+				formname.specifiedmonthrepeat.checked = true;
+				formname.everyyearrepeat.checked = true;
+			}
+			else{
+				selectweek(1);
+				selectmonth(1);
+				selectyear(1);
+				selecttododate(1);
+				
+				formname.everyweekrepeat.checked = false;
+				formname.specifiedweekrepeat.checked = false;
+				formname.everymonthrepeat.checked = false;
+				formname.specifiedmonthrepeat.checked = false;
+				formname.everyyearrepeat.checked = false;
+			}
+	}
+}
+
+function selectweekday(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.weekdays0.disabled = true;
+			formname.weekdays1.disabled = true;
+			formname.weekdays2.disabled = true;
+			formname.weekdays3.disabled = true;
+			formname.weekdays4.disabled = true;
+			formname.weekdays5.disabled = true;
+			formname.weekdays6.disabled = true;
+			
+			formname.weekdays0.checked = false;
+			formname.weekdays1.checked = false;
+			formname.weekdays2.checked = false;
+			formname.weekdays3.checked = false;
+			formname.weekdays4.checked = false;
+			formname.weekdays5.checked = false;
+			formname.weekdays6.checked = false;
+		
+		break;
+		case 1:
+			formname.weekdays0.disabled = false;
+			formname.weekdays1.disabled = false;
+			formname.weekdays2.disabled = false;
+			formname.weekdays3.disabled = false;
+			formname.weekdays4.disabled = false;
+			formname.weekdays5.disabled = false;
+			formname.weekdays6.disabled = false;
+		break;
+	}
+}
+
+function selectmonthweek(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.monthweek1.disabled = true;
+			formname.monthweek2.disabled = true;
+			formname.monthweek3.disabled = true;
+			formname.monthweek4.disabled = true;
+			formname.monthweek5.disabled = true;
+			
+			formname.monthweek1.checked = false;
+			formname.monthweek2.checked = false;
+			formname.monthweek3.checked = false;
+			formname.monthweek4.checked = false;
+			formname.monthweek5.checked = false;
+		break;
+		case 1:
+			formname.monthweek1.disabled = false;
+			formname.monthweek2.disabled = false;
+			formname.monthweek3.disabled = false;
+			formname.monthweek4.disabled = false;
+			formname.monthweek5.disabled = false;
+		break;
+	}
+}
+
+function selectyearmonth(num) {
+	var formname = document.form1;
+	switch (num) {
+		default:
+		case 0:
+			formname.yearmonth1.disabled = true;
+			formname.yearmonth2.disabled = true;
+			formname.yearmonth3.disabled = true;
+			formname.yearmonth4.disabled = true;
+			formname.yearmonth5.disabled = true;
+			formname.yearmonth6.disabled = true;
+			formname.yearmonth7.disabled = true;
+			formname.yearmonth8.disabled = true;
+			formname.yearmonth9.disabled = true;
+			formname.yearmonth10.disabled = true;
+			formname.yearmonth11.disabled = true;
+			formname.yearmonth12.disabled = true;
+			
+			formname.yearmonth1.checked = false;
+			formname.yearmonth2.checked = false;
+			formname.yearmonth3.checked = false;
+			formname.yearmonth4.checked = false;
+			formname.yearmonth5.checked = false;
+			formname.yearmonth6.checked = false;
+			formname.yearmonth7.checked = false;
+			formname.yearmonth8.checked = false;
+			formname.yearmonth9.checked = false;
+			formname.yearmonth10.checked = false;
+			formname.yearmonth11.checked = false;
+			formname.yearmonth12.checked = false;
+			break;
+		case 1:
+			formname.yearmonth1.disabled = false;
+			formname.yearmonth2.disabled = false;
+			formname.yearmonth3.disabled = false;
+			formname.yearmonth4.disabled = false;
+			formname.yearmonth5.disabled = false;
+			formname.yearmonth6.disabled = false;
+			formname.yearmonth7.disabled = false;
+			formname.yearmonth8.disabled = false;
+			formname.yearmonth9.disabled = false;
+			formname.yearmonth10.disabled = false;
+			formname.yearmonth11.disabled = false;
+			formname.yearmonth12.disabled = false;	
+			break;
+	}
+}
+
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=calendar.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=uid value="{$UID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=dest value="{$Dest}">
+
+				<tr height=20>
+					<td class="tb_field" align="right" width="20%">{#cal_title#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="title" value="{$Title|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea name="content" cols=50 rows=5 class="textbox">{$Content|escape:"html"}</textarea></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_tododate#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$TodoDateCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_starttime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$StartTimeCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_endtime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$EndTimeCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="wholedayevent" OnClick="javascript:checkwholeday();" value="1" {$WholedayEvent}><acronym style="cursor: hand;" OnClick="wholedayevent.click()">{#cal_wholeday_event#}</acronym></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_status#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=status>
+						<option value="wait"{if $Status eq "wait"} selected{/if}>{#cal_status_wait#}</option>
+						<option value="waitnext"{if $Status eq "waitnext"} selected{/if}>{#cal_status_waitnext#}</option>
+						<option value="reminded"{if $Status eq "reminded"} selected{/if}>{#cal_status_reminded#}</option>
+						<option value="doing"{if $Status eq "doing"} selected{/if}>{#cal_status_doing#}</option>
+						<option value="finished"{if $Status eq "finished"} selected{/if}>{#cal_status_finished#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_type#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=type>
+						<option value="personal"{if $Type eq "personal"} selected{/if}>{#cal_type_personal#}</option>
+						<option value="business"{if $Type eq "business"} selected{/if}>{#cal_type_business#}</option>
+						<option value="meeting"{if $Type eq "meeting"} selected{/if}>{#cal_type_meeting#}</option>
+						<option value="birthday"{if $Type eq "birthday"} selected{/if}>{#cal_type_birthday#}</option>
+						<option value="holiday"{if $Type eq "holiday"} selected{/if}>{#cal_type_holiday#}</option>
+						<option value="anniversary"{if $Type eq "anniversary"} selected{/if}>{#cal_type_anniversary#}</option>
+						<option value="appointment"{if $Type eq "appointment"} selected{/if}>{#cal_type_appointment#}</option>
+						<option value="gettogether"{if $Type eq "gettogether"} selected{/if}>{#cal_type_gettogether#}</option>
+						<option value="other"{if $Type eq "other"} selected{/if}>{#cal_type_other#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_priority#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=priority>
+						<option value="normal"{if $Priority eq "normal"} selected{/if}>{#cal_priority_normal#}</option>
+						<option value="exigence"{if $Priority eq "exigence"} selected{/if}>{#cal_priority_exigence#}</option>
+						<option value="importance"{if $Priority eq "importance"} selected{/if}>{#cal_priority_importance#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_share#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=share>
+						<option value="private"{if $Share eq "private"} selected{/if}>{#cal_share_private#}</option>
+						<option value="busy"{if $Share eq "busy"} selected{/if}>{#cal_share_busy#}</option>
+						<option value="public"{if $Share eq "public"} selected{/if}>{#cal_share_public#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_reminder#}&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="reminder" value="1" {$Reminder}><acronym style="cursor: hand;" OnClick="reminder.click()">{#cal_reminder_tip#}</acronym>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindermailbox#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="remindermailbox" value="{$ReminderMailbox|escape:"html"}" class="textbox">
+						<br>&nbsp;{#cal_remindermailbox_tip#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindertime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{#cal_remindertime_tip#}&nbsp;<select name=remindertime>
+						<option value="10"{if $ReminderTime eq 10} selected{/if}>{#cal_remindertime_10#}</option>
+						<option value="20"{if $ReminderTime eq 20} selected{/if}>{#cal_remindertime_20#}</option>
+						<option value="30"{if $ReminderTime eq 30} selected{/if}>{#cal_remindertime_30#}</option>
+						<option value="40"{if $ReminderTime eq 40} selected{/if}>{#cal_remindertime_40#}</option>
+						<option value="50"{if $ReminderTime eq 50} selected{/if}>{#cal_remindertime_50#}</option>
+						<option value="60"{if $ReminderTime eq 60} selected{/if}>{#cal_remindertime_1_60#}</option>
+						<option value="120"{if $ReminderTime eq 120} selected{/if}>{#cal_remindertime_2_60#}</option>
+						<option value="180"{if $ReminderTime eq 180} selected{/if}>{#cal_remindertime_3_60#}</option>
+						<option value="360"{if $ReminderTime eq 360} selected{/if}>{#cal_remindertime_6_60#}</option>
+						<option value="720"{if $ReminderTime eq 720} selected{/if}>{#cal_remindertime_12_60#}</option>
+						<option value="1440"{if $ReminderTime eq 1440} selected{/if}>{#cal_remindertime_1_24_60#}</option>
+						<option value="2880"{if $ReminderTime eq 2880} selected{/if}>{#cal_remindertime_2_24_60#}</option>
+						<option value="4320"{if $ReminderTime eq 4320} selected{/if}>{#cal_remindertime_3_24_60#}</option>
+						<option value="5760"{if $ReminderTime eq 5760} selected{/if}>{#cal_remindertime_4_24_60#}</option>
+						<option value="7200"{if $ReminderTime eq 7200} selected{/if}>{#cal_remindertime_5_24_60#}</option>
+						<option value="8640"{if $ReminderTime eq 8640} selected{/if}>{#cal_remindertime_6_24_60#}</option>
+						<option value="10080"{if $ReminderTime eq 10080} selected{/if}>{#cal_remindertime_7_24_60#}</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right" rowspan=5>{#cal_repeat#}&nbsp;</td>
+					<td class="tb_value">
+						<input type=checkbox name=norepeat value=1 onclick="javascript:selectday(1)" {$NoRepeat}>{#cal_norepeat#}
+						<input type=checkbox name=everydayrepeat value=1 onclick="javascript:selectday(2)" {$EveryDayRepeat}>{#cal_everydayrepeat#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_value">
+						<input type=radio name=everyweekrepeat value=1 onclick="javascript:selectweek(2)" {$EveryWeekRepeat}>{#cal_everyweekrepeat#}
+						<input type=radio name=specifiedweekrepeat value=1 onclick="javascript:selectweek(3)" {$SpecifiedWeekRepeat}>{#cal_specifiedweekrepeat#}
+						<br>
+						<input type=checkbox name=weekdays0 value=1 onclick="javascript:selectweek(4)" {$WeekDays0}>{#cal_longweekname_0#}
+						<input type=checkbox name=weekdays1 value=1 onclick="javascript:selectweek(4)" {$WeekDays1}>{#cal_longweekname_1#}
+						<input type=checkbox name=weekdays2 value=1 onclick="javascript:selectweek(4)" {$WeekDays2}>{#cal_longweekname_2#}
+						<input type=checkbox name=weekdays3 value=1 onclick="javascript:selectweek(4)" {$WeekDays3}>{#cal_longweekname_3#}
+						<input type=checkbox name=weekdays4 value=1 onclick="javascript:selectweek(4)" {$WeekDays4}>{#cal_longweekname_4#}
+						<input type=checkbox name=weekdays5 value=1 onclick="javascript:selectweek(4)" {$WeekDays5}>{#cal_longweekname_5#}
+						<input type=checkbox name=weekdays6 value=1 onclick="javascript:selectweek(4)" {$WeekDays6}>{#cal_longweekname_6#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_value">
+						<input type=radio name=everymonthrepeat value=1 onclick="javascript:selectmonth(2)" {$EveryMonthRepeat}>{#cal_everymonthrepeat#}
+						<input type=radio name=specifiedmonthrepeat value=1 onclick="javascript:selectmonth(3)" {$SpecifiedMonthRepeat}>{#cal_specifiedmonthrepeat#}
+						<br>
+						<input type=checkbox name=monthweek1 value=1 onclick="javascript:selectmonth(4)" {$MonthWeek1}>{#cal_monthweek1#}
+						<input type=checkbox name=monthweek2 value=1 onclick="javascript:selectmonth(4)" {$MonthWeek2}>{#cal_monthweek2#}
+						<input type=checkbox name=monthweek3 value=1 onclick="javascript:selectmonth(4)" {$MonthWeek3}>{#cal_monthweek3#}
+						<input type=checkbox name=monthweek4 value=1 onclick="javascript:selectmonth(4)" {$MonthWeek4}>{#cal_monthweek4#}
+						<input type=checkbox name=monthweek5 value=1 onclick="javascript:selectmonth(4)" {$MonthWeek5}>{#cal_monthweek5#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_value">
+						<input type=radio name=everyyearrepeat value=1 onclick="javascript:selectyear(3)" {$EveryYearRepeat}>{#cal_everyyearrepeat#}
+						<br>
+						<input type=checkbox name=yearmonth1 value=1 onclick="javascript:selectyear(3)" {$YearMonth1}>{#cal_longmonthname_0#}
+						<input type=checkbox name=yearmonth2 value=1 onclick="javascript:selectyear(3)" {$YearMonth2}>{#cal_longmonthname_1#}
+						<input type=checkbox name=yearmonth3 value=1 onclick="javascript:selectyear(3)" {$YearMonth3}>{#cal_longmonthname_2#}
+						<input type=checkbox name=yearmonth4 value=1 onclick="javascript:selectyear(3)" {$YearMonth4}>{#cal_longmonthname_3#}
+						<input type=checkbox name=yearmonth5 value=1 onclick="javascript:selectyear(3)" {$YearMonth5}>{#cal_longmonthname_4#}
+						<input type=checkbox name=yearmonth6 value=1 onclick="javascript:selectyear(3)" {$YearMonth6}>{#cal_longmonthname_5#}
+						<br>
+						<input type=checkbox name=yearmonth7 value=1 onclick="javascript:selectyear(3)" {$YearMonth7}>{#cal_longmonthname_6#}
+						<input type=checkbox name=yearmonth8 value=1 onclick="javascript:selectyear(3)" {$YearMonth8}>{#cal_longmonthname_7#}
+						<input type=checkbox name=yearmonth9 value=1 onclick="javascript:selectyear(3)" {$YearMonth9}>{#cal_longmonthname_8#}
+						<input type=checkbox name=yearmonth10 value=1 onclick="javascript:selectyear(3)" {$YearMonth10}>{#cal_longmonthname_9#}
+						<input type=checkbox name=yearmonth11 value=1 onclick="javascript:selectyear(3)" {$YearMonth11}>{#cal_longmonthname_10#}
+						<input type=checkbox name=yearmonth12 value=1 onclick="javascript:selectyear(3)" {$YearMonth12}>{#cal_longmonthname_11#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class=default>
+						<input type=checkbox name=tododaterepeat value=1 onclick="javascript:selecttododate(2)" {$TodoDateRepeat}>{#cal_tododaterepeat#}
+					</td>
+				</tr>
+				
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_repeatenddate#}&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="repeatend" onclick="javascript:checkrepeatend();" value="1" {$RepeatEnd}><acronym style="cursor: hand;" OnClick="repeatend.click()">{#cal_repeatend#}</acronym>&nbsp;{$RepeatEndDateCtrl}</td>
+				</tr>				
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#cal_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#cal_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{literal}
+<SCRIPT language="javascript">
+	var formname = document.form1;
+	if (formname.norepeat.checked) {
+		selectday(1);
+	}
+	if (formname.everydayrepeat.checked) {
+		selectday(2);
+	}
+	if (formname.everyweekrepeat.checked) {
+		selectweek(2);
+	}
+	if (formname.everymonthrepeat.checked) {
+		selectmonth(2);
+	}
+	if (formname.specifiedmonthrepeat.checked) {
+		selectmonth(3);
+	}
+	if (formname.everyyearrepeat.checked) {
+		selectmonth(3);
+	}
+	if (formname.tododaterepeat.checked) {
+		selecttododate(2);
+	}
+	
+	checkrepeatend();
+	checkwholeday();
+</SCRIPT>	
+{/literal}
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+{config_load file=$LanguageFile section="AdvancedEditor"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+<title>Paragraph Style</title>
+{literal}
+<style type="text/css">
+.pStyle { font-size: 14px; color: #000000;}
+</style>
+{/literal}
+
+{literal}
+<script language="javascript">
+function overItem(iconItem) {
+	iconItem.style.backgroundColor='#CCCCCC';
+}
+
+function outItem(iconItem) {
+	iconItem.style.backgroundColor='#FFFFFF';
+}
+
+function mouseClick(fontFormat) {
+{/literal}
+	self.parent.doCommand('fontname', fontFormat);
+{literal}
+}
+</script>
+{/literal}
+
+<body bgcolor="#FFFFFF" leftmargin="2" topmargin="2" marginwidth="2" marginheight="2">
+<table width="100%"  border="0" cellspacing="0" cellpadding="3">
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Arial')" style="cursor: default;">
+    <td width="100%" class="pStyle" style="font-family: Arial;">Arial</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Arial Black')" style="cursor: default;">
+    <td width="100%" class="pStyle" style="font-family: Arial Black;">Arial Black</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Arial Narrow')" style="cursor: default;">
+    <td class="pStyle" style="font-family: Arial Narrow;">Arial Narrow</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Comic Sans MS')" style="cursor: default;">
+    <td class="pStyle" style="font-family: Comic Sans MS;">Comic Sans MS</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Courier New')" style="cursor: default;">
+    <td class="pStyle" style="font-family: Courier New;">Courier New</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('System')" style="cursor: default;">
+    <td class="pStyle" style="font-family: System;">System</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Times New Roman')" style="cursor: default;">
+    <td class="pStyle" style="font-family: Times New Roman;">Georgia</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('Verdana')" style="cursor: default;">
+    <td class="pStyle" style="font-family: Verdana;">Verdana</td>
+  </tr>
+{section name=i loop=$FontNameList}
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('{$FontNameList[i]}')" style="cursor: default;">
+    <td class="pStyle" style="font-family: {$FontNameList[i]};">{$FontNameList[i]}</td>
+  </tr>
+{/section}  
+</table>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#adr_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+	function save_check()
+	{
+		var name = document.form1.name.value;
+		var email = document.form1.email.value;
+		
+		if (name == "" || email == "" ){
+{/literal}
+			alert("{#adr_empty#}");
+{literal}
+			return;
+		}
+		
+		document.form1.submit();
+	}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+
+<table align="center" width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<form name=form1 method=post action=catchpublic.php>
+		<td align="center" valign=top width="400" height=130>
+			<input type=hidden name=sid value="{$Sid}">
+			<input type=hidden name=lid value="{$Lid}">
+			<input type=hidden name=tid value="{$Tid}">
+			<input type=hidden name=opt value="add">
+
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr height=25>
+					<td class="tb_header" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right" width="30%">{#adr_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="name" value="{$AddrName|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_email#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="email" value="{$AddrEmail|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_phone#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="phone" value="{$AddrPhone|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_address#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="address" value="{$AddrAddress|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_work#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="work" value="{$AddrWork|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#adr_save#}" class=button onclick="javascript:save_check();">
+						<input type=button value="{#adr_close#}" class=button onclick="javascript:self.close();">
+					</td>
+				</tr>
+			</table>
+		</td>
+		</form>
+	</tr>
+</table>
+	
+</body>
+</html> 

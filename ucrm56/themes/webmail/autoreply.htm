@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AutoReply"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#reply_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 action=autoreply.php method=POST>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=save value="yes">
+
+				<tr height=20>
+					<td class="tb_field" align="right" width=30%>&nbsp;</td>
+					<td class=default><input type=checkbox name=reply_status value="1" {$AutoReplyStatus}><acronym style="cursor: hand;" OnClick="reply_status.click()">{#reply_status#}</acronym></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#reply_start#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$AutoReplyStartDateCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#reply_end#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$AutoReplyEndDateCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#reply_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea name=reply_content cols=50 rows=8 class="textbox">{$AutoReplyContent}</textarea></td>
+				</tr>
+				<tr height=30>
+					<td class="tb_field" align="center" colspan=2>{#reply_tip#}</td>
+				</tr>
+
+				{if $Result neq ""}
+				<tr height="30">
+					<td class=tb_field colspan=2 align=center><font color=#ff0000>
+					{if $Result eq "success"}
+					{#reply_success#}
+					{else}
+					{#reply_failure#}
+					{/if}</font>
+					</td>
+				</tr>
+				{/if}
+
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=submit value="{#reply_save#}" class="button">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

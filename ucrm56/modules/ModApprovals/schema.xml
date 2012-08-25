@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_modapprovals</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_modapprovals` (
+  `modapprovalsid` int(11) DEFAULT NULL,
+  `reports_to_id` varchar(36) DEFAULT NULL,
+  `approvalcontent` text,
+  `related_to` varchar(100) NOT NULL,
+  `parent_approvals` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_modapprovalscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_modapprovalscf` (
+  `modapprovalsid` int(11) NOT NULL,
+  PRIMARY KEY (`modapprovalsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

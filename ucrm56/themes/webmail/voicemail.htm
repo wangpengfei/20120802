@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#multimail_voice#}</title>
+
+<OBJECT id=XEnroll codeBase=activex/certcontrol/xenrlinf.cab#Version=5,131,2146,1 classid=clsid:43F8F289-7A20-11D0-8F06-00C04FC295E1 name=XEnroll></OBJECT>
+<Script Language="VBScript">
+	Public sPKCS7
+
+	sPKCS7=""
+	sPKCS7=sPKCS7 & "-----BEGIN CERTIFICATE-----" & vbNewLine
+	sPKCS7=sPKCS7 & "MIICyDCCAnKgAwIBAgIQVG+pw2Ikcb5GOjiN/8Cb+jANBgkqhkiG9w0BAQUFADCB" & vbNewLine
+	sPKCS7=sPKCS7 & "hDEcMBoGCSqGSIb3DQEJARYNY2FAYW1heGl0Lm5ldDELMAkGA1UEBhMCQ04xEDAO" & vbNewLine
+	sPKCS7=sPKCS7 & "BgNVBAgTB2ppYW5nc3UxDzANBgNVBAcTBnN1emhvdTETMBEGA1UEChMKYW1heGl0" & vbNewLine
+	sPKCS7=sPKCS7 & "Lm5ldDELMAkGA1UECxMCc2kxEjAQBgNVBAMTCUFNQVhJVCBDQTAeFw0wMzAxMjQw" & vbNewLine
+	sPKCS7=sPKCS7 & "NDA0MTFaFw0xMzAxMjQwNDA2NDRaMIGEMRwwGgYJKoZIhvcNAQkBFg1jYUBhbWF4" & vbNewLine
+	sPKCS7=sPKCS7 & "aXQubmV0MQswCQYDVQQGEwJDTjEQMA4GA1UECBMHamlhbmdzdTEPMA0GA1UEBxMG" & vbNewLine
+	sPKCS7=sPKCS7 & "c3V6aG91MRMwEQYDVQQKEwphbWF4aXQubmV0MQswCQYDVQQLEwJzaTESMBAGA1UE" & vbNewLine
+	sPKCS7=sPKCS7 & "AxMJQU1BWElUIENBMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKovDjReY2ktIS1h" & vbNewLine
+	sPKCS7=sPKCS7 & "V7njpsZLzM+7GBovKry0J6HldSEh5Gnr3MhRipROivQDYDv98bkFPPk/kXXnw6BE" & vbNewLine
+	sPKCS7=sPKCS7 & "9xQejP8CAwEAAaOBvTCBujALBgNVHQ8EBAMCAcYwDwYDVR0TAQH/BAUwAwEB/zAd" & vbNewLine
+	sPKCS7=sPKCS7 & "BgNVHQ4EFgQUcmxpV3j9rGJATVnt+bTmDLRG+nQwaQYDVR0fBGIwYDAtoCugKYYn" & vbNewLine
+	sPKCS7=sPKCS7 & "aHR0cDovL3Rlc3QxL0NlcnRFbnJvbGwvQU1BWElUJTIwQ0EuY3JsMC+gLaArhilm" & vbNewLine
+	sPKCS7=sPKCS7 & "aWxlOi8vXFx0ZXN0MVxDZXJ0RW5yb2xsXEFNQVhJVCUyMENBLmNybDAQBgkrBgEE" & vbNewLine
+	sPKCS7=sPKCS7 & "AYI3FQEEAwIBADANBgkqhkiG9w0BAQUFAANBAF7zTPZLU+LH7uJGOdGb2piAAWpu" & vbNewLine
+	sPKCS7=sPKCS7 & "CevoD70e8/tyGkUxeax703WDp3n2GU/1vUHcYTtidLmyXBlXZTr3gdG+8BI=" & vbNewLine
+	sPKCS7=sPKCS7 & "-----END CERTIFICATE-----" & vbNewLine
+
+	XEnroll.InstallPKCS7 sPKCS7
+</Script>
+
+</head>
+
+<body bgcolor="#BEC2CD" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+<script language="javascript">
+{literal}
+function uploadfile(){
+	// Check recorded.
+	if( document.para.record.SoundStatus() == 0 ){
+		window.close();
+		return true;
+	}
+
+	// Check not recording
+	if( document.para.record.SoundStatus() != 3 ){
+		document.para.record.stop();
+	}
+{/literal}
+	document.para.record.Host = "{$HttpHost}";
+{literal}
+	document.para.record.UserName = "";
+	document.para.record.Password = "";
+	document.para.record.Proxy = "";
+{/literal}
+{if $SSLTransfer eq 1}
+	document.para.record.SSL = true;
+{else}
+	document.para.record.SSL = false;
+{/if}
+	document.para.record.Mp3Encode = {$SoundMp3Encode};
+	document.para.record.Acceptor = "{$Acceptor}";
+{literal}
+	if(document.para.saveasfile.value != '')
+		strDisplayName = "_" + document.para.saveasfile.value;
+	else
+		strDisplayName = "";
+
+	var strSaveName = 'VoiceMail' + strDisplayName;
+	document.para.record.SaveAsFile = strSaveName;
+	
+	var bControlRet = document.para.record.Post();
+	var bResponse = document.record.ServerResponse;
+	if( bControlRet == "error" || bResponse != 0 ){
+{/literal}
+		alert("{#multimail_upload_error#}");
+{literal}
+		return;
+	}
+
+	if(window.opener) 
+		window.opener.doupload();
+
+	window.close();
+}
+</script>
+{/literal}
+
+<form name=para width="100%">
+<object classid="clsid:E8774354-4C13-4B4C-A601-AF8D27D6D1DB" CodeBase="activex/sound.cab" id="record" width="215" height="80" border=0>
+  <param name="_Version" value="65536">
+  <param name="_ExtentX" value="11192">
+  <param name="_ExtentY" value="3863">
+  <param name="_StockProps" value="0">
+  <param name="SoundFrequency" value="{$SoundFrequency}">
+  <param name="SoundChannel" value="{$SoundChannel}">
+  <param name="SoundSampleBit" value="{$SoundSampleBit}">
+  <param name="TimeLimit" value="{$SoundTimeLimit}">
+</object>
+<table border="0" cellpadding="0" cellspacing="0" width="215">
+	<tr height=20>
+		<td align=center>
+			{#multimail_name#}&nbsp;<input type="text" name="saveasfile" size="16" class="textbox" maxlength="24">
+		</td>
+	</tr>
+	<tr height=25>
+		<td align=center>
+			<input type=button value="{#multimail_ok#}" onclick="javascript:uploadfile();" class="button">
+			&nbsp;&nbsp;
+			<input type=button value="{#multimail_cancel#}" onclick="javascript:window.close();" class="button">
+		</td>
+	</tr>
+</table>
+</form>
+
+</body>
+
+</html>

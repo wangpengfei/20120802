@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<SCRIPT language="javascript">
+function addEvent(date, wholeday)
+{
+	document.form1.dest.value = 'addevent';
+	document.form1.tododate.value = date;
+	document.form1.wholedayevent.value = wholeday;
+	document.form1.submit();
+}
+</SCRIPT>	
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=calendar.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=wholedayevent value="">
+				<input type=hidden name=tododate value="">
+				<input type=hidden name=subaction value="fromdayview">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=dest value="addevent">
+				<tr height="20">
+					<td class="tb_empty">
+						<table width=100% border=0 cellspacing=0 cellpadding=0>
+						<tr>
+							<td width=75%>
+								<table width=100% border=0 cellspacing=0 cellpadding=0>
+								<tr><td align=center colspan=2>
+									<table border=0 width=100% cellspacing=0 cellpadding=0>
+										<tr height=30>
+											<td width=20% class="tb_title" align=center>&nbsp;<a href="{$PreviousDayLink}"><b>&lt;&lt;{#cal_previous_day#}</b></a></td>
+											<td width=*% class="tb_title" align=center>&nbsp;<b>{$CurrentDayText}</b></td>
+											<td width=20% class="tb_title" align=center><a href="{$NextDayLink}"><b>{#cal_next_day#}&gt;&gt;</a>&nbsp;</b></td>
+										</tr>
+									</table>
+									</td></tr>									
+								<tr height=40><td width=20% align=center class="tb_field">{#cal_whole_day#}&nbsp;&nbsp;<a title="{#cal_add_event#}" href="javascript:addEvent('{$CurrentDay}', '1');"><img border=0 width=15 height=12 src="themes/common/images/edit.gif" align=absmiddle></a></td>
+									<td class="tb_value">{$WholeDayEventLink}</td></tr>
+								{section name=i loop=$AllDayTime}
+								<tr height=40><td align=center class="tb_field">&nbsp;{$AllDayTime[i].timetext}:00&nbsp;&nbsp;<a title="{#cal_add_event#}" href="javascript:addEvent('{$CurrentDay}{$AllDayTime[i].timetext}00', '0');"><img border=0 width=15 height=12 src="themes/common/images/edit.gif" align=absmiddle></a></td>
+									<td class="tb_value">{$AllDayTime[i].eventlink}</td></tr>
+								{/section}
+								<tr><td align=center colspan=2>
+									<table border=0 width=100% cellspacing=0 cellpadding=0>
+										<tr height=30>
+											<td width=20% class="tb_title" align=center>&nbsp;<a href="{$PreviousDayLink}"><b>&lt;&lt;{#cal_previous_day#}</b></a></td>
+											<td width=*% class="tb_title" align=center><a href="{$CurrentDayLink}">{if $ALLTime eq 1}{#cal_disp_allevent#}{else}{#cal_disp_specialevent#}{/if}</a></td>
+											<td width=20% class="tb_title" align=center><a href="{$NextDayLink}"><b>{#cal_next_day#}&gt;&gt;</a>&nbsp;</b></td>
+										</tr>
+									</table>
+									</td></tr>									
+								</table>
+							</td>
+							<td width=5></td>
+							<td valign=top align=center>
+								{$AllMonthDay}
+								<br>
+								<a href="{$CurrentDayLink}">{if $ALLTime eq 1}{#cal_disp_allevent#}{else}{#cal_disp_specialevent#}{/if}</a>
+								<br>
+							</td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

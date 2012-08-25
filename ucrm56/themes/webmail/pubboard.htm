@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="PubBoard"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#pubboard_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+
+<table align="center" width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+		<table cellspacing=0 cellpadding=0 width="100%" border=0>
+			<tr height="25">
+				<td colspan="4" class="list_header" align=center>
+					&nbsp;&nbsp;<b>{#pubboard_title_tip#}</b>
+				</td>
+			</tr>
+
+			<tr height="22">
+			    <td width="10" class="list_title" align=center><img src="images/prior_high.gif" width=5 height=11 border=0 align=absmiddle></td>
+		    	<td width="120" class="list_title" align=center><b>{#from_hea#}</b></td>
+			    <td width="220" class="list_title" align=center><b>{#subject_hea#}</b></td>
+			    <td width="100" class="list_title" align=center><b>{#date_hea#}</b></td>
+			</tr>
+
+			{section name=i loop=$MessageList}
+			<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+				<td class="list_value">&nbsp;{$MessageList[i].priorimg}</td>
+				<td class="list_value">&nbsp;{$MessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_sender_text#}</td>
+				<td class="list_value">&nbsp;<a href="{$MessageList[i].readlink}" title="{#read_mail#}{$MessageList[i].subject|escape:"html"|default:#no_subject_text#}  ">{$MessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}  </a></td>
+				<td class="list_value" align=center>{$MessageList[i].date}</td>
+			</tr>
+			{sectionelse}
+			<tr height="50">
+				<td colspan="4" class="list_value" align="center">
+					{#msg_none_messages#}
+				</td>
+			</tr>
+			{/section}
+			<tr height="30">
+				<td colspan="4" class="list_btn" align="center">
+					<a href="javascript:self.close();">{#pubboard_close#}</a>
+				</td>
+			</tr>
+			
+		</table>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>
+

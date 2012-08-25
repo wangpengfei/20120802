@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="EmailCA"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#ca_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height="25">
+					<td class="list_header" colspan=4 align="center"><b>{#ca_mycert#}</b></td>
+				</tr>
+				<tr height="22">
+					<td width="30%" class="list_title" align="center"><b>{#ca_name#}</b></td>
+					<td width="35%" class="list_title" align="center"><b>{#ca_issuer#}</b></td>
+					<td width="25%" class="list_title" align="center"><b>{#ca_expiry#}</b></td>
+					<td width="20%" class="list_title" align="center"><b>{#ca_certtype#}</b></td>
+				</tr>
+				{section name=i loop=$MyCertList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;<a href="{$MyCertList[i].viewlink}">{$MyCertList[i].name}</a></td>
+						<td class="list_value">&nbsp;{$MyCertList[i].issuer}</td>
+						<td class="list_value">&nbsp;{if $MyCertList[i].expire neq 0}{$MyCertList[i].expire}{/if}</td>
+						<td class="list_value" align="center">&nbsp;{if $MyCertList[i].type neq 1}{#ca_certtype1#}{else}{#ca_certtype2#}{/if}</td>
+					</tr>
+				{/section}
+				<form>
+				<tr height="30">
+					<td colspan=4 class="list_btn" align=center>
+						<input type=button value="{#ca_new#}" class=button onClick="location = '{$New}'">
+						&nbsp;
+						<input type=button value="{#ca_import#}" class=button onClick="location = '{$Import}'">
+						&nbsp;
+						<input type=button value="{#ca_export#}" class=button onClick="location = '{$Export}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height="25">
+					<td class="list_header" colspan=4 align="center"><b>{#ca_othercert#}</b></td>
+				</tr>
+				<tr height="22">
+					<td width="30%" class="list_title" align="center"><b>{#ca_name#}</b></td>
+					<td width="40%" class="list_title" align="center"><b>{#ca_issuer#}</b></td>
+					<td width="22%" class="list_title" align="center"><b>{#ca_expiry#}</b></td>
+					<td width="8%" class="list_title" align="center"><b>{#ca_delete#}</b></td>
+				</tr>
+				{section name=i loop=$OtherCertList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;<a href="{$OtherCertList[i].viewlink}">{$OtherCertList[i].name}</a></td>
+						<td class="list_value">&nbsp;{$OtherCertList[i].issuer}</td>
+						<td class="list_value">&nbsp;{if $OtherCertList[i].expire neq 0}{$OtherCertList[i].expire}{/if}</td>
+						<td class="list_value" align="center">&nbsp;<a href="{$OtherCertList[i].dellink}"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#ca_delete#}"></a></td>
+					</tr>
+				{/section}
+				<form>
+				<tr height="30">
+					<td colspan=4 class="list_btn" align=center>
+						<input type=button value="{#ca_import#}" class=button onClick="location = '{$ImportOther}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height="25">
+					<td class="list_header" colspan=4 align="center"><b>{#ca_systemcert#}</b></td>
+				</tr>
+				<tr height="22">
+					<td width="30%" class="list_title" align="center"><b>{#ca_name#}</b></td>
+					<td width="40%" class="list_title" align="center"><b>{#ca_issuer#}</b></td>
+					<td width="30%" class="list_title" align="center"><b>{#ca_expiry#}</b></td>
+				</tr>
+				{section name=i loop=$SystemCertList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;<a href="{$SystemCertList[i].viewlink}">{$SystemCertList[i].name}</a></td>
+						<td class="list_value">&nbsp;{$SystemCertList[i].issuer}</td>
+						<td class="list_value">&nbsp;{if $SystemCertList[i].expire neq 0}{$SystemCertList[i].expire}{/if}</td>
+					</tr>
+				{/section}
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

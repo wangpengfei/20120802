@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#adr_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 method=post action=addressbook.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+				<input type=hidden name=filename value="{$FileName}">
+				
+				<tr height=20>
+					<td class="tb_title" align="center" width="40%">&nbsp;{#adr_import_field#}</td>
+					<td class="tb_title" align="center">&nbsp;{#adr_map_field#}</td>
+				</tr>
+				{section name=i loop=$FileField}
+				<tr height=20>
+					<td class="tb_field" align="right">{$FileField[i]}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="mapfield{$smarty.section.i.index}">
+					<option value="" selected>{#adr_selmap_field#}</option>
+					<option value="name">{#adr_name#}</option>
+					<option value="email">{#adr_email#}</option>
+					<option value="phone">{#adr_phone#}</option>
+					<option value="mobile">{#adr_mobile#}</option>
+					<option value="fax">{#adr_fax#}</option>
+					<option value="address">{#adr_address#}</option>
+					<option value="zipcode">{#adr_zipcode#}</option>
+					<option value="work">{#adr_work#}</option>
+					<option value="jobtitle">{#adr_jobtitle#}</option>
+					<option value="birthday">{#adr_birthday#}</option>
+					</select>
+					</td>
+				</tr>
+				{/section}
+				
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_sameline#}&nbsp;</td>
+					<td class="tb_value">
+					<input type=radio name=sameline value="0" checked>{#adr_sameline_discard#}
+					&nbsp;
+					<input type=radio name=sameline value="1">{#adr_sameline_update#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2 align="center">{#adr_importmap_tip#}</td>
+				</tr>
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align="center" valign="middle">
+						<input type=button value="{#adr_ok#}" class=button onclick="document.form1.submit();">
+						&nbsp;
+						<input type=button value="{#adr_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

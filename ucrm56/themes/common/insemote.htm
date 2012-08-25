@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+{config_load file=$LanguageFile section="AdvancedEditor"}
+{config_load file=$CustomerLanguageFile}
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+<TITLE>{#insemote_title#}</TITLE>
+{literal}
+<STYLE>
+ td { border: 1px solid #FFFFFF; font-size: 10.8pt}
+ body {font-size: 10.8pt}
+ BUTTON {width:5em}
+</STYLE>
+{/literal}
+
+{literal}
+<SCRIPT language="JavaScript">
+function overIcon(iconItem) {
+	iconItem.style.border = '1px solid #000000';
+}
+function outIcon(iconItem) {
+	iconItem.style.border = '1px solid #FFFFFF';
+}
+function selEmotes(imgfile) {
+	window.returnValue = imgfile;
+	window.close();
+}
+</SCRIPT>
+{/literal}
+
+</HEAD>
+<BODY bgColor="#d6d3ce" leftMargin="2" topMargin="12" marginheight="2" marginwidth="2">
+<TABLE align="center"  cellSpacing="0" cellPadding="0" width="100%" border="0">
+	<TR>
+		<TD bgColor="#ffffff">
+			{$EmoteImages}
+		</TD>
+	</TR>
+</TABLE>
+</BODY>
+</HTML>

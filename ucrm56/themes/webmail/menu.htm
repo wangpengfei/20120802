@@ -1,0 +1,421 @@
+{if $LoadAjax eq true}
+<script language="JavaScript" src="themes/common/js/prototype.js" type="text/javascript"></script>
+<script language="JavaScript" src="themes/common/js/rico.js" type="text/javascript"></script>
+<script language="JavaScript" src="themes/common/js/msgnumupdater.js" type="text/javascript"></script>
+{/if}
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="185" height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="90%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="80" class="mail_btn_bg" align=center>
+  			<table width=90% border="0" cellspacing="0" cellpadding="0">
+  			<tr>
+  				<td class="mail_btn" onclick="javascript:receivepop3();">
+  					&nbsp;<img src="themes/common/images/recvpop3.gif" width="16" height="16" align=absmiddle>&nbsp;{#recvmail_mnu#}
+  				</td>
+  			</tr>
+  			</table>
+          </td>
+          <td>&nbsp;</td>
+          <td width="80" class="mail_btn_bg" align=center>
+  			<table width=90% border="0" cellspacing="0" cellpadding="0">
+  			<tr>
+  				<td class="mail_btn" onclick="javascript:composemail();">
+  					&nbsp;<img src="themes/common/images/compose.gif" width="16" height="16" align=absmiddle>&nbsp;{#compose_mnu#}
+  				</td>
+  			</tr>
+  			</table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td align="right"><img src="themes/common/images/unreadmsg.gif" width="16" height="16" border=0></td>
+                <td colspan=2>&nbsp;<a class="menu" href="javascript:goinbox('true')">{#unreadmsg_mnu#}</a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td align="right"><img src="themes/common/images/inbox.gif" width="16" height="16" border=0></td>
+                <td colspan=2>&nbsp;<a class="menu" href="javascript:goinbox('false')">{#messages_mnu#}</a></td>
+              </tr>
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="27" class="left_menu_bt">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" align="right"><img src="themes/common/images/folders.gif" width="16" height="16"></td>
+                <td>&nbsp;<a class="menub" href="javascript:folderlist();">{#folders_mnu#}</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+			  <tr height="20"{if $leftMenuItem neq 'pri_folder'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'pri_folder'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/folder.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'pri_folder'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:prifolderlist()">{#prifolders_mnu#}</a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td colspan=2 align="right"{if $leftMenuItem eq 'inbox'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/inboxfolder.gif" width="16" height="16"></td>
+                <td{if $leftMenuItem eq 'inbox'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('INBOX')">{#inbox_extended#}&nbsp;<span class="inbox"></span></a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td colspan=2 align="right"{if $leftMenuItem eq 'sent'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/sentfolder.gif" width="16" height="16"></td>
+                <td{if $leftMenuItem eq 'sent'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('Sent')">{#sent_extended#}&nbsp;<span class="sent"></span></a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td colspan=2 align="right"{if $leftMenuItem eq 'trash'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/trashfolder.gif" width="16" height="16"></td>
+                <td{if $leftMenuItem eq 'trash'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('Trash')">{#trash_extended#}&nbsp;<span class="trash"></span></a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td colspan=2 align="right"{if $leftMenuItem eq 'draft'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/draftfolder.gif" width="16" height="16"></td>
+                <td{if $leftMenuItem eq 'draft'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('Draft')">{#draft_extended#}&nbsp;<span class="draft"></span></a></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td colspan=2 align="right"{if $leftMenuItem eq 'spam'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/spamfolder.gif" width="16" height="16"></td>
+                <td{if $leftMenuItem eq 'spam'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('Spam')">{#spam_extended#}&nbsp;<span class="spam"></span></a></td>
+              </tr>
+			  {section name=i loop=$PersonalFolderList}
+			    <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+					<td colspan=2 align="right"{if $leftMenuItem eq $PrivateFolderList[i].name} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/folder.gif" width="16" height="16"></td>
+					<td{if $leftMenuItem eq $PersonalFolderList[i].name} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:gotofolder('{$PersonalFolderList[i].entry}')">{$PersonalFolderList[i].name}({$PersonalFolderList[i].msgs})<span class="spam"></span></a></td>
+				</tr>
+			  {/section}
+
+          	{if $MenuHavePubMbox}
+              <tr height="4"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+              <tr height="4"> 
+                <td colspan=3 class="left_menu_line"><img height=1 width=1></td>
+              </tr>
+              <tr height="4"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+			  <tr height="20" class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'">
+                <td align="right"{if $leftMenuItem eq 'pub_folder'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/pubfolder.gif"  width="16" height="16" border=0></td>
+                <td colspan=2{if $leftMenuItem eq 'pub_folder'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:pubfolderlist()">{#pubfolders_mnu#}</a></td>
+              </tr>
+          	{/if}
+
+              <tr height="4"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+              <tr height="4"> 
+                <td colspan=3 class="left_menu_line"><img height=1 width=1></td>
+              </tr>
+              <tr height="4"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+			  
+
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+	
+	{if $selectedMenu eq 'address'}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="27" class="left_menu_bt">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" align="right"><img src="themes/common/images/addressbook.gif" width="16" height="16"></td>
+                <td>&nbsp;<span class="menub">{#address_mnu#}</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+              
+			  <tr height="20"{if $leftMenuItem neq 'addressbook'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'addressbook'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/address.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'addressbook'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:addresses()">{#personaddress_mnu#}</a></td>
+              </tr>
+			  <tr height="20"{if $leftMenuItem neq 'addressgroup'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'addressgroup'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/group.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'addressgroup'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:groupes()">{#persongroup_mnu#}</a></td>
+              </tr>
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+	{/if}
+<!--
+{if $NetstoreControl eq 0 or $CalendarControl eq 0 or $NotebookControl eq 0}
+	{if $selectedMenu eq 'netassistant'}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="27" class="left_menu_bt">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" align="right"><img src="themes/common/images/netassistant.gif" width="16" height="16"></td>
+                <td>&nbsp;<span class="menub">{#netassistant_mnu#}</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+              
+          	{if $NetstoreControl eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'netstore'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'netstore'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/netstore.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'netstore'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:netstore()">{#netstore_mnu#}</a></td>
+              </tr>
+          	{/if}
+          	{if $CalendarControl eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'calendar'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'calendar'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/netcalendar.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'calendar'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:calendar()">{#netcalendar_mnu#}</a></td>
+              </tr>
+          	{/if}
+          	{if $NotebookControl eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'notebook'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'notebook'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/netnotebook.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'notebook'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:notebook()">{#netnotebook_mnu#}</a></td>
+              </tr>
+          	{/if}
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+	{/if}
+{/if}
+
+{if $AllowSetupSMS}
+	{if $selectedMenu eq 'sms'}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="27" class="left_menu_bt">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" align="right"><img src="themes/common/images/smssetup.gif" width="16" height="16"></td>
+                <td>&nbsp;<span class="menub">{#smssetup_mnu#}</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+              
+			  <tr height="20"{if $leftMenuItem neq 'smssetting'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'smssetting'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/smssetting.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'smssetting'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:smssetting()">{#smscgi_mnu#}</a></td>
+              </tr>
+          	{if $AllowSendSM}
+			  <tr height="20"{if $leftMenuItem neq 'sendsms'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'sendsms'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/sendsms.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'sendsms'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:sendsms()">{#sendsms_mnu#}</a></td>
+              </tr>
+          	{/if}
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+	{/if}
+{/if}
+-->
+	{if $selectedMenu eq 'options'}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="27" class="left_menu_bt">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" align="right"><img src="themes/common/images/options.gif" width="16" height="16"></td>
+                <td>&nbsp;<span class="menub">{#options_mnu#}</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="171" border="0" cellpadding="0" cellspacing="1" class="left_menu_rect">
+        <tr> 
+          <td align="center" bgcolor="#FFFFFF">
+            <table width="95%" border="0" cellpadding="0" cellspacing="0">
+              <tr height="8"> 
+                <td width="30"><img height=1 width=1></td>
+                <td width="20"><img height=1 width=1></td>
+                <td width="120"><img height=1 width=1></td>
+              </tr>
+              
+			  <tr height="20"{if $leftMenuItem neq 'preferences'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'preferences'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/preferences.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'preferences'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
+              </tr>
+			 <!--
+            {if $ModifyUserInfo eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'userinfo'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'userinfo'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/personalinfo.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'userinfo'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:userinfo()">{#userinfo_mnu#}</a></td>
+              </tr>
+			{/if}
+			-->
+			  <tr height="20"{if $leftMenuItem neq 'signature'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'signature'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/signature.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'signature'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:signatures()">{#signature_mnu#}</a></td>
+              </tr>
+        	{if $ExternalPop3 eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'externalpop3'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'externalpop3'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/externalpop3.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'externalpop3'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:externalpop3()">{#externalpop3_mnu#}</a></td>
+              </tr>
+			{/if}
+			  <tr height="20"{if $leftMenuItem neq 'mailfilter'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'mailfilter'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/mailfilter.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'mailfilter'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:mailfilter()">{#mailfilter_mnu#}</a></td>
+              </tr>
+			 <!--
+            {if $AutoForward eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'autoforward'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'autoforward'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/autoforward.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'autoforward'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:autoforward()">{#autoforward_mnu#}</a></td>
+              </tr>
+			{/if}
+	        {if $AutoReply eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'autoreply'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'autoreply'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/autoreply.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'autoreply'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:autoreply()">{#autoreply_mnu#}</a></td>
+              </tr>
+			{/if}
+			
+        	{if $ChgPassword eq 0}
+			  <tr height="20"{if $leftMenuItem neq 'chgpassword'} class="left_menu_item" onmouseover="this.className='left_menu_item_over'" onmouseout="this.className='left_menu_item'"{/if}>
+                <td align="right"{if $leftMenuItem eq 'chgpassword'} class="left_menu_item_sel_l"{/if}><img src="themes/common/images/password.gif" width="16" height="16"></td>
+                <td colspan=2{if $leftMenuItem eq 'chgpassword'} class="left_menu_item_sel_r"{/if}>&nbsp;<a class="menu" href="javascript:chgpassword()">{#chgpassword_mnu#}</a></td>
+              </tr>
+			{/if}
+			-->
+              <tr height="8"> 
+                <td colspan=3><img height=1 width=1></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+	{/if}
+	
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="10"><img height=1 width=1></td>
+        </tr>
+      </table>
+
+
+{if $LoadAjax eq true}
+{literal}
+<script language="Javascript">
+var msgnumUpdater = new MsgNumUpdater();
+ajaxEngine.registerRequest( 'msgnumupdater', 'msgnumupdater.php' );
+ajaxEngine.registerAjaxObject( 'msgnumUpdater', msgnumUpdater );
+msgnumUpdater.reset();
+
+function getMsgNum(sid, tid, lid, retid) {
+	ajaxEngine.sendRequest( 'msgnumupdater',
+	                          "sid=" + sid,
+	                          "tid=" + tid,
+	                          "lid=" + lid,
+	                          "retid=" + retid);
+{/literal}
+	setTimeout("getMsgNum('{$Sid}', '{$Tid}', '{$Lid}', '{$Retid}')", 600 * 1000);
+{literal}
+}
+{/literal}
+getMsgNum('{$Sid}', '{$Tid}', '{$Lid}', '{$Retid}');
+</script>	
+{/if}

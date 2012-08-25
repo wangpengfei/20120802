@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Notebook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#note_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<tr height=100>
+					<td class="tb_field" align="right" width="20%">{#note_content#}&nbsp;</td>
+					<td class="tb_value" valign=top>{$Content}&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#note_modifytime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$ModifyTime}</td>
+				</tr>
+				<tr  height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<a href="{$GoBack}">{#note_back#}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_gathers</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_gathers` (
+  `gathersid` int(11) DEFAULT NULL,
+  `gathersno` varchar(100) DEFAULT NULL,
+  `gathersname` varchar(100) DEFAULT NULL,
+  `payer` varchar(100) DEFAULT NULL,
+  `salesorder_id` varchar(100) DEFAULT NULL,
+  `plandate` date DEFAULT NULL,
+  `planamount` varchar(100) DEFAULT NULL,
+  `actualdate` date DEFAULT NULL,
+  `actualamount` varchar(100) DEFAULT NULL,
+  `gathersstatus` varchar(100) DEFAULT NULL,
+  `isinvoice` varchar(100) DEFAULT NULL,
+  `gatherstimes` varchar(100) DEFAULT NULL,
+  `remark` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_gatherscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_gatherscf` (
+  `gathersid` int(11) NOT NULL,
+  PRIMARY KEY (`gathersid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_gathersgrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_gathersgrouprel` (
+  `gathersid` int(11) NOT NULL,
+  `groupname` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`gathersid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

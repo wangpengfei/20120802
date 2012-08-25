@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="ExternalPop3"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#pop3_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<tr height="20">
+					<td class="tb_field" align="right" width="30%">{#pop3_username#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$UserName|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_password#}&nbsp;</td>
+					<td class="tb_value">&nbsp;********</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_host#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Host|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_port#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Port|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Name|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_email#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Email|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_mailfolder#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$MailFolder|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_enable#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Enable|escape:"html"}</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#pop3_savecopy#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$SaveCopy|escape:"html"}</td>
+				</tr>
+				<tr height="30">
+					<td class="tb_btn" colspan=2 align=center valign="middle">
+						<a href="{$GoBack}">{#pop3_back#}</a>
+					</td>
+				</tr>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

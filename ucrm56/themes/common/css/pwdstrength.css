@@ -1,0 +1,39 @@
+.pwd_default {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #000000; 
+	background-color: #EBEBEB;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #999999;
+}
+.pwd_weak {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #000000; 
+	background-color: #FF4545;
+}
+.pwd_middle {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #000000; 
+	background-color: #FFD35E;
+}
+.pwd_middle1 {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #FFD35E; 
+	background-color: #FFD35E;
+}
+.pwd_strong {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #000000; 
+	background-color: #95EB81;
+}
+.pwd_strong1 {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #95EB81; 
+	background-color: #95EB81;
+}

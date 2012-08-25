@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#cal_share_title#}</title>
+</head>
+
+{literal}
+<script language="javascript">
+function dispEvent(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'dispevent';
+	document.form1.submit();
+}
+</script>
+{/literal}
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<form name=form1 method=post action=viewsharecalendar.php>
+			<tr height="22">
+				<td width="30%" class="list_title" align=center><b>{#cal_title#}</b></td>
+				<td width="15%" class="list_title" align=center><b>{#cal_tododate#}</b></td>
+				<td width="15%" class="list_title" align=center><b>{#cal_startendtime#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_status#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_type#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_share#}</b></td>
+			</tr>
+			{section name=i loop=$EventList}
+				<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+					<td class="list_value">&nbsp;<a href="javascript:dispEvent('{$EventList[i].uid}');">{$EventList[i].title}</a></td>
+					<td class="list_value" align=center>&nbsp;{$EventList[i].tododate|date_format:#date_format#}</td>
+					<td class="list_value" align=center>&nbsp;{$EventList[i].starttime|date_format:#time_format#} - {$EventList[i].endtime|date_format:#time_format#}</td>
+					<td class="list_value" align=center>
+					{if $EventList[i].status eq "wait"}
+						&nbsp;{#cal_status_wait#}
+					{elseif $EventList[i].status eq "waitnext"}
+						&nbsp;{#cal_status_waitnext#}
+					{elseif $EventList[i].status eq "reminded"}
+						&nbsp;{#cal_status_reminded#}
+					{elseif $EventList[i].status eq "doing"}
+						&nbsp;{#cal_status_doing#}
+					{elseif $EventList[i].status eq "finished"}
+						&nbsp;{#cal_status_finished#}
+					{/if}
+					</td>
+					<td class="list_value" align=center>
+					{if $EventList[i].type eq "personal"}
+						&nbsp;{#cal_type_personal#}
+					{elseif $EventList[i].type eq "business"}
+						&nbsp;{#cal_type_business#}
+					{elseif $EventList[i].type eq "meeting"}
+						&nbsp;{#cal_type_meeting#}
+					{elseif $EventList[i].type eq "birthday"}
+						&nbsp;{#cal_type_birthday#}
+					{elseif $EventList[i].type eq "holiday"}
+						&nbsp;{#cal_type_holiday#}
+					{elseif $EventList[i].type eq "anniversary"}
+						&nbsp;{#cal_type_anniversary#}
+					{elseif $EventList[i].type eq "appointment"}
+						&nbsp;{#cal_type_appointment#}
+					{elseif $EventList[i].type eq "gettogether"}
+						&nbsp;{#cal_type_gettogether#}
+					{elseif $EventList[i].type eq "other"}
+						&nbsp;{#cal_type_other#}
+					{/if}
+					</td>
+					<td class="list_value" align=center>
+					{if $EventList[i].share eq "private"}
+						&nbsp;{#cal_share_private#}
+					{elseif $EventList[i].share eq "busy"}
+						&nbsp;{#cal_share_busy#}
+					{elseif $EventList[i].share eq "public"}
+						&nbsp;{#cal_share_public#}
+					{else}
+						&nbsp;{#cal_share_private#}
+					{/if}
+					</td>
+				</tr>
+			{/section}
+			<input type=hidden name=userid value="{$UserID}">
+			<input type=hidden name=uid value="{$UID}">
+			<input type=hidden name=dest value="">
+			</form>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

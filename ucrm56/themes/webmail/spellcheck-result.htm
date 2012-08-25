@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#spellcheck_title#}</title>
+</head>
+
+{if $DispResult eq 1}
+{literal}
+<script language="javascript">
+function closeWin() 
+{
+	window.close();
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+	<table align=center width="98%" border="0" cellspacing=0 cellpadding=0>
+		<tr height=25>
+	    	<td class="tb_header">&nbsp;&nbsp;<b>{#spellcheck_result#}</b></td>
+		</tr>
+		<tr height=330>
+			<td class="tb_value" valign=top>
+				{$SpellCheckResult}
+			</td>
+		</tr>
+		<tr height=30>
+	    	<td class="tb_btn" align=center> 
+				<a href="javascript:closeWin();">{#spellcheck_close_button#}</a>
+		    </td>
+		</tr>
+	</table>
+</body>
+{else}
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+	<table align=center width="98%" border="0" cellspacing=0 cellpadding=0>
+		<tr height=25>
+	    	<td class="tb_header">&nbsp;&nbsp;</td>
+		</tr>
+		<tr height=65>
+			<td class="tb_value" align=center>
+			{if $ResultError neq 1}
+				{#spellcheck_doning#}
+			{else}
+				{#spellcheck_error#}
+			{/if}
+			</td>
+		</tr>
+	</table>
+</body>
+{/if}
+</html>

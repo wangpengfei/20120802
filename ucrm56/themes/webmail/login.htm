@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<form name="form1" action="main.php?loginuser={$LoginUser}" method=post>
+		<input type=hidden name=sid value="{$Sid}">
+		<input type=hidden name=lid value="{$Lid}">
+		<input type=hidden name=tid value="{$Tid}">
+    </form>
+    
+    <br>
+	<h3>Loading...</h3>
+</body>
+
+{literal}
+<script language="Javascript">
+	document.form1.submit();
+</script>
+{/literal}
+
+</html>

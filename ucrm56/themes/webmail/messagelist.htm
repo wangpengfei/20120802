@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="MessageList"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{$BoxName} - {#messages_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+    	</td>
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 action=msglist.php method=post>
+				{$Forms}
+				<!--
+				{if $Folder eq "spam"}
+				<tr height="40">
+					<td colspan="7" class="list_tip">
+					&nbsp; {#spam_txt#}
+					{if $SpamStatus eq 0}
+					<b>{#spam_status_disable#}</b> [<a href="javascript:setspamstatus()">{#spam_option_enable#}</a>]
+					{else}
+					<b>{#spam_status_enable#}</b> [<a href="javascript:setspamstatus()">{#spam_option_disable#}</a>]
+					{/if}
+					<br>
+					&nbsp; {#spam_note_txt#}
+					</td>
+				</tr>
+				<tr height="8">
+					<td colspan="7" class="list_empty"><img width=1 height=1></td>
+				</tr>
+				{/if}
+				-->
+				
+				<tr height="25">
+					<td colspan="4" class="list_header">&nbsp;{$FolderInfo}</td>
+					<td colspan="3" class="list_header">&nbsp;{#select_folder_tip#}
+					<select name="dest_folders" onchange="chgfolder(this[this.selectedIndex].value)">
+						<option value="" selected>{#select_folder#}</option>
+						{section name=i loop=$AvalFolders}
+							<option value="{$AvalFolders[i].path|escape:"html"}">{$AvalFolders[i].display|escape:"html"}</option>
+						{/section}
+					</select>
+					</td>
+				</tr>
+
+				<tr height="22">
+				    <td width="2%" class="list_title" align=center><input type=checkbox name=chkall onclick="sel()"></td>
+				    <td width="6%" class="list_title" align=center><img src="images/msg_read.gif" border="0" width="17" height="14" align=absmiddle>&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" align=absmiddle>&nbsp;<img src="images/prior_high.gif" width=5 height=11 border=0 align=absmiddle></td>
+					{if $Folder eq "sent" or $Folder eq "draft"}
+				    	<td width="20%" class="list_title" align=center><b><a href="javascript:sortby('toname')">{#to_hea#}{$NameArrow}</a></b></td>
+					{else}
+				    	<td width="20%" class="list_title" align=center><b><a href="javascript:sortby('fromname')">{#from_hea#}{$NameArrow}</a></b></td>
+					{/if}
+				    <td width="*%" class="list_title" align=center><b><a href="javascript:sortby('msgsubject')">{#subject_hea#}{$SubjectArrow}</a></b></td>
+				    <td width="20%" class="list_title" align=center><b><a href="javascript:sortby('date')">{#date_hea#}{$DateArrow}</a></b></td>
+				    <td width="8%" class="list_title" align=center><b><a href="javascript:sortby('size')">{#size_hea#}{$SizeArrow}</a></b></td>
+				    <td width="4%" class="list_title" align=center><img src="themes/common/images/mailfilter.gif" width=16 height=16 border=0></td>
+				</tr>
+			
+				{section name=i loop=$MessageList}
+				<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+					<td class="list_value">{$MessageList[i].checkbox}</td>
+					<td class="list_value">{$MessageList[i].statusimg}{$MessageList[i].attachimg}{$MessageList[i].priorimg}</td>
+					{if $Folder eq "sent" or $Folder eq "draft"}
+						{if $AllowFromUrl}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].composelinksent}" title="{#edit_mail#}{$MessageList[i].tomail|escape:"html"}">{$MessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_recipient_text#} </a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{else}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<span title="{$MessageList[i].tomail|escape:"html"}">{$MessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_recipient_text#}</span>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{/if}
+					{else}
+						{if $AllowFromUrl}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].composelink}" title="{#reply_mail#}{$MessageList[i].frommail|escape:"html"}">{$MessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_sender_text#} </a>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{else}
+							<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<span title="{$MessageList[i].frommail|escape:"html"}">{$MessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_sender_text#}</span>{if $MessageList[i].read eq "false"}</b>{/if}</td>
+						{/if}
+					{/if}
+
+					<td class="list_value">&nbsp;{if $MessageList[i].read eq "false"}<b>{/if}<a href="{$MessageList[i].readlink}" title="{#read_mail#}{$MessageList[i].subject|escape:"html"|default:#no_subject_text#}  ">{$MessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}  </a>{if $MessageList[i].read eq "false"}</b>{/if}  </td>
+					<td class="list_value" align=center>{if $MessageList[i].read eq "false"}<b>{/if}{$MessageList[i].date}{if $MessageList[i].read eq "false"}</b>{/if}</td>
+					<td class="list_value" align=right>{if $MessageList[i].read eq "false"}<b>{/if}{$MessageList[i].size} KB&nbsp;{if $MessageList[i].read eq "false"}</b>{/if}</td>
+					<td class="list_value" align=center>{if $MessageList[i].filterlink neq ""}<a href="{$MessageList[i].filterlink}" title="{#filter_mail#}"><img src="themes/common/images/mailfilter.gif" width=16 height=16 border=0></a>{/if}</td>
+				</tr>
+				{sectionelse}
+				<tr height="50">
+					<td colspan="7" class="list_value" align="center">
+						{#msg_none_messages#}
+					</td>
+				</tr>
+				{/section}
+				
+				{if $NumMessages gt 0}
+				<tr height="30">
+					<td colspan="4" class="list_btn">&nbsp;
+					<a class="navigation" href="javascript:delemsg()">{#delete_mnu#}</a> 
+					:: &nbsp;<a class="navigation" href="javascript:dropmsg()">{#drop_mnu#}</a> 
+					{if $Folder neq "draft"}
+					:: &nbsp;<a class="navigation" href="javascript:forward()">{#forward_mnu#}</a>
+					{/if}
+					{if $Folder eq "inbox"}
+					:: &nbsp;<a class="navigation" href="javascript:spammsg()">{#spam_mnu#}</a> 
+					{/if}
+					{if $Folder eq "spam"}
+					:: &nbsp;<a class="navigation" href="javascript:hammsg()">{#ham_mnu#}</a> 
+					{/if}
+					:: &nbsp;<select name="make_as" onchange="makeas(this[this.selectedIndex].value)">
+						<option value="" selected>{#make_mnu#}</option>
+						<option value="mkunread">{#mkunread_mnu#}</option>
+						<option value="mkread">{#mkread_mnu#}</option>
+					</select>
+					:: &nbsp;<select name="moveto_folder" onchange="movemsg(this[this.selectedIndex].value)">
+						<option value="" selected>{#move_mnu#}</option>
+						{section name=i loop=$AvalFolders}
+							<option value="{$AvalFolders[i].path|escape:"html"}">{$AvalFolders[i].display|escape:"html"}</option>
+						{/section}
+					</select>
+					:: &nbsp;<select name="copyto_folder" onchange="copymsg(this[this.selectedIndex].value)">
+						<option value="" selected>{#copy_mnu#}</option>
+						{section name=i loop=$AvalFolders}
+							<option value="{$AvalFolders[i].path|escape:"html"}">{$AvalFolders[i].display|escape:"html"}</option>
+						{/section}
+					</select>
+					</td>
+					<td colspan="3" class="list_btn">&nbsp;{$PageInfo}&nbsp;
+					{if $NavBar}
+						{if $FirstLink}
+							&nbsp;<a href="{$FirstLink}" title="{#page_first_text#}"><img src="themes/common/images/firstpg.gif" width="10" height="12" alt="{#page_first_text#}" border=0></a>
+						{else}
+							&nbsp;<img src="themes/common/images/firstpgd.gif" width="10" height="12" alt="{#page_first_text#}" border=0>
+						{/if}
+						{if $PreviousLink}
+							&nbsp;<a href="{$PreviousLink}" title="{#page_prev_text#}"><img src="themes/common/images/prevpg.gif" width="7" height="12" alt="{#page_prev_text#}" border=0></a>
+						{else}
+							&nbsp;<img src="themes/common/images/prevpgd.gif" width="7" height="12" alt="{#page_prev_text#}" border=0>
+						{/if}
+						&nbsp;{$NavBar}
+						{if $NextLink}
+							&nbsp;<a href="{$NextLink}" title="{#page_next_text#}"><img src="themes/common/images/nextpg.gif" width="7" height="12" alt="{#page_next_text#}" border=0></a>
+						{else}
+	 						&nbsp;<img src="themes/common/images/nextpgd.gif" width="7" height="12" alt="{#page_next_text#}" border=0>
+						{/if}
+						{if $LastLink}
+							&nbsp;<a href="{$LastLink}" title="{#page_last_text#}"><img src="themes/common/images/lastpg.gif" width="10" height="12" alt="{#page_last_text#}" border=0></a>
+						{else}
+	 						&nbsp;<img src="themes/common/images/lastpgd.gif" width="10" height="12" alt="{#page_last_text#}" border=0>
+						{/if}
+						&nbsp;
+					{/if}
+					</td>
+				</tr>
+				{/if}
+				</form>
+			</table>
+			<br>
+
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

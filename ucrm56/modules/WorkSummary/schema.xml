@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_worksummary</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_worksummary` (
+  `worksummaryid` int(11) DEFAULT NULL,
+  `worksummaryname` varchar(100) DEFAULT NULL,
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `summary` text,
+  `plan` text,
+  `remark` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_worksummarycf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_worksummarycf` (
+  `worksummaryid` int(11) NOT NULL,
+  PRIMARY KEY (`worksummaryid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_worksummarygrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_worksummarygrouprel` (
+  `worksummaryid` int(11) NOT NULL,
+  `groupname` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`worksummaryid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

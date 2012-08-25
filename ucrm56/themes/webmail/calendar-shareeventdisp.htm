@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#cal_share_title#}</title>
+</head>
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr height=20>
+				<td class="tb_field" align="right" width=20%>{#cal_title#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$Title|escape:"html"}</td>
+			</tr>
+			<tr height=40>
+				<td class="tb_field" align="right">{#cal_content#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$Content}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_tododate#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$TodoDate|date_format:#date_format#}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_starttime#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$StartTime|date_format:#time_format#}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_endtime#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$EndTime|date_format:#time_format#}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">&nbsp;{#cal_wholeday_event#}</td>
+				<td class="tb_value">&nbsp;{if $WholedayEvent eq 1}{#cal_wholeday_event_yes#}{else}{#cal_wholeday_event_no#}{/if}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" colspan=2>&nbsp;</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_status#}&nbsp;</td>
+				<td class="tb_value">
+				{if $Status eq "wait"}
+					&nbsp;{#cal_status_wait#}
+				{elseif $Status eq "waitnext"}
+					&nbsp;{#cal_status_waitnext#}
+				{elseif $Status eq "reminded"}
+					&nbsp;{#cal_status_reminded#}
+				{elseif $Status eq "doing"}
+					&nbsp;{#cal_status_doing#}
+				{elseif $Status eq "finished"}
+					&nbsp;{#cal_status_finished#}
+				{/if}	
+				</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_type#}&nbsp;</td>
+				<td class="tb_value">
+				{if $Type eq "personal"}
+					&nbsp;{#cal_type_personal#}
+				{elseif $Type eq "business"}
+					&nbsp;{#cal_type_business#}
+				{elseif $Type eq "meeting"}
+					&nbsp;{#cal_type_meeting#}
+				{elseif $Type eq "birthday"}
+					&nbsp;{#cal_type_birthday#}
+				{elseif $Type eq "holiday"}
+					&nbsp;{#cal_type_holiday#}
+				{elseif $Type eq "anniversary"}
+					&nbsp;{#cal_type_anniversary#}
+				{elseif $Type eq "appointment"}
+					&nbsp;{#cal_type_appointment#}
+				{elseif $Type eq "gettogether"}
+					&nbsp;{#cal_type_gettogether#}
+				{elseif $Type eq "other"}
+					&nbsp;{#cal_type_other#}
+				{/if}
+				</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_priority#}&nbsp;</td>
+				<td class="tb_value">
+				{if $Priority eq "normal"}
+					&nbsp;{#cal_priority_normal#}
+				{elseif $Priority eq "exigence"}
+					&nbsp;{#cal_priority_exigence#}
+				{elseif $Priority eq "importance"}
+					&nbsp;{#cal_priority_importance#}
+				{/if}	
+				</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="center" colspan=2>&nbsp;</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_share#}&nbsp;</td>
+				<td class="tb_value">
+				{if $Share eq "private"}
+					&nbsp;{#cal_share_private#}
+				{elseif $Share eq "busy"}
+					&nbsp;{#cal_share_busy#}
+				{elseif $Share eq "public"}
+					&nbsp;{#cal_share_public#}
+				{/if}	
+				</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" colspan=2>&nbsp;</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_reminder#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{if $Reminder eq 1}{#cal_reminder_enable#}{else}{#cal_reminder_disable#}{/if}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_remindermailbox#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{$ReminderMailbox|escape:"html"}</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_remindertime#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{#cal_remindertime_tip#}&nbsp;
+				{if $ReminderTime eq 10}
+					{#cal_remindertime_10#}
+				{elseif $ReminderTime eq 20}
+					{#cal_remindertime_20#}
+				{elseif $ReminderTime eq 30}
+					{#cal_remindertime_30#}
+				{elseif $ReminderTime eq 40}
+					{#cal_remindertime_40#}
+				{elseif $ReminderTime eq 50}
+					{#cal_remindertime_50#}
+				{elseif $ReminderTime eq 60}
+					{#cal_remindertime_1_60#}
+				{elseif $ReminderTime eq 120}
+					{#cal_remindertime_2_60#}
+				{elseif $ReminderTime eq 180}
+					{#cal_remindertime_3_60#}
+				{elseif $ReminderTime eq 360}
+					{#cal_remindertime_6_60#}
+				{elseif $ReminderTime eq 720}
+					{#cal_remindertime_12_60#}
+				{elseif $ReminderTime eq 1440}
+					{#cal_remindertime_1_24_60#}
+				{elseif $ReminderTime eq 2880}
+					{#cal_remindertime_2_24_60#}
+				{elseif $ReminderTime eq 4320}
+					{#cal_remindertime_3_24_60#}
+				{elseif $ReminderTime eq 5760}
+					{#cal_remindertime_4_24_60#}
+				{elseif $ReminderTime eq 7200}
+					{#cal_remindertime_5_24_60#}
+				{elseif $ReminderTime eq 8640}
+					{#cal_remindertime_6_24_60#}
+				{elseif $ReminderTime eq 10080}
+					{#cal_remindertime_7_24_60#}
+				{/if}
+				</td>
+			</tr>
+			
+			<tr height=20>
+				<td class="tb_field" colspan=2>&nbsp;</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_repeat#}&nbsp;</td>
+				<td class="tb_value">
+					{if $NoRepeat eq 1 or $EveryDayRepeat eq 1}
+						<br>
+						{if $NoRepeat eq 1}&nbsp;{#cal_norepeat#}{/if}
+						{if $EveryDayRepeat eq 1}&nbsp;{#cal_everydayrepeat#}{/if}
+						<br>
+					{/if}
+
+					{if $EveryWeekRepeat eq 1 or $SpecifiedWeekRepeat eq 1}
+						<br>
+						{if $EveryWeekRepeat eq 1}&nbsp;{#cal_everyweekrepeat#}{/if}
+						{if $SpecifiedWeekRepeat eq 1}&nbsp;{#cal_specifiedweekrepeat#}{/if}
+						<br>
+						{if $WeekDays0 eq 1}&nbsp;{#cal_longweekname_0#}{/if}
+						{if $WeekDays1 eq 1}&nbsp;{#cal_longweekname_1#}{/if}
+						{if $WeekDays2 eq 1}&nbsp;{#cal_longweekname_2#}{/if}
+						{if $WeekDays3 eq 1}&nbsp;{#cal_longweekname_3#}{/if}
+						{if $WeekDays4 eq 1}&nbsp;{#cal_longweekname_4#}{/if}
+						{if $WeekDays5 eq 1}&nbsp;{#cal_longweekname_5#}{/if}
+						{if $WeekDays6 eq 1}&nbsp;{#cal_longweekname_6#}{/if}
+						<br>
+					{/if}
+					
+					{if $EveryMonthRepeat eq 1 or $SpecifiedMonthRepeat eq 1}
+						<br>
+						{if $EveryMonthRepeat eq 1}&nbsp;{#cal_everymonthrepeat#}{/if}
+						{if $SpecifiedMonthRepeat eq 1}&nbsp;{#cal_specifiedmonthrepeat#}{/if}
+						<br>
+						{if $MonthWeek1 eq 1}&nbsp;{#cal_monthweek1#}{/if}
+						{if $MonthWeek2 eq 1}&nbsp;{#cal_monthweek2#}{/if}
+						{if $MonthWeek3 eq 1}&nbsp;{#cal_monthweek3#}{/if}
+						{if $MonthWeek4 eq 1}&nbsp;{#cal_monthweek4#}{/if}
+						{if $MonthWeek5 eq 1}&nbsp;{#cal_monthweek5#}{/if}
+						<br>
+					{/if}
+
+					{if $EveryYearRepeat eq 1}
+						<br>
+						{if $EveryYearRepeat eq 1}&nbsp;{#cal_everyyearrepeat#}{/if}
+						<br>
+						{if $YearMonth1 eq 1}&nbsp;{#cal_longmonthname_0#}{/if}
+						{if $YearMonth2 eq 1}&nbsp;{#cal_longmonthname_1#}{/if}
+						{if $YearMonth3 eq 1}&nbsp;{#cal_longmonthname_2#}{/if}
+						{if $YearMonth4 eq 1}&nbsp;{#cal_longmonthname_3#}{/if}
+						{if $YearMonth5 eq 1}&nbsp;{#cal_longmonthname_4#}{/if}
+						{if $YearMonth6 eq 1}&nbsp;{#cal_longmonthname_5#}{/if}
+						{if $YearMonth7 eq 1}&nbsp;{#cal_longmonthname_6#}{/if}
+						{if $YearMonth8 eq 1}&nbsp;{#cal_longmonthname_7#}{/if}
+						{if $YearMonth9 eq 1}&nbsp;{#cal_longmonthname_8#}{/if}
+						{if $YearMonth10 eq 1}&nbsp;{#cal_longmonthname_9#}{/if}
+						{if $YearMonth11 eq 1}&nbsp;{#cal_longmonthname_10#}{/if}
+						{if $YearMonth12 eq 1}&nbsp;{#cal_longmonthname_11#}{/if}
+						<br>
+					{/if}
+					
+					{if $TodoDateRepeat eq 1}
+						<br>
+						&nbsp;{#cal_tododaterepeat#}
+						<br>
+					{/if}
+				</td>
+			</tr>
+			<tr height=20>
+				<td class="tb_field" align="right">{#cal_repeatenddate#}&nbsp;</td>
+				<td class="tb_value">&nbsp;{if $RepeatEnd eq 1}{#cal_repeatend#}&nbsp;{$RepeatEndDate|date_format:#date_format#}{else}{#cal_repeatend_no#}{/if}
+			</tr>				
+			<tr height=30>
+				<td class="tb_btn" colspan=2 align=center>
+					<a href="{$GoBack}">{#cal_back#}</a>
+				</td>
+			</tr>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html> 

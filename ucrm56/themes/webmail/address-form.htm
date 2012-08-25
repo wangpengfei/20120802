@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#adr_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+	function save_check()
+	{
+		var name = document.form1.name.value;
+		var email = document.form1.email.value;
+		
+		if (name == "" || email == "" ){
+{/literal}
+			alert("{#adr_empty#}");
+{literal}
+			return;
+		}
+		
+		document.form1.submit();
+	}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 method=post action=addressbook.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=id value="{$AddrID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+	
+				<tr height=20>
+					<td class="tb_field" align="right" width="30%">{#adr_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="name" value="{$AddrName|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_email#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea rows=3 cols=40 name="email" class="textbox">{$AddrEmail|escape:"html"}</textarea>
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_phone#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="phone" value="{$AddrPhone|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td colspan=2 class="tb_field" align="center"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_mobile#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="mobile" value="{$AddrMobile|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_fax#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="fax" value="{$AddrFax|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_address#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="60" type=text name="address" value="{$AddrAddress|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_zipcode#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="zipcode" value="{$AddrZipCode|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_work#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="work" value="{$AddrWork|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_jobtitle#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="jobtitle" value="{$AddrJobTitle|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td colspan=2 class="tb_field" align="center"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_birthday#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="20" type=text name="birthday" value="{$AddrBirthday|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#adr_memo#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea name="memo" rows=5 cols=40 class="textbox">{$AddrMemo|escape:"html"}</textarea></td>
+				</tr>
+				<tr  height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#adr_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#adr_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

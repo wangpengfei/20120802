@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_vtmessages</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_vtmessages` (
+  `vtmessagesid` int(11) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `message` text,
+  `vtmsgstatus` varchar(100) DEFAULT NULL,
+  `topicid` varchar(100) DEFAULT NULL,
+  `topicstart` varchar(3) DEFAULT NULL,
+  KEY `vtmessages_vtmessagesid_idx` (`vtmessagesid`),
+  KEY `vtmessages_topicid_idx` (`topicid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_vtmessagescf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_vtmessagescf` (
+  `vtmessagesid` int(11) NOT NULL,
+  PRIMARY KEY (`vtmessagesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_vtmessages_topicrel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_vtmessages_topicrel` (
+  `vtmessagesid` int(11) DEFAULT NULL,
+  `topicid` varchar(100) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  KEY `vtmessages_topicrel_vtmessagesid_idx` (`vtmessagesid`),
+  KEY `vtmessages_topicrel_topicid_idx` (`topicid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

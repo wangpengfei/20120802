@@ -1,0 +1,215 @@
+buildHeaderModelColumnLeft:
+Array
+(
+    [logo] => test/logo/ubiwire_logo.jpg
+    [summary] => 友贝科技
+    [content] => 蛇口太子路振兴大厦四层D-010室, 
+南山, 深圳, 
+广东, 518057
+电话: +86-755-2689-5119, 
+传真: +86-755-2689-5119, 
+网址: www.ubiwire.com
+    [fieldlabel] => 报价单名称
+    [fieldvalue] => Cont_Quote
+)
+
+buildHeaderModelColumnCenter:
+Array
+(
+    [主题] => SO_销售单1
+    [客户名称] => 深圳市白雪投影显示技术有限公司
+    [联系人名称] => 刘斌 
+    [采购订单] => CAIGOU001
+)
+
+buildHeaderModelColumnRight:
+Array
+(
+    [dates] => Array
+        (
+            [填开日期] => 2010-10-28
+            [预计交付日期] => 2007-04-26
+        )
+
+    [付款住址] => 547400, 付款地址, [付款住址]乡镇市区, [付款住址]市(县), 547405
+    [送货住址] => 456456, 送货住址, [送货住址]乡镇市区, [送货住址]市(县), 65786788
+)
+
+getHeaderViewer:
+Vtiger_PDF_Model Object
+(
+    [values:protected] => Array
+        (
+            [title] => 销售订单: SO1
+            [columns] => Array
+                (
+                    [0] => Array
+                        (
+                            [logo] => test/logo/ubiwire_logo.jpg
+                            [summary] => 友贝科技
+                            [content] => 蛇口太子路振兴大厦四层D-010室, 
+南山, 深圳, 
+广东, 518057
+电话: +86-755-2689-5119, 
+传真: +86-755-2689-5119, 
+网址: www.ubiwire.com
+                            [fieldlabel] => 报价单名称
+                            [fieldvalue] => Cont_Quote
+                        )
+
+                    [1] => Array
+                        (
+                            [主题] => SO_销售单1
+                            [客户名称] => 深圳市白雪投影显示技术有限公司
+                            [联系人名称] => 刘斌 
+                            [采购订单] => CAIGOU001
+                        )
+
+                    [2] => Array
+                        (
+                            [dates] => Array
+                                (
+                                    [填开日期] => 2010-10-28
+                                    [预计交付日期] => 2007-04-26
+                                )
+
+                            [付款住址] => 547400, 付款地址, [付款住址]乡镇市区, [付款住址]市(县), 547405
+                            [送货住址] => 456456, 送货住址, [送货住址]乡镇市区, [送货住址]市(县), 65786788
+                        )
+
+                )
+
+        )
+
+)
+
+buildHeaderModelColumnLeft:
+Array
+(
+    [logo] => test/logo/ubiwire_logo.jpg
+    [summary] => 友贝科技
+    [content] => 蛇口太子路振兴大厦四层D-010室, 
+南山, 深圳, 
+广东, 518057
+电话: +86-755-2689-5119, 
+传真: +86-755-2689-5119, 
+网址: www.ubiwire.com
+    [fieldlabel] => 报价单名称
+    [fieldvalue] => Cont_Quote
+)
+
+buildHeaderModelColumnCenter:
+Array
+(
+    [主题] => SO_销售单1
+    [客户名称] => 深圳市白雪投影显示技术有限公司
+    [联系人名称] => 刘斌 
+    [采购订单] => CAIGOU001
+)
+
+buildHeaderModelColumnRight:
+Array
+(
+    [dates] => Array
+        (
+            [填开日期] => 2010-10-28
+            [预计交付日期] => 2007-04-26
+        )
+
+    [付款住址] => 547400, 付款地址, [付款住址]乡镇市区, [付款住址]市(县), 547405
+    [送货住址] => 456456, 送货住址, [送货住址]乡镇市区, [送货住址]市(县), 65786788
+)
+
+buildFooterModel:
+Order Notes说明
+
+
+
+
+
+
+
+
+setContentModels:
+Array
+(
+    [0] => Vtiger_PDF_Model Object
+        (
+            [values:protected] => Array
+                (
+                    [Name] => 打印机
+                    [Code] => sg-125
+                    [Quantity] => 1
+                    [Price] => 130.00
+                    [Discount] => 20.00
+ (0%)
+                    [Tax] => 0.00
+ (0%)
+                    [Total] => 110.00
+                    [Comment] => This is test comment for product of Quotes
+                )
+
+        )
+
+    [1] => Vtiger_PDF_Model Object
+        (
+            [values:protected] => Array
+                (
+                    [Name] => 打印机
+                    [Code] => sg-125
+                    [Quantity] => 1
+                    [Price] => 1,230.00
+                    [Discount] => 200.00
+ (0%)
+                    [Tax] => 0.00
+ (0%)
+                    [Total] => 1,030.00
+                    [Comment] => This is test comment for product of SalesOrder
+                )
+
+        )
+
+)
+
+buildSummaryModel:
+Vtiger_PDF_Model Object
+(
+    [values:protected] => Array
+        (
+            [总净额] => 1,140.00
+            [折扣] => 100.00
+            [运费和手续费：] => 50.00
+            [运费和手续费 税:(0%)] => 0.00
+            [调整] => 100.00
+            [总计金额：(  $)] => 1,190.00
+        )
+
+)
+
+buildContentLabelModel:
+Vtiger_PDF_Model Object
+(
+    [values:protected] => Array
+        (
+            [Code] => 产品编号
+            [Name] => 产品名称
+            [Quantity] => 数量
+            [Price] => 单价
+            [Discount] => 折扣
+            [Tax] => 税
+            [Total] => 总计
+            [Comment] => Comment
+        )
+
+)
+
+buildWatermarkModel:
+Vtiger_PDF_Model Object
+(
+    [values:protected] => Array
+        (
+            [content] => Approved
+        )
+
+)
+

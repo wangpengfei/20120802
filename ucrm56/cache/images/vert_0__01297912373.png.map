@@ -1,0 +1,9 @@
+<img src="cache/images/vert_0__01297912373.png" border="0" usemap="#cache/images/vert_0__01297912373.png">
+<map name="cache/images/vert_0__01297912373.png">
+	<area shape="rect" coords="57,216,105,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=s&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="s - 1" title="s - 1">
+	<area shape="rect" coords="168,174,215,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=testmsg&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="testmsg - 6" title="testmsg - 6">
+	<area shape="rect" coords="279,166,326,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=admin&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="admin - 7" title="admin - 7">
+	<area shape="rect" coords="389,191,437,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=sm&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="sm - 4" title="sm - 4">
+	<area shape="rect" coords="500,56,547,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=test&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="test - 20" title="test - 20">
+	<area shape="rect" coords="611,191,658,225" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=sss&search_field=assigned_user_id&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="sss - 4" title="sss - 4">
+</map>

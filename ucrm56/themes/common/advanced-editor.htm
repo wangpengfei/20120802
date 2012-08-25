@@ -1,0 +1,962 @@
+<!-- 
+available only for IE5+ users
+-->
+{config_load file=$LanguageFile section="AdvancedEditor"}
+{config_load file=$CustomerLanguageFile}
+
+{literal}
+<style type="text/css">
+SELECT {
+    BACKGROUND: #eeeeee;
+    FONT: 9pt arial,sans-serif
+}
+TABLE {
+    POSITION: relative
+}
+.Composition {
+    BACKGROUND-COLOR: FFFFFF;
+    POSITION: relative; 
+    scrollbar-arrow-color: #FFFFFF; 
+    scrollbar-3dlight-color: #FFFFFF; 
+    scrollbar-darkshadow-color: #FFFFFF; 
+    scrollbar-face-color: #999999; 
+    scrollbar-highlight-color: #999999; 
+    scrollbar-shadow-color: #999999; 
+    scrollbar-track-color: #FFFFFF;
+    border: 1px dotted
+}
+.yToolbar {
+    BACKGROUND-COLOR: menu;
+    BORDER-BOTTOM: buttonshadow 1px solid;
+    BORDER-LEFT: buttonhighlight 1px solid;
+    BORDER-RIGHT: buttonshadow 1px solid;
+    BORDER-TOP: buttonhighlight 1px solid;
+    HEIGHT: 27px;
+    LEFT: 0px;
+    POSITION: relative;
+    TOP: 0px
+}
+.Btn {
+    BACKGROUND-COLOR: menu;
+    BORDER-BOTTOM: buttonface 1px solid;
+    BORDER-LEFT: buttonface 1px solid;
+    BORDER-RIGHT: buttonface 1px solid;
+    BORDER-TOP: buttonface 1px solid;
+    HEIGHT: 23px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 23px
+}
+.Ico {
+    HEIGHT: 22px;
+    LEFT: -1px;
+    POSITION: absolute;
+    TOP: -1px;
+    WIDTH: 22px
+}
+.TBSep {
+    BORDER-LEFT: buttonshadow 1px solid;
+    BORDER-RIGHT: buttonhighlight 1px solid;
+    FONT-SIZE: 0px;
+    HEIGHT: 22px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 1px
+}
+.TBGen {
+    FONT: 9pt arial,sans-serif;
+    HEIGHT: 22px;
+    POSITION: absolute;
+    TOP: 2px
+}
+.TBHandle {
+    BACKGROUND-COLOR: menu;
+    BORDER-LEFT: buttonhighlight 1px solid;
+    BORDER-RIGHT: buttonshadow 1px solid;
+    BORDER-TOP: buttonhighlight 1px solid;
+    FONT-SIZE: 1px;
+    HEIGHT: 22px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 3px
+}
+.BtnMouseOverUp {
+    BACKGROUND-COLOR: buttonface;
+    BORDER-BOTTOM: buttonshadow 1px solid;
+    BORDER-LEFT: buttonhighlight 1px solid;
+    BORDER-RIGHT: buttonshadow 1px solid;
+    BORDER-TOP: buttonhighlight 1px solid;
+    HEIGHT: 23px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 24px
+}
+.BtnMouseOverDown {
+    BACKGROUND-COLOR: buttonface;
+    BORDER-BOTTOM: buttonhighlight 1px solid;
+    BORDER-LEFT: buttonshadow 1px solid;
+    BORDER-RIGHT: buttonhighlight 1px solid;
+    BORDER-TOP: buttonshadow 1px solid;
+    HEIGHT: 23px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 24px
+}
+.BtnDown {
+    BACKGROUND-COLOR: gainsboro;
+    BORDER-BOTTOM: buttonhighlight 1px solid;
+    BORDER-LEFT: buttonshadow 1px solid;
+    BORDER-RIGHT: buttonhighlight 1px solid;
+    BORDER-TOP: buttonshadow 1px solid;
+    HEIGHT: 23px;
+    POSITION: absolute;
+    TOP: 1px;
+    WIDTH: 24px
+}
+.IcoDown {
+    HEIGHT: 23px;
+    LEFT: 0px;
+    POSITION: absolute;
+    TOP: 0px;
+    WIDTH: 24px
+}
+.IcoDownPressed {
+    LEFT: 1px;
+    POSITION: absolute;
+    TOP: 1px
+}
+.PopupFrame {
+	visibility: hidden; 
+	position: absolute; 
+	left: 0px;
+	top: 0px; 
+	border: 1px solid #000000;
+}
+</STYLE>
+{/literal}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="1">
+	<tr>
+		<td bgcolor=menu>
+			<div class="yToolbar" id="ParaToolbar">
+				<div class="TBHandle"></div>
+				<div class="Btn" language="javascript" onClick="formatC('cut')"><img class="Ico" src="images/editor/cut.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('copy')"><img class="Ico" src="images/editor/copy.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('paste')"><img class="Ico" src="images/editor/paste.gif"></div>
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('undo')"><img class="Ico" src="images/editor/undo.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('redo');"><img class="Ico" src="images/editor/redo.gif"></div>
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('bold');"><img class="Ico" src="images/editor/bold.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('italic')"><img class="Ico" src="images/editor/italic.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('underline')"><img class="Ico" src="images/editor/under.gif"></div>
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('strikethrough');"><img class="Ico" src="images/editor/strikethrough.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('subscript')"><img class="Ico" src="images/editor/subscript.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('superscript')"><img class="Ico" src="images/editor/superscript.gif"></div>
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('createLink')"><img class="Ico" src="images/editor/wlink.gif"></div>
+				<div class="Btn" language="javascript" onClick="insertImage()"><img class="Ico" src="images/editor/img.gif"></div>
+				<div class="Btn" language="javascript" onClick="insertTable()"><img class="Ico" src="images/editor/table.gif"></div>
+				{if $LiteEditor eq ""}
+				{if $OriginalEditor eq 1}
+				<div class="Btn" language="javascript" onClick="insertEmote()"><img class="Ico" src="images/editor/emote.gif"></div>
+				{else}
+				<div id="EmoteImgBtn" class="Btn" language="javascript" onClick="switchIframe('EmoteImg')"><img class="Ico" src="images/editor/emote.gif"></div>
+				{/if}
+				<div class="Btn" language="javascript" onClick="uploadImage()"><img class="Ico" src="images/editor/upimg.gif"></div>
+				{/if}
+				<div class="TBSep"></div>
+				{if $OriginalEditor eq 1}
+				<div class="Btn" language="javascript" onClick="foreColor()"><img class="Ico" src="images/editor/fgcolor.gif"></div>
+				<div class="Btn" language="javascript" onClick="backColor()"><img class="Ico" src="images/editor/gbcolor.gif"></div>
+				{else}
+				<div id="ForeColorPaletteBtn" class="Btn" language="javascript" onClick="switchIframe('ForeColorPalette')"><img class="Ico" src="images/editor/fgcolor.gif"></div>
+				<div id="BackColorPaletteBtn" class="Btn" language="javascript" onClick="switchIframe('BackColorPalette')"><img class="Ico" src="images/editor/gbcolor.gif"></div>
+				{/if}
+				{if $LiteEditor eq ""}
+				<div class="TBSep"></div>
+				{if $OriginalEditor eq 1}
+				<select class="TBGen" language="javascript" onChange="backImage(this[this.selectedIndex].value);">
+					<option selected value="-1">{#notepapers_select#}</option>
+					{$NotePapers}
+				</select>
+				{else}
+				<div id="NotePaperBtn" class="TBGen" language="javascript" onClick="switchIframe('NotePaper')"><img src="images/editor/notepaper.gif"></div>
+				{/if}
+				{/if}
+			</div>
+			
+			<div class="yToolbar" id="ParaToolbar">
+				<div class="TBHandle"></div>
+				{if $OriginalEditor eq 1}
+				<select class="TBGen" language="javascript" onChange="formatC('formatBlock', this[this.selectedIndex].value);this.selectedIndex=0">
+					<option value="&lt;P&gt;" selected>{#format_paragraph#}</option>
+					<option value="&lt;H1&gt;">{#format_h1#}</option>
+					<option value="&lt;H2&gt;">{#format_h2#}</option>
+					<option value="&lt;H3&gt;">{#format_h3#}</option>
+					<option value="&lt;H4&gt;">{#format_h4#}</option>
+					<option value="&lt;H5&gt;">{#format_h5#}</option>
+					<option value="&lt;H6&gt;">{#format_h6#}</option>
+					<option value="&lt;PRE&gt;">{#format_pre#}</option>
+				</select>
+				<select class="TBGen" language="javascript" onChange="formatC('fontname', this[this.selectedIndex].value);this.selectedIndex=0">
+					<option value="Arial" selected>{#format_font#}</option>
+					<option value="Arial">Arial</option>
+					<option value="Arial Black">Arial Black</option>
+					<option value="Arial Narrow">Arial Narrow</option>
+					<option value="Comic Sans MS">Comic Sans MS</option>
+					<option value="Courier New">Courier New</option>
+					<option value="System">System</option>
+					<option value="Times New Roman">Times New Roman</option>
+					<option value="Verdana">Verdana</option>
+					<option value="Wingdings">Wingdings</option>
+					{#extra_font_list#}
+				</select>
+				<select class="TBGen" language="javascript" onChange="formatC('fontsize', this[this.selectedIndex].value);this.selectedIndex=0">
+					<option value="4" selected>{#format_size#}</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+				</select>
+				{else}
+				<div id="ParagraphStyleBtn" class="TBGen" language="javascript" onClick="switchIframe('ParagraphStyle')"><img src="images/editor/paragraph.gif"></div>
+				<div id="FontNameBtn" class="TBGen" language="javascript" onClick="switchIframe('FontName')"><img src="images/editor/fontname.gif"></div>
+				<div id="FontSizeBtn" class="TBGen" language="javascript" onClick="switchIframe('FontSize')"><img src="images/editor/fontsize.gif"></div>
+				{/if}
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('justifyleft')"><img class="Ico" src="images/editor/aleft.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('justifycenter')"><img class="Ico" src="images/editor/center.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('justifyright')"><img class="Ico" src="images/editor/aright.gif"></div>
+				<div class="TBSep"></div>
+				<div class="Btn" language="javascript" onClick="formatC('insertorderedlist')"><img class="Ico" src="images/editor/nlist.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('insertunorderedlist')"><img class="Ico" src="images/editor/blist.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('outdent')"><img class="Ico" src="images/editor/ileft.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('indent')"><img class="Ico" src="images/editor/iright.gif"></div>
+				<div class="Btn" language="javascript" onClick="formatC('InsertHorizontalRule')"><img class="Ico" src="images/editor/hline.gif"></div>
+				<div class="TBSep"></div>
+				<div id="EditMode" class="TBGen">
+					<input type="checkbox" name="switchMode" language="javascript" onClick="setMode(switchMode.checked)"><a href="javascript:void(0)" onClick="document.form1.switchMode.click()"><font color="#000000" face="Arial">{#view_source#}</font></a> 
+				  	<a href="javascript:void(0)" onClick="formatC('formatBlock','removeFormat')"><font color="#000000" face="Arial">{#clear_format#}</font></a>
+				</div>
+			</div>
+		</td>
+	</tr>
+			
+	<tr>
+		<td>
+		{if $LiteEditor eq ""}
+			<iframe name="Composition" id="Composition" src="blank.htm" width="100%" height="350" frameborder="0" class="Composition"></iframe>
+		{else}
+			<iframe name="Composition" id="Composition" src="blank.htm" width="100%" height="200" frameborder="0" class="Composition"></iframe>
+		{/if}
+		</td>
+	</tr>
+{if $OriginalEditor neq 1}
+<iframe name="ForeColorPalette" id="ForeColorPalette" src="blank.htm" width="260" height="160" frameborder="0" scrolling="no" class="PopupFrame"></iframe>
+<iframe name="BackColorPalette" id="BackColorPalette" src="blank.htm" width="260" height="160" frameborder="0" scrolling="no" class="PopupFrame"></iframe>
+<iframe name="ParagraphStyle" id="ParagraphStyle" src="blank.htm" width="240" height="260" frameborder="0" scrolling="no" class="PopupFrame"></iframe>
+<iframe name="FontName" id="FontName" src="blank.htm" width="140" height="190" frameborder="0" scrolling="yes" class="PopupFrame"></iframe>
+<iframe name="FontSize" id="FontSize" src="blank.htm" width="65" height="230" frameborder="0" scrolling="no" class="PopupFrame"></iframe>
+<iframe name="EmoteImg" id="EmoteImg" src="blank.htm" width="350" height="340" frameborder="0" scrolling="no" class="PopupFrame"></iframe>
+<iframe name="NotePaper" id="NotePaper" src="blank.htm" width="280" height="340" frameborder="0" scrolling="yes" class="PopupFrame"></iframe>
+{/if}
+</table>
+
+{literal}
+<script language="JavaScript">
+<!--
+SEP_PADDING = 5;
+HANDLE_PADDING = 7;
+DEFAULT_HTML_TEXT = "<DIV></DIV>"; 
+
+bLoad = false;
+pureText = true;
+
+bodyTag = "<HEAD>";
+{/literal}
+bodyTag += "<META http-equiv=\"Content-Type\" content=\"text/html; charset={$PageCharset}\">";
+{literal}
+bodyTag += "<STYLE type=\"text/css\">body {font-size: 10.8pt}</STYLE>";
+bodyTag += "</HEAD>";
+bodyTag += "<BODY MONOSPACE>";
+bodyTag += DEFAULT_HTML_TEXT;
+bodyTag += "</BODY>";
+
+bTextMode = false;
+
+/*****************************
+ Power Editor class
+ member function:
+ SetHtml
+ GetHtml
+ SetText
+ GetText
+ GetCompFocus()
+ *****************************/
+function Editor() {
+	this.put_HtmlMode = setMode;
+//	this.put_value = SetValue;
+//	this.get_value = GetValue;
+	this.put_html = SetHtml;
+	this.get_html = GetHtml;
+	this.put_text = SetText;
+	this.get_text = GetText;
+	this.CompFocus = GetCompFocus;
+}
+
+function GetCompFocus() {
+	Composition.focus();
+}
+
+function GetText() {
+	if (Composition.document.body.innerText == DEFAULT_HTML_TEXT)
+		return "";
+		
+	return Composition.document.body.innerText;
+}
+
+function SetText(text) {
+	text = text.replace(/\n/g, "<BR>") 
+	text = text.replace(/  /g, "&nbsp;&nbsp;") 
+	Composition.document.body.innerHTML = text;
+}
+
+function GetHtml() {
+	if (bTextMode) {
+		if (Composition.document.body.innerText == DEFAULT_HTML_TEXT)
+			return "";
+		
+		return Composition.document.body.innerText;
+	}
+	else {
+		cleanHtml();
+		cleanHtml();
+		return Composition.document.body.innerHTML;
+	}
+}
+
+function SetHtml(sVal) {
+	if (bTextMode) 
+		Composition.document.body.innerText = sVal;
+	else 
+		Composition.document.body.innerHTML = sVal;
+}
+
+function GetValue() {
+	if (bTextMode) {
+		if (Composition.document.body.innerText == DEFAULT_HTML_TEXT)
+			return "";
+
+		return Composition.document.body.innerText;
+	}
+	else {
+		cleanHtml();
+		cleanHtml();
+		return Composition.document.body.innerHTML;
+	}
+}
+
+function SetValue(sVal) {
+	if (bTextMode) 
+		Composition.document.body.innerText = sVal;
+	else 
+		Composition.document.body.innerHTML = sVal;
+}
+//End  of Editor Class
+
+/***********************************************
+ Initialize everything when the document is ready
+ ***********************************************/
+var bInitialized = false;
+var range;
+
+document.onreadystatechange = function() {
+//function document.onreadystatechange(){
+	if (bInitialized) 
+		return;
+	
+	bInitialized = true;
+	var i, s, curr;
+	// Find all the toolbars and initialize them.
+	for (i = 0; i < document.body.all.length; i++) {
+		curr = document.body.all[i];
+	    if (curr.className == "yToolbar") {
+	      InitTB(curr);
+	    }
+	}
+	Composition.document.open("text/html", "replace")
+	Composition.document.write(bodyTag);
+	Composition.document.close()
+	Composition.document.designMode = "On"
+	Composition.document.onkeydown = _handleKeyDown;
+	Composition.document.onmousedown = hideIframes;
+	
+	if (document.form1.rtfeditor.value != "")
+		SetHtml(document.form1.rtfeditor.value);
+	else
+		SetHtml(bodyTag);
+		
+{/literal}
+{if $LiteEditor eq ""}
+	if(document.form1.bgcolor && document.form1.bgcolor.value != '-1')
+		Composition.document.bgColor = document.form1.bgcolor.value;
+	if(document.form1.bgimage && document.form1.bgimage.value != '-1')
+		Composition.document.body.background = document.form1.bgimage.value;
+{/if}
+{literal}
+}
+
+function _handleKeyDown () {
+	var ev = this.parentWindow.event
+	if(ev.keyCode == 13) {
+		Composition.focus();
+
+		var selectedRange = Composition.document.selection.createRange();
+		var parentElement = selectedRange.parentElement();
+		var tagName = parentElement.tagName;
+
+		while((/^(a|abbr|acronym|b|bdo|big|cite|code|dfn|em|font|i|kbd|label|q|s|samp|select|small|span|strike|strong|sub|sup|textarea|tt|u|var)$/i.test(tagName)) 
+			&& (tagName != 'HTML')){
+			parentElement = parentElement.parentElement;
+			tagName = parentElement.tagName;
+		}
+
+		//Insert <div> instead of <p>
+		if (parentElement.tagName == 'P' || parentElement.tagName == 'BODY'
+			|| parentElement.tagName == 'HTML' || parentElement.tagName == 'TD'
+			|| parentElement.tagName == 'THEAD' || parentElement.tagName == 'TFOOT'){
+			selectedRange.pasteHTML('<div>');
+			selectedRange.select();
+			ev.returnValue = false;
+			ev.cancelBubble = true;
+			return false;
+		}
+	}
+}
+
+/***********************************************
+ Initialize a button ontop of toolbar
+ ***********************************************/
+function InitBtn(btn) {
+	btn.onmouseover = BtnMouseOver;
+	btn.onmouseout = BtnMouseOut;
+	btn.onmousedown = BtnMouseDown;
+	btn.onmouseup = BtnMouseUp;
+	btn.ondragstart = YCancelEvent;
+	btn.onselectstart = YCancelEvent;
+	btn.onselect = YCancelEvent;
+	btn.YUSERONCLICK = btn.onclick;
+	btn.onclick = YCancelEvent;
+	btn.YINITIALIZED = true;
+	
+	return true;
+}
+
+function InitTB(y)
+{
+	y.TBWidth = 0;
+
+  	if (!PopulateTB(y)) 
+  		return false;
+
+  	y.style.posWidth = y.TBWidth;
+
+  	return true;
+}
+
+function PopulateTB(y)
+{
+	var i, elements, element;
+
+	elements = y.children;
+	for (i = 0; i < elements.length; i++) {
+		element = elements[i];
+		if (element.tagName == "SCRIPT" || element.tagName == "!") 
+			continue;
+
+		switch (element.className) {
+		case "Btn":
+			if (element.YINITIALIZED == null) {
+				if (!InitBtn(element))
+					return false;
+			}
+
+			element.style.posLeft = y.TBWidth;
+			y.TBWidth += element.offsetWidth + 1;
+			break;
+		case "TBGen":
+			element.style.posLeft = y.TBWidth;
+			y.TBWidth += element.offsetWidth + 1;
+			break;
+		case "TBSep":
+			element.style.posLeft = y.TBWidth + 2;
+			y.TBWidth += SEP_PADDING;
+			break;
+		case "TBHandle":
+			element.style.posLeft = 2;
+			y.TBWidth += element.offsetWidth + HANDLE_PADDING;
+			break;
+		default:
+			return false;
+		}
+	}
+
+	y.TBWidth += 1;
+	return true;
+}
+
+// Hander that simply cancels an event
+function YCancelEvent() {
+	event.returnValue = false;
+	event.cancelBubble = true;
+	
+	return false;
+}
+
+// Toolbar button onmouseover handler
+function BtnMouseOver() {
+	if (event.srcElement.tagName != "IMG") 
+		return false;
+		
+	var image = event.srcElement;
+	var element = image.parentElement;
+	// Change button look based on current state of image.- we don't actually have chaned image
+	// could be commented but don't remove for future extension
+	if (image.className == "Ico") 
+		element.className = "BtnMouseOverUp";
+	else if (image.className == "IcoDown") 
+		element.className = "BtnMouseOverDown";
+		
+	event.cancelBubble = true;
+}
+
+// Toolbar button onmouseout handler
+function BtnMouseOut() {
+	if (event.srcElement.tagName != "IMG") {
+		event.cancelBubble = true;
+		return false;
+	}
+	
+	var image = event.srcElement;
+	var element = image.parentElement;
+	yRaisedElement = null;
+	element.className = "Btn";
+	image.className = "Ico";
+	event.cancelBubble = true;
+}
+
+// Toolbar button onmousedown handler
+function BtnMouseDown() {
+	hideIframes();
+	
+	if (event.srcElement.tagName != "IMG") {
+    	event.cancelBubble = true;
+    	event.returnValue=false;
+    	return false;
+  	}
+  	
+  	var image = event.srcElement;
+  	var element = image.parentElement;
+
+  	element.className = "BtnMouseOverDown";
+  	image.className = "IcoDown";
+
+  	event.cancelBubble = true;
+  	event.returnValue = false;
+  	return false;
+}
+
+// Toolbar button onmouseup handler
+function BtnMouseUp() {
+  	if (event.srcElement.tagName != "IMG") {
+    	event.cancelBubble = true;
+    	return false;
+  	}
+
+  	var image = event.srcElement;
+  	var element = image.parentElement;
+
+  	if (element.YUSERONCLICK) 
+  		eval(element.YUSERONCLICK + "anonymous()");
+
+  	element.className = "BtnMouseOverUp";
+  	image.className = "Ico";
+
+  	event.cancelBubble = true;
+  	return false;
+}
+
+// Check if toolbar is being used when in text mode
+function validateMode() {
+  	if (!bTextMode) 
+  		return true;
+{/literal}
+  		alert('{#adv_warning_text_mode1#} "{#view_source#}" {#adv_warning_text_mode2#}');
+{literal}
+  	Composition.focus();
+  	return false;
+}
+
+//Formats text in composition.
+function formatC(what, opt) {
+  	if (!validateMode()) 
+  		return;
+  	
+  	if (opt == "removeFormat") {
+    	what = opt;
+    	opt = null;
+  	}
+  
+  	Composition.focus();
+  
+  	if (opt == null) 
+  		Composition.document.execCommand(what);
+  	else 
+  		Composition.document.execCommand(what, false, opt);
+  		
+  	pureText = false;
+  	
+  	Composition.focus();
+}
+
+//Switches between text and html mode.
+function setMode(newMode) {
+  	bTextMode = newMode;
+  	var content;
+  	if (bTextMode) {
+    	cleanHtml();
+ 		cleanHtml();
+   	
+    	content = Composition.document.body.innerHTML;
+		Composition.document.body.innerText = content;
+  	} 
+  	else {
+    	content = Composition.document.body.innerText;
+    	Composition.document.body.innerHTML = content;
+  	}
+  	Composition.focus();
+}
+
+//Finds and returns an element.
+function getEl(sTag, start) {
+  	while ((start != null) && (start.tagName != sTag)) 
+  		start = start.parentElement;
+  	
+  	return start;
+}
+
+function cleanHtml() {
+  	var fonts = Composition.document.body.all.tags("FONT");
+  	var curr;
+  	
+  	for (var i = fonts.length - 1; i >= 0; i--) {
+    	curr = fonts[i];
+    	if (curr.style.backgroundColor == "#ffffff") 
+    		curr.outerHTML = curr.innerHTML;
+  	}
+}
+
+function getPureHtml() {
+  	var str = "";
+  	var paras = Composition.document.body.all.tags("P");
+  	if (paras.length > 0) {
+    	for (var i = paras.length-1; i >= 0; i--) 
+    		str = paras[i].innerHTML + "\n" + str;
+  	} 
+  	else {
+    	str = Composition.document.body.innerHTML;
+  	}
+  	return str;
+}
+
+//==========================================
+
+function insertImage() {
+	if (!validateMode()) 
+		return;
+{/literal}
+    var str = showModalDialog("{$InsPictureUrl}", "InsPicture", "dialogWidth:30em; dialogHeight:14em; status:0; scroll:0");
+{literal}
+	Composition.focus();
+	if (str != null) {
+		var sel = Composition.document.selection.createRange();
+		sel.pasteHTML(str);
+		sel.select();
+	}
+}
+
+function insertTable() {
+	if (!validateMode()) 
+		return;
+{/literal}
+	var str = showModalDialog("{$InsTableUrl}", "InsTable", "dialogWidth:24em; dialogHeight:12em; status:0; scroll:0");
+{literal}
+	Composition.focus();
+	if (str != null) {
+		var sel = Composition.document.selection.createRange();
+		sel.pasteHTML(str);
+		sel.select();
+	}
+}
+
+function insertEmote() {
+	if (!validateMode()) 
+		return;
+{/literal}
+	var str = showModalDialog("{$InsEmoteUrl}", "InsEmote", "dialogWidth:24em; dialogHeight:26em; status:0; scroll:0");
+{literal}
+	Composition.focus();
+	if (str != null){
+		formatC("insertImage", str);
+	}
+}
+
+function uploadImage() {
+	if (!validateMode()) 
+		return;
+{/literal}
+	window.open("{$UpImageUrl}", "UpImage", "left=150,top=150,width=350,height=50,directories=no,toolbar=no,status=no,scrollbars=no,resizable=no");
+{literal}
+}
+
+function insertUpImage(str) {
+	if (!validateMode()) 
+		return;
+
+	Composition.focus();
+	if (str != null){
+		formatC("insertImage", str);
+	}
+}
+
+function foreColor() {
+  	if (! validateMode()) 
+  		return;
+{/literal}
+  	var str = showModalDialog("{$SelColorUrl}", "SelColor", "dialogWidth:18.5em; dialogHeight:17.5em; status:0; scroll:0");
+{literal}
+	Composition.focus();
+  	if (str != null) {
+  		formatC('forecolor', str);
+  	}
+}
+
+function backColor() {
+  	if (!validateMode())
+  		return;
+{/literal}
+  	var str = showModalDialog("{$SelColorUrl}", "SelBkColor", "dialogWidth:18.5em; dialogHeight:17.5em; status:0; scroll:0");
+{literal}
+	Composition.focus()
+  	if (str != null){
+	   	if( Composition.document.selection.type == "None" ){
+	   		Composition.document.bgColor = str;
+{/literal}
+{if $LiteEditor eq ""}
+	   		if (document.form1.bgcolor)
+	   			document.form1.bgcolor.value = str;
+{/if}
+{literal}
+	   	}
+	   	else{
+	  		formatC('backcolor', str);
+	   	}
+  	}
+}
+
+function backImage(image){
+	if (!validateMode()) 
+		return;
+
+	Composition.focus()
+	if (image == "-1")
+  		Composition.document.body.background = "";
+	else
+		Composition.document.body.background = image;
+	
+	if (document.form1.bgimage)	
+		document.form1.bgimage.value = image;
+}
+
+//==========================================
+
+function getOffsetTop(elm){
+	var mOffsetTop = elm.offsetTop;
+	var mOffsetParent = elm.offsetParent;
+	if (mOffsetParent){
+		mOffsetTop += mOffsetParent.offsetTop;
+	}
+	
+	return mOffsetTop;
+}
+
+function getOffsetLeft(elm){
+	var mOffsetLeft = elm.offsetLeft;
+	var mOffsetParent = elm.offsetParent;
+	if (mOffsetParent){
+		mOffsetLeft += mOffsetParent.offsetLeft;
+		mOffsetParent = mOffsetParent.offsetParent;
+	}
+	
+	return mOffsetLeft;
+}
+
+function switchIframe(frmName){
+{/literal}
+{if $OriginalEditor eq 1}
+	return;
+{/if}	
+{literal}
+	hideIframes();
+
+	if (!validateMode()) 
+		return;
+		
+	btnName = frmName + "Btn";
+	buttonElement = document.getElementById(btnName);
+	
+	document.getElementById(frmName).style.left = getOffsetLeft(buttonElement) + 'px';
+	document.getElementById(frmName).style.top = (getOffsetTop(buttonElement) + buttonElement.offsetHeight) + 'px';
+
+	frmSrc = '';
+	switch(frmName){
+{/literal}
+	case 'EmoteImg':
+		frmSrc = '{$EmoteImgUrl}';
+		break;
+	case 'ForeColorPalette':
+		frmSrc = '{$ColorPaletteUrl}&colormode=forecolor';
+		break;
+	case 'BackColorPalette':
+		frmSrc = '{$ColorPaletteUrl}&colormode=backcolor';
+		break;
+	case 'NotePaper':
+		frmSrc = '{$NotePaperUrl}';
+		break;
+	case 'ParagraphStyle':
+		frmSrc = '{$ParagraphUrl}';
+		break;
+	case 'FontName':
+		frmSrc = '{$FontNameUrl}';
+		break;
+	case 'FontSize':
+		frmSrc = '{$FontSizeUrl}';
+		break;
+{literal}
+	}
+	
+	if (frmSrc == '')
+		return;
+		
+	document.getElementById(frmName).src = frmSrc;
+	document.getElementById(frmName).style.visibility = 'visible';
+
+	var selectedRange = Composition.document.selection;
+	if (selectedRange != null)
+		range = selectedRange.createRange();
+	else
+		range = null;
+}
+
+function hideIframes(){
+{/literal}
+{if $OriginalEditor eq 1}
+	return;
+{/if}	
+{literal}
+	if (document.getElementById('BackColorPalette').style.visibility == 'visible')
+		document.getElementById('BackColorPalette').style.visibility = 'hidden';
+	if (document.getElementById('ForeColorPalette').style.visibility == 'visible')
+		document.getElementById('ForeColorPalette').style.visibility = 'hidden';
+	if (document.getElementById('ParagraphStyle').style.visibility == 'visible')
+		document.getElementById('ParagraphStyle').style.visibility = 'hidden';
+	if (document.getElementById('FontName').style.visibility == 'visible')
+		document.getElementById('FontName').style.visibility = 'hidden';
+	if (document.getElementById('FontSize').style.visibility == 'visible')
+		document.getElementById('FontSize').style.visibility = 'hidden';
+	if (document.getElementById('EmoteImg').style.visibility == 'visible')
+		document.getElementById('EmoteImg').style.visibility = 'hidden';
+	if (document.getElementById('NotePaper').style.visibility == 'visible')
+		document.getElementById('NotePaper').style.visibility = 'hidden';
+
+	range = null;
+}
+
+function doCommand(optMode, optValue){
+	if (optValue == '')
+		return;
+		
+	var selectedRange = Composition.document.selection;
+	if (selectedRange != null){
+		selectedRange = selectedRange.createRange();
+		if (range != null) {
+			selectedRange = range;
+			selectedRange.select();
+		}
+	}
+
+	switch(optMode){
+	case 'forecolor':
+  		formatC('forecolor', optValue);
+		break;
+	case 'backcolor':
+	   	if(Composition.document.selection.type == "None"){
+	   		Composition.document.bgColor = optValue;
+{/literal}
+{if $LiteEditor eq ""}
+	   		if (document.form1.bgcolor)
+	   			document.form1.bgcolor.value = optValue;
+{/if}
+{literal}	   	
+		}
+		else{
+	  		formatC('backcolor', optValue);
+	  	}
+		break;
+	case 'paragraph':
+		formatC('formatBlock', optValue);
+		break;
+	case 'fontname':
+		formatC('fontname', optValue);
+		break;
+	case 'fontsize':
+		formatC('fontsize', optValue);
+		break;
+	case 'emoteimg':
+		formatC("insertImage", optValue);
+		break;
+	case 'notepaper':
+		if (optValue == "-1")
+	  		Composition.document.body.background = "";
+		else
+			Composition.document.body.background = optValue;
+		
+		if (document.form1.bgimage)	
+			document.form1.bgimage.value = optValue;
+		break;
+	}
+	
+	hideIframes();
+}
+
+obEditor = new Editor;
+
+Composition.document.open();
+Composition.document.write(bodyTag);
+Composition.document.close();
+Composition.document.designMode = "On";
+
+//Composition.focus();
+
+hideIframes();
+
+bLoad = true;
+// -->
+</script>
+
+{/literal}

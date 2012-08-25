@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Group"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#group_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+                <tr height=22>		          
+	    	       		<td width="30%" class="list_title" align=center><b>{#group_adr#}</b></td>
+	    	        	<td width="30%" class="list_title" align=center><b>{#group_description#}</b></td>
+	    	        	<td width="10%" class="list_title" align=center><b>{#group_manager#}</b></td>
+	    	        	<td width="10%" class="list_title" align=center><b>{#group_mailto#}</b></td>
+	    	        	<td width="10%" class="list_title" align=center><b>{#group_listmember#}</b></td>
+	    	        	<td width="10%" class="list_title" align=center><b>{#group_addcontact#}</b></td>
+	    		</tr>
+	    		{section name=i loop=$grouplist}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;{$grouplist[i].gid}</td>
+						<td class="list_value">&nbsp;{$grouplist[i].description|truncate:30:"...":true|escape:"html"}</td>
+						<td class="list_value" align="center">{if $grouplist[i].managerlink neq ""}<a href="{$grouplist[i].managerlink}" title="{#group_manager#}"><img src="themes/common/images/edit.gif" width=15 height=12 border=0 align=absmiddle></a>{else}&nbsp;{/if}</td>
+						<td class="list_value" align="center">{if $grouplist[i].mailto neq ""}<a href="{$grouplist[i].mailto}" title="{#group_mailto#}"><img src="themes/common/images/writemail.gif" width=16 height=16 border=0 align=absmiddle></a>{else}&nbsp;{/if}</td>
+						<td class="list_value" align="center">{if $grouplist[i].memberlink neq ""}<a href="{$grouplist[i].memberlink}" title="{#group_listmember#}"><img src="themes/common/images/member.gif" width=16 height=16 border=0 align=absmiddle>{else}&nbsp;{/if}</a></td>
+						<td class="list_value" align="center">{if $grouplist[i].addcontactlink neq ""}<a href="{$grouplist[i].addcontactlink}" title="{#group_addcontact#}"><img src="themes/common/images/address.gif" width=16 height=16 border=0 align=absmiddle></a>{else}&nbsp;{/if}</td>
+					</tr>
+			{/section}	    		
+	    	</table>
+	    	<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

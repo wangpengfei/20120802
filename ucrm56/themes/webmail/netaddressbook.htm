@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#netadr_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+		        <tr height=25>
+		            <td width="5%" align=center class="list_header"><a class="navigation" href="{$linklist[100]}">{#netadr_all#}</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[0]}">A</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[1]}">B</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[2]}">C</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[3]}">D</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[4]}">E</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[5]}">F</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[6]}">G</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[7]}">H</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[8]}">I</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[9]}">J</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[10]}">K</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[11]}">L</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[12]}">M</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[13]}">N</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[14]}">O</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[15]}">P</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[16]}">Q</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[17]}">R</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[18]}">S</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[19]}">T</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[20]}">U</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[21]}">V</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[22]}">W</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[23]}">X</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[24]}">Y</a></td>
+		            <td width="3%" align=center class="list_header"><a class="navigation" href="{$linklist[25]}">Z</a></td>
+				</tr>
+			</table>
+			
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+                <tr height=22>		          
+	    	        <td width="20%" class="list_title" align=center><b>{#netadr_name#}</b></td>
+	    	        <td width="40%" class="list_title" align=center><b>{#netadr_mail#}</b></td>
+	    	        <td width="20%" class="list_title" align=center><b>{#netadr_phone#}</b></td>
+	    	        <td width="15%" class="list_title" align=center><b>{#netadr_addcontact#}</b></td>
+	    		</tr>
+			    {section name=i loop=$netulist}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;{if $netulist[i].usertype eq "ext"}<img src="themes/common/images/typeext.gif" width=16 height=16 alt="{#netadr_typeext#}" border=0 align=absmiddle>{else}<img src="themes/common/images/typesys.gif" width=16 height=16 alt="{#netadr_typesys#}" border=0 align=absmiddle>{/if}&nbsp;<a href="{$netulist[i].viewlink}" title="{#netadr_viewinfo#}">{$netulist[i].name}</a></td>
+						<td class="list_value">&nbsp;<a href="{$netulist[i].maillink}" title="{#netadr_compose#}" align=absmiddle>{$netulist[i].mail}</a></td>
+						<td class="list_value">&nbsp;{$netulist[i].phone}</td>
+						<td class="list_value" align="center">&nbsp;<a href="{$netulist[i].addcontactlink}" title="{#netadr_addcontact#}"><img src="themes/common/images/address.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+					</tr>
+				{sectionelse}
+					<tr height="50">
+					    <td width="100%" class="list_value" colspan="4" align="center">
+					    	{#netadr_noschresults#}
+					    </td>
+					</tr>
+			    {/section}
+				
+		        {if $NumAddress neq 0}
+                <tr height=30>
+		            <td colspan="2" class="list_btn">&nbsp;</td>
+		            <td colspan="2" class="list_btn">&nbsp;{$PageInfo}&nbsp;
+					{if $NavBar}
+						{if $FirstLink}
+							&nbsp;<a href="{$FirstLink}" title="{#page_first_text#}"><img src="themes/common/images/firstpg.gif" width="10" height="12" alt="{#page_first_text#}" border=0></a>
+						{else}
+							&nbsp;<img src="themes/common/images/firstpgd.gif" width="10" height="12" alt="{#page_first_text#}" border=0>
+						{/if}
+						{if $PreviousLink}
+							&nbsp;<a href="{$PreviousLink}" title="{#page_prev_text#}"><img src="themes/common/images/prevpg.gif" width="7" height="12" alt="{#page_prev_text#}" border=0></a>
+						{else}
+							&nbsp;<img src="themes/common/images/prevpgd.gif" width="7" height="12" alt="{#page_prev_text#}" border=0>
+						{/if}
+						&nbsp;{$NavBar}
+						{if $NextLink}
+							&nbsp;<a href="{$NextLink}" title="{#page_next_text#}"><img src="themes/common/images/nextpg.gif" width="7" height="12" alt="{#page_next_text#}" border=0></a>
+						{else}
+	 						&nbsp;<img src="themes/common/images/nextpgd.gif" width="7" height="12" alt="{#page_next_text#}" border=0>
+						{/if}
+						{if $LastLink}
+							&nbsp;<a href="{$LastLink}" title="{#page_last_text#}"><img src="themes/common/images/lastpg.gif" width="10" height="12" alt="{#page_last_text#}" border=0></a>
+						{else}
+	 						&nbsp;<img src="themes/common/images/lastpgd.gif" width="10" height="12" alt="{#page_last_text#}" border=0>
+						{/if}
+						&nbsp;
+					{/if}
+	    	        </td>
+	    		</tr>
+	    		{/if}
+			</table>
+	      	<br>
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form method="POST" name="form1" action="netaddressbook.php">
+				<input type="hidden" name="sid" value="{$Sid}">
+				<input type="hidden" name="tid" value="{$Tid}">
+				<input type="hidden" name="lid" value="{$Lid}">
+				<input type="hidden" name="retid" value="{$Retid}">
+				<tr height=30>
+	    		<td class="tb_title" align="right" width="30%">{#netadr_lookup_tip#}&nbsp;</td>
+	    		<td class="tb_field" width="70%">
+	    			&nbsp;<input size="40" type=text name="ldapsearchword" class="textbox" maxlength=64>
+	    		    &nbsp;<input type="submit" value="{#netadr_lookup#}" class=button >
+	    		</td>
+	    		</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Today"}
+{config_load file=$LanguageFile section="Folders"}
+{config_load file=$LanguageFile section="PubBoard"}
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#today_title#}</title>
+</head>
+
+{$JSSource}
+{$PubBoardJSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+  	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+			{if $LastVisit}
+			<tr height=25>
+				<td colspan=3 class="list_header">
+					&nbsp;{#today_lastvisit#}&nbsp;POP3(<font color=blue>{$LastVisitPop3}</font>)&nbsp;IMAP(<font color=blue>{$LastVisitImap}</font>)&nbsp;Webmail(<font color=blue>{$LastVisitWebmail}</font>)
+					{if $LastVisitDateTime neq ""}&nbsp;{#today_datetime#}&nbsp;<font color=blue>{$LastVisitDateTime}</font>{/if}
+				</td>
+			</tr>
+			{/if}
+			<tr><td width=70% valign=top>
+				<table cellspacing=0 cellpadding=0 width="100%" border=0>
+				<tr height=25>
+				{if $QuotaEnabled eq 1}
+				    <td width="100%" colspan=4 class="list_header" align="center"><b>{#fld_prifolders#}</b></td>
+				{else}
+				    <td width="100%" colspan=3 class="list_header" align="center"><b>{#fld_prifolders#}</b></td>
+				{/if}
+				</tr>
+				<tr height=22>
+				    <td width="*%" class="list_title" align="center"><b>{#fld_name_hea#}</b></td>
+				    <td width="20%" class="list_title" align="center"><b>{#fld_messages_hea#}</b></td>
+				    <td width="15%" class="list_title" align="center"><b>{#fld_size_hea#}</b></td>
+				{if $QuotaEnabled eq 1}
+				    <td width="15%" class="list_title" align="center"><b>{#fld_usedrate_hea#}</b></td>
+				{/if}
+				</tr>
+		
+				{section name=i loop=$PrivateFolderList}
+				<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+					<td class="list_value">&nbsp;<a href="{$PrivateFolderList[i].chlink}"><img src="themes/common/images/{$PrivateFolderList[i].images}" border=0 width=16 height=16 align=absmiddle> {$PrivateFolderList[i].name|escape:"html"}</a></td>
+					<td class="list_value" align="center">{$PrivateFolderList[i].msgs}</td>
+					<td class="list_value" align="right">{$PrivateFolderList[i].boxsize}KB &nbsp;</td>
+					{if $QuotaEnabled eq 1}
+						<td class="list_value" align="center">{$PrivateFolderList[i].usedrate}%</td>
+					{/if}
+				</tr>
+				{/section}
+				<tr height=20>
+					<td class="list_value">&nbsp;</td>
+					<td class="list_value" align="right"><b>{#fld_total#}</b> &nbsp;</td>
+					<td class="list_value" align="right"><b>{$FolderTotalUsed}</b>KB &nbsp;</td>
+					{if $QuotaEnabled eq 1}
+					<td class="list_value" align="center">&nbsp;</td>
+					{/if}
+				</tr>
+		
+				<tr height=40>
+					<td class="list_value" align="center" colspan=4>
+						<b>{#quota_usage_info#}:</b> {#quota_usage_used#} <b>{$TotalUsed}</b>MB {#quota_usage_avail#} {if $QuotaEnabled eq 1}<b>{$QuotaLimit}</b>MB{else}<b>{#quota_usage_unlimited#}</b>{/if}<br>
+						{if $QuotaEnabled eq 1}{$UsageGraph}{/if}
+					</td>
+				</tr>
+				</table>				
+				
+			</td>
+			<td valign=top width=5><img width=1 height=1></td>
+			<td valign=top>
+				{$AllMonthDay}
+				<br>
+				<!--
+				{if $CalendarControl eq 0}
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height=22>
+						<td class="tb_header" colspan=2 align="center"><b>{#today_event_list#}</b></td>
+					</tr>
+					{if $WholeDayEventLink neq ""}
+					<tr height=20>
+						<td width=20% class="tb_field" align="center">{#cal_whole_day#}</td>
+						<td class="tb_value">{$WholeDayEventLink}</td>
+					</tr>
+					{/if}
+					{section name=i loop=$AllDayEvent}
+						{if $AllDayEvent[i].eventlink neq ""}
+						<tr height=20>
+							<td width=20% class="tb_field" align="center">{$AllDayEvent[i].timetext}:00</td>
+							<td class="tb_value">{$AllDayEvent[i].eventlink}</td>
+						</tr>
+						{/if}
+					{/section}
+					<tr height=20>
+						<td class="tb_value" colspan=2 align="right"><a href="{$CalListEventLink}">{#today_more#}</a>&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+				
+				<br>
+				<table width="100%" border="0" cellspacing="1" cellpadding="0">
+					<tr height=22>
+						<td class="tb_header" align="center"><b>{#today_task_list#}</b></td>
+					</tr>
+					{section name=i loop=$AllDayTask}
+						<tr height=20>
+							<td class="tb_value">{$AllDayTask[i].tasklink}</td>
+						</tr>
+					{/section}
+					<tr height=20>
+						<td class="tb_value" align="right"><a href="{$CalListTaskLink}">{#today_more#}</a>&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+				-->
+				<br>
+				{/if}
+			</td></tr>
+			</table>
+			<br>
+			
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

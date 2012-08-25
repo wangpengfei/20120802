@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="ReceivePop3"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#recvpop3_title#}</title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+	{if $NoAccount}
+	<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+		{if $DispResult neq 1}
+		<tr height=25">
+			<td class="list_header" align=center colspan=6>{#recvpop3_tip#}</td>
+		</tr>
+		{/if}
+		<tr height=22>
+			<td class="list_title" width="5%" align=center>&nbsp;</td>
+	  		<td class="list_title" width="30%" align=center><b>{#recvpop3_host#}</b></td>
+	  		<td class="list_title" width="25%" align=center><b>{#recvpop3_username#}</b></td>
+	  		<td class="list_title" width="10%" align=center><b>{#recvpop3_savecopy#}</b></td>
+	  		<td class="list_title" width="10%" align=center><b>{#recvpop3_enable#}</b></td>
+	  		<td class="list_title" width="*%" align=center><b>{#recvpop3_mailnum#}</b></td>
+		</tr>
+			{section name=i loop=$ExternalPop3List}
+				<tr height=20>
+					{if $DispResult neq 1}
+						<td class="list_value" width="5%" class="default" align=center><image src="themes/common/images/pop3getting.gif" width=16 height=16 border=0></td>
+					{else}
+						{if $ExternalPop3List[i].errorstring eq ""}
+						<td class="list_value" width="5%" class="default" align=center><image src="images/enable.gif" width=16 height=16 border=0></td>
+						{else}
+						<td class="list_value" width="5%" class="default" align=center><image src="images/disable.gif" width=16 height=16 border=0></td>
+						{/if}
+					{/if}
+
+					<td class="list_value" width="30%" class="default" align=center>{$ExternalPop3List[i].host}</td>
+					<td class="list_value" width="25%" class="default" align=center>{$ExternalPop3List[i].username}</td>
+					{if $DispResult neq 1}
+					<td class="list_value" width="10%" class="default" align=center>{if $ExternalPop3List[i].savecopy}Y{else}N{/if}</td>
+					<td class="list_value" width="10%" class="default" align=center>{if $ExternalPop3List[i].enable}Y{else}N{/if}</td>
+					<td class="list_value" width="20%" class="default" align=center>?</td>
+					{else}
+						{if $ExternalPop3List[i].errorstring eq ""}
+						<td class="list_value" width="10%" class="default" align=center>{if $ExternalPop3List[i].savecopy}Y{else}N{/if}</td>
+						<td class="list_value" width="10%" class="default" align=center>{if $ExternalPop3List[i].enable}Y{else}N{/if}</td>
+						<td class="list_value" width="20%" class="default" align=center>{$ExternalPop3List[i].msgcount}</td>
+						{else}
+						<td class="list_value" width="*%" class="default" colspan=3 align=center><font color=red>{$ExternalPop3List[i].errorstring}</font></td>
+						{/if}
+					{/if}
+				</tr>
+			{/section}
+	</table>
+	<br>
+	<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr height=50>
+			<td class="list_tip" align=center valign=middle>
+			{#recvpop3_sizelimit#}{$SizeLimit}
+			&nbsp;
+			{#recvpop3_countlimit#}{$CountLimit}
+			{if $DispResult eq 1}
+			<br>
+			<a href="javascript:self.close();">{#recvpop3_close#}</a>
+			<script>
+				if(window.opener) window.opener.goinbox();
+				setTimeout("javascript:window.close();", 10000);
+			</script>
+			{else}
+			<form name=form1 action="receivepop3.php" method=post>
+			<input type=hidden name=sid value="{$Sid}">
+			<input type=hidden name=lid value="{$Lid}">
+			<input type=hidden name=tid value="{$Tid}">
+			<input type=hidden name=dispresult value="1">
+			</form>
+			{/if}
+			</td>
+		</tr>
+	</table>
+	{else}
+	<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr height=100>
+		<td class="list_tip" align="center">
+			{#recvpop3_noaccount#}
+			<br>
+			<br>
+			<a href="javascript:self.close();">{#recvpop3_close#}</a>
+		</td>
+	</tr>
+	</table>
+	{/if}
+</body>

@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="SmsCgi"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#smscgi_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript">
+function Add()
+{
+	var mailaddress = document.form1.mailaddress.value;
+	
+	if (mailaddress != "") {
+		var intPos = document.form1.allowlist.length;
+		for (i = 0; i < intPos; i++){
+			if (mailaddress == document.form1.allowlist.options[i].value)
+				return;
+		}
+		
+		newOpt = new Option(mailaddress, mailaddress);
+		document.form1.allowlist.options[intPos] = newOpt;
+	}
+}
+
+function Del()
+{
+	var intPos = document.form1.allowlist.selectedIndex;
+	document.form1.allowlist.options[intPos] = null;
+}
+
+function Save(mode)
+{
+	if (document.form1.smscgi_status.checked){
+		if (document.form1.smscgi_mobile.value == ""){
+{/literal}
+			alert('{#smscgi_mobile_empty#}');
+{literal}
+			return;
+		}
+{/literal}
+
+{if $SelfSMSConfig eq true}
+{literal}
+		if (!document.form1.smscgi_usesystemset.checked 
+			&& !document.form1.smscgi_useuserset.checked){
+{/literal}
+			alert('{#smscgi_settype_empty#}');
+{literal}
+			return;
+		}
+
+		if (document.form1.smscgi_useuserset.checked
+			&& (document.form1.smscgi_host.value == "" 
+			|| document.form1.smscgi_port.value == "" 
+			|| document.form1.smscgi_length.value == "" 
+			|| document.form1.smscgi_user.value == "" 
+			|| document.form1.smscgi_pass.value == "")){
+{/literal}
+			alert('{#smscgi_useset_empty#}');
+{literal}
+			return;
+		}
+{/literal}
+{/if}
+{literal}
+	}
+	
+	var allowlist = "";
+	var intPos = document.form1.allowlist.length;
+	for (i = 0; i < intPos; i++){
+		if (document.form1.allowlist.options[i].value){
+			if (allowlist != "")
+				allowlist += ";";
+			allowlist += document.form1.allowlist.options[i].value;
+		}
+	}
+
+	document.form1.smscgi_allowlist.value = allowlist;
+	document.form1.smscgi_test.value = mode;
+	
+	document.form1.submit();
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/sms_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 action=smssetting.php method=POST>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=save value="yes">
+			{if $SelfSMSConfig eq false}
+				<input type=hidden name=smscgi_usesystemset value="1">
+				<input type=hidden name=smscgi_useuserset value="0">
+			{/if}
+
+				<tr height=20>
+					<td class="tb_field" align="right" width=30%>&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=smscgi_status value="1" {$SmsCgiStatus}><acronym style="cursor: hand;" OnClick="smscgi_status.click()">{#smscgi_status#}</acronym></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_mobile#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_mobile value="{$SmsCgiMobile}" size=32 maxlength=32 class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<!--
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_texttype#}&nbsp;</td>
+					<td class="tb_value">
+						<select name="smscgi_texttype">
+						<option value="0"{if $SmsCgiTextType eq 0} selected{/if}>{#smscgi_texttype0#}</option>
+						<option value="1"{if $SmsCgiTextType eq 1} selected{/if}>{#smscgi_texttype1#}</option>
+						</select>
+					</td>
+				</tr>
+				-->
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_count#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$SmsCgiCount}
+						<input type=hidden name=smscgi_count value="{$SmsCgiCount}">
+						<input type=hidden name=smscgi_lasttime value="{$SmsCgiLastTime}">
+					</td>
+				</tr>
+			{if $SelfSMSConfig eq true}
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>{#smscgi_syssetting_tip#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=smscgi_usesystemset value="1" {$SmsCgiUseSystemSet}><acronym style="cursor: hand;" OnClick="smscgi_usesystemset.click()">{#smscgi_usesystemset#}</acronym></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name=smscgi_useuserset value="1" {$SmsCgiUseUserSet}><acronym style="cursor: hand;" OnClick="smscgi_useuserset.click()">{#smscgi_useuserset#}</acronym></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>{#smscgi_usersetting_tip#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_service#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$SmsCgiIspList}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_host#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_host value="{$SmsCgiHost}" size=32 maxlength=64 readonly class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_port#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_port value="{$SmsCgiPort}" size=8 maxlength=5 readonly class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_length#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_length value="{$SmsCgiLength}" size=8 maxlength=4 readonly class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_user#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_user value="{$SmsCgiUser}" size=32 maxlength=64 class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_pass#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=password name=smscgi_pass value="{$SmsCgiPass}" size=32 maxlength=64 class="textbox">&nbsp;<font color=red>*</font></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_maximum#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=smscgi_maximum value="{$SmsCgiMaximum}" size=8 maxlength=4 class="textbox">&nbsp;&nbsp;{#smscgi_maximum_tip#}</td>
+				</tr>
+			{/if}
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_starttime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$StartTimeCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_endtime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$EndTimeCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>{#smscgi_allowlist_tip#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_mail#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=text name=mailaddress value="" size=32 maxlength=64 class="textbox">
+					&nbsp;&nbsp;<input type=button value="{#smscgi_add#}" class="button" onclick="Add()"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#smscgi_maillist#}&nbsp;</td>
+					<td class="tb_value" align=top>&nbsp;<select name="allowlist" size="10" style="width: 200px;">
+						{$SmsCgiAllowList}
+						</select>
+						&nbsp;&nbsp;
+						<input type=button value="{#smscgi_del#}" class="button" onclick="Del()">
+						<input type=hidden name=smscgi_allowlist value="">
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2 align=center>
+						{#smscgi_test_tip#}
+					</td>
+				</tr>
+				
+				{if $SmsCgiResult neq ""}
+				<tr height=30>
+					<td class="tb_field" colspan=2 align=center>
+						<font color=red>
+						{if $SmsCgiResult eq "savesuccess"}
+							{#smscgi_savesuccess#}
+						{elseif $SmsCgiResult eq "savefailure"}
+							{#smscgi_savefailure#}
+						{elseif $SmsCgiResult eq "testsuccess"}
+							{#smscgi_testsuccess#}
+						{elseif $SmsCgiResult eq "testfailure"}
+							{#smscgi_testfailure#}
+						{/if}
+						</font>
+					</td>
+				</tr>
+				{/if}
+				
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=hidden name=smscgi_test value="">
+						<input type=button value="{#smscgi_save#}" class="button" onclick="Save('')">
+						<input type=button value="{#smscgi_saveandtest#}" class="button" onclick="Save('test')">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>
+

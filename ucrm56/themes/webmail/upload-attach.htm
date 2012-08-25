@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#up_title#}</title>
+</head>
+
+{literal}
+<script language=javascript>
+function CloseWin()
+{
+	window.close();
+}
+
+function Uploading()
+{
+	div_uploading.style.visibility = "visible";
+	div_cover.style.visibility = "visible";
+	document.form1.submit();
+}
+
+</script>
+{/literal}
+
+{$JS}
+
+<body leftmargin=0 topmargin=4 marginwidth=0 marginheight=0>
+<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td align="center">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<form name=form1 enctype="multipart/form-data" action="upload.php" method=POST>
+				{$Forms}
+				<tr height="25">
+					<td class="tb_header" colspan=2>&nbsp;&nbsp;<b>{#up_information_text#}</b></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right" width=20%>{#up_upload_file1#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=file name=userfile1 class=textbox size=30></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#up_upload_file2#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=file name=userfile2 class=textbox size=30></td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#up_upload_file3#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input type=file name=userfile3 class=textbox size=30></td>
+				</tr>
+				<tr height="30">
+					<td class="tb_btn" align=center colspan=2>
+						<input type=hidden value="true" name="uploaded">
+						<input type=button value="{#up_upload_button_text#}" name=upbtn class=button onClick="javascript:Uploading();">
+						<input type=button value="{#up_close_button_text#}" name=close class=button onClick="javascript:CloseWin();">
+					</td>
+				</tr>
+			</form>
+		</table>
+		<br>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr height=22>
+				<td width="45%" class="list_title" align=center>{#attch_name_hea#}</td>
+				<td width="15%" class="list_title" align=center>{#attch_size#}&nbsp;</td>
+				<td width="30%" class="list_title" align=center>{#attch_type_hea#}</td>
+				<td width="10%" class="list_title" align=center>{#attch_dele_hea#}</td>
+			</tr>
+			{section name=i loop=$AttachList}
+				<tr height=20>
+					<td class="list_value">&nbsp;<img src="{$AttachList[i].iconfile}" width="16" height="16" border="0" align=absmiddle>&nbsp;{$AttachList[i].name|escape:"html"}</td>
+					<td class="list_value" align="right">{$AttachList[i].size} KB&nbsp;</td>
+					<td class="list_value">&nbsp;{$AttachList[i].type|truncate:23:"...":true}</td>
+					<td class="list_value" align=center><a href="{$AttachList[i].link}"><img src="themes/common/images/delete.gif" width=11 height=12 border=0></a></td>
+				</tr>
+			{sectionelse}							
+				<tr height=50>
+					<td class="list_value" colspan=4 align=center>&nbsp;{#attch_no_hea#}</td>
+				</tr>
+			{/section}
+
+		</table>
+	</td>
+  </tr>
+</table>
+
+<div id="div_uploading" style="position:absolute; top:120; left:20; z-index:10; visibility:hidden">
+<table width=100% border=0 cellspacing=0 cellpadding=0>
+<tr>
+	<td width=10%></td>
+	<td>
+		<table width=100% height=100 border=0 cellspacing=0s cellpadding=0>
+		<tr height=20>
+			<td class="tb_header" align=center></td>
+		</tr>
+		<tr height=80>
+			<td class="tb_value" align=center>
+			<img src="themes/common/images/uploading.gif" width=17 height=18 border=0>
+			&nbsp;<font color=#0000ff>{#up_uploading_tip#}</font>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td width=10%></td>
+</tr>
+</table>
+</div>
+
+<div id="div_cover" style="position:absolute; top:0; left:0; z-index:9; visibility:hidden">
+<table width=100% height=380 border=0 cellspacing=0 cellpadding=0>
+<tr>
+	<td align=center>&nbsp;</td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Readmsg"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{$PageTitle|escape:"html"}  </title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+<table cellspacing=1 cellpadding=0 border=0 align=center width="600">
+	<tr>
+		<td valign=top>
+			<table width="100%" border=0 cellspacing=0 cellpadding=0>
+				<tr height="20">
+					<td width="20%" class="tb_field" align="right">{#from_hea#}&nbsp;</td>
+					<td class="tb_value">
+					{section name=i loop=$FromList}
+					 &nbsp;{$FromList[i].title|default:#no_sender_text#|escape:"html"}&nbsp;
+					{/section}
+					</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#to_hea#}&nbsp;</td>
+					<td class="tb_value">
+					{section name=i loop=$TOList}
+					&nbsp;{$TOList[i].title|escape:"html"}&nbsp;
+					{sectionelse}
+					&nbsp;{#no_recipient_text#}
+					{/section}
+					</td>
+				</tr>	
+
+				{if $HaveCC}
+					<tr height="20">
+						<td class="tb_field" align="right">{#cc_hea#}&nbsp;</td>
+						<td class="tb_value">
+						{section name=i loop=$CCList}
+						&nbsp;{$CCList[i].title|escape:"html"}&nbsp;
+						{/section}
+						</td>
+					</tr>	
+				{/if}
+
+				<tr height="20">
+					<td class="tb_field" align="right">{#subject_hea#}&nbsp;</td>
+					<td class="tb_value"> &nbsp;{$Subject|default:#no_subject_text#|escape:"html"}</td>
+				</tr>	
+
+				<tr height="20">
+					<td class="tb_field" align="right">{#date_hea#}&nbsp;</td>
+					<td class="tb_value"> &nbsp;{$Date}</td>
+				</tr>	
+				
+				{if $HaveAttachments}
+				<tr>
+					<td class="tb_field" align="right">{#attach_hea#}&nbsp;</td>
+					<td class="tb_empty">
+						<table width="100%" border=0 cellspacing=1 cellpadding=0>
+							<tr height="22">
+								<td class="list_title" align=center width="85%">&nbsp;<b>{#attch_name_hea#}</b></td>
+								<td class="list_title" align=center width="15%">&nbsp;<b>{#attch_size_hea#}</b></td>
+							</tr>
+							{section name=i loop=$AttachList}
+							<tr height="20">
+								<td class="list_value">&nbsp;
+								{if $AttachList[i].normlink eq ""}
+									<img src="{$AttachList[i].iconfile}" width="16" height="16" border="0" align=absmiddle>&nbsp;{$AttachList[i].name|escape:"html"}
+								{else} 
+									<a href="{$AttachList[i].normlink}"><img src="{$AttachList[i].iconfile}" width="16" height="16" border="0" align=absmiddle>&nbsp;{$AttachList[i].name|escape:"html"}</a>
+								{/if}
+								&nbsp;<a href="{$AttachList[i].downlink}" title="{#attch_download_tip#}"><img src="themes/common/images/download.gif" width="16" height="16" border="0" alt="{#attch_download_tip#}" align=absmiddle></a>
+								{if $AttachList[i].savelink neq ""}
+								&nbsp;<a href="{$AttachList[i].savelink}" title="{#attch_savetonetdisk_tip#}"><img src="themes/common/images/netdisk.gif" width="16" height="16" border="0" alt="{#attch_savetonetdisk_tip#}" align=absmiddle></a>
+								{/if}
+								{if $AttachList[i].playlink neq ""}
+								&nbsp;<a href="{$AttachList[i].playlink}" title="{#attch_mediaplay_tip#}"><img src="themes/common/images/mediaplay.gif" width="16" height="16" border="0" alt="{#attch_mediaplay_tip#}" align=absmiddle></a>
+								{/if}
+								</td>
+								<td class="list_value" align="right">{$AttachList[i].size}Kb &nbsp;</td>
+							</tr>
+							{/section}
+						</table>
+					</td>
+				</tr>	
+				{/if}
+				<tr height=400>
+					<td colspan=2 valign="top">
+						<table width="100%" border=0 cellspacing=1 cellpadding=0 class="tablebg">
+							<tr>
+								<td{$BackImg}{$BackColor}><font color=black>{$MessageBody}</font></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

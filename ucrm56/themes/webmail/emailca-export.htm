@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="EmailCA"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#ca_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+	function save_check()
+	{
+{/literal}
+{if $CertType neq 1}
+{literal}
+		var exportpwd = document.form1.exportpwd.value;
+		var confirmpwd = document.form1.confirmpwd.value;
+		
+		if (document.form1.exporttype(3).checked){
+			if (exportpwd == "" || confirmpwd == ""){
+{/literal}
+				alert('{#ca_exportpwd_empty#}');
+				return;
+{literal}
+			}
+			if (exportpwd != confirmpwd){
+{/literal}
+				alert('{#ca_exportpwd_notmatch#}');
+				return;
+{literal}
+			}
+		}
+{/literal}
+{/if}
+{literal}
+		
+		document.form1.submit();
+	}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=emailca.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+				
+				{if $CertType eq 1}
+				<tr height=20>
+					<td class="tb_field" width="20%" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=radio name=exporttype value=1 checked>{#ca_export_type5#}</td>
+				</tr>
+				{else}
+				<tr height=20>
+					<td class="tb_field" width="20%" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=radio name=exporttype value=1 checked>{#ca_export_type1#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" width="20%" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=radio name=exporttype value=2>{#ca_export_type2#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" width="20%" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=radio name=exporttype value=3>{#ca_export_type3#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_empty"><input type=radio name=exporttype value=4>{#ca_export_type4#}<br>
+						<table width="100%" border="0" cellspacing="1" cellpadding="1">
+							<tr height=20>
+								<td class="tb_field" width="20%" align="right">{#ca_export_password#}&nbsp;</td>
+								<td class="tb_value"><input type=password name=exportpwd value="" size="40" maxlength=32 class="textbox"></td>
+							</tr>
+							<tr height=20>
+								<td class="tb_field" align="right">{#ca_export_confirm#}&nbsp;</td>
+								<td class="tb_value"><input type=password name=confirmpwd value="" size="40" maxlength=32 class="textbox"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				{/if}
+				<tr  height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#ca_export#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#ca_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="BadRegister"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#bdl_title#}</title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+<br><br><br>
+<table width="400" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+				<tr height=25>
+					<td class="tb_header">&nbsp;&nbsp;{#bdl_title#}</td>
+				</tr>
+				<tr height=100>
+					<td class="tb_value" align="center">
+					<br>
+					{#bdl_msg#}<br><br>
+					<a href="{$LogoutLocation}">{#bdl_back#}</a>
+					<br><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</td>
+</table>
+</body>
+</html>
+

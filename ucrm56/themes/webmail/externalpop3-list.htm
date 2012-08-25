@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="ExternalPop3"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#pop3_title#}</title>
+</head>
+
+{$JSSource}
+{$ListJSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 method=post action=externalpop3.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name="opt" value="">
+				
+				<tr height=22>
+					<td width="3%" class="list_title" align="center"><input type=checkbox name=chkall onclick="sel()"></td>
+					<td width="35%" class="list_title" align=center><b>{#pop3_username_hea#}</b></td>
+					<td width="30%" class="list_title" align=center><b>{#pop3_host_hea#}</b></td>
+					<td width="10%" class="list_title" align=center><b>{#pop3_enable_hea#}</b></td>
+					<td width="10%" class="list_title" align=center><b>{#pop3_edit_hea#}</b></td>
+					<td width="10%" class="list_title" align=center><b>{#pop3_dele_hea#}</b></td>
+				</tr>
+				{section name=i loop=$ExternalPop3List}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value" align="center">{$ExternalPop3List[i].checkbox}</td>
+						<td class="list_value"> &nbsp;<a href="{$ExternalPop3List[i].viewlink}">{$ExternalPop3List[i].username}</a></td>
+						<td class="list_value"> &nbsp;{$ExternalPop3List[i].host}</td>
+						<td class="list_value" align="center"><img src="{$ExternalPop3List[i].statusimg}" width=16 height=16 border=0 alt="{$ExternalPop3List[i].enable}"></td>
+						<td class="list_value" align="center"><a href="{$ExternalPop3List[i].editlink}"><img src="themes/common/images/edit.gif" width=15 height=12 border=0 alt="{#pop3_edit_hea#}"></a></td>
+						<td class="list_value" align="center"><a href="{$ExternalPop3List[i].dellink}"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#pop3_dele_hea#}"></a></td>
+					</tr>
+				{/section}
+				<tr height=30>
+					<td class="list_btn" colspan=6 align=left>
+						&nbsp;<input type=button value="{#pop3_new_entry#}" class=button onClick="location = '{$New}'">
+						&nbsp;<input type=button value="{#pop3_dele_hea#}" class=button onClick="javascript:delexternalpop3('');">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height="20">
+					<td class="tb_empty">
+						<table width=100% border=0 cellspacing=0 cellpadding=0>
+						<tr>
+							<td valign=top align=center>{$PreviousMonth}</td>
+							<td width="50%" align=center><b>{$MonthName}</b>&nbsp;&nbsp;<a href="{$ThisYearLink}" class="menub">{$ThisYear}</a></td>
+							<td valign=top align=center>{$NextMonth}</td>
+						</tr>
+						<tr>
+							<td align=center colspan=3>
+							{$AllMonthDay}
+							</td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

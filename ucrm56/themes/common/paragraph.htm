@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+{config_load file=$LanguageFile section="AdvancedEditor"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+<title>Paragraph Style</title>
+{literal}
+<style type="text/css">
+.pStyle { font-family: Arial, Helvetica, sans-serif; color: #000000;}
+</style>
+{/literal}
+
+{literal}
+<script language="javascript">
+function overItem(iconItem) {
+	iconItem.style.backgroundColor='#CCCCCC';
+}
+
+function outItem(iconItem) {
+	iconItem.style.backgroundColor='#FFFFFF';
+}
+
+function mouseClick(fontFormat) {
+{/literal}
+	self.parent.doCommand('paragraph', fontFormat);
+{literal}
+}
+</script>
+{/literal}
+
+<body bgcolor="#FFFFFF" leftmargin="2" topmargin="2" marginwidth="2" marginheight="2">
+<table width="100%"  border="0" cellspacing="0" cellpadding="3">
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<p>')" style="cursor: default;">
+    <td width="100%" class="pStyle">{#format_normal#}</td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h1>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 32px;"><b>{#format_h1#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h2>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 24px;"><b>{#format_h2#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h3>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 19px;"><b>{#format_h3#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h4>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 16px;"><b>{#format_h4#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h5>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 13px;"><b>{#format_h5#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<h6>')" style="cursor: default;">
+    <td class="pStyle" style="font-size: 11px;"><b>{#format_h6#}</b></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<address>')" style="cursor: default;">
+    <td class="pStyle"><address>{#format_addr#}</address></td>
+  </tr>
+  <tr onMouseover="overItem(this)" onMouseout="outItem(this)" OnClick="mouseClick('<pre>')" style="cursor: default;">
+    <td class="pStyle">{#format_pre#}</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_news</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_news` (
+  `newsid` int(11) DEFAULT NULL,
+  `newsname` varchar(100) DEFAULT NULL,
+  `newstype` varchar(100) DEFAULT NULL,
+  `newsstatus` varchar(100) DEFAULT NULL,
+  `startdate` varchar(100) DEFAULT NULL,
+  `enddate` varchar(100) DEFAULT NULL,
+  `newscontent` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_newscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_newscf` (
+  `newsid` int(11) NOT NULL,
+  PRIMARY KEY (`newsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_newsgrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_newsgrouprel` (
+  `newsid` int(11) NOT NULL,
+  `groupname` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`newsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

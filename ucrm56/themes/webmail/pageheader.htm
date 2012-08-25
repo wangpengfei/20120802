@@ -1,0 +1,131 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td height="88" class="header_main_bg">
+   	  <table width="100%" height="88" border="0" cellpadding="0" cellspacing="0">
+        <tr> 
+          <td width="222" rowspan="2" valign="bottom">
+          	<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td align="center" valign="middle"><font class="menub"><b>{#logo_title#}</b></font></td>
+              </tr>
+              <tr> 
+                <td height="18" class="header_main_bg2"></td>
+              </tr>
+            </table>
+          </td>
+          <td height="58" align="right" valign="top">
+           <table width="350" border="0" cellspacing="0" cellpadding="0">
+              <tr height=26> 
+                <td width=37 class="header_main_topr">&nbsp;</td>
+                <td class="header_main_toprbg">
+                	<a href="javascript: today();" title="{$UserEmail}"><font class="menub">{$UserEmail|truncate:25}</font></a>
+                	| <a class="menu" href="javascript:goend()"><img src="themes/common/images/logout.gif" width="16" height="16" border=0 align=absmiddle>&nbsp;{#logoff_mnu#}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr height="30"> 
+          <td valign="bottom" class="header_main_bg3">
+          	<table width="100%" height="30" border="0" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td height="30" align="left">
+                  <table border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td height="30">
+						<table border="0" height="30" cellpadding="0" cellspacing="0">
+						<tr> 
+						{if $selectedMenu eq 'mail'}
+						  <td width="100" align="center" class="menu_a">{#mail_mnu#}</td>
+						{else}
+						  <td width="9" align="center" class="menu_l"></td>
+						  <td width="81" align="center" class="menu_bg" onclick="javascript:today();">{#mail_mnu#}</td>
+						  {if $selectedMenu neq 'address'}
+						  <td width="9" align="center" class="menu_sp"></td>
+						  {/if}
+						{/if}
+						
+						{if $selectedMenu eq 'address'}
+						  <td width="100" align="center" class="menu_a">{#address_mnu#}</td>
+						{else}
+						  <td width="90" align="center" class="menu_bg" onclick="javascript:addresses();">{#address_mnu#}</td>
+	          			  {if $NetstoreControl eq 0 or $CalendarControl eq 0 or $NotebookControl eq 0}
+		          			{assign var="nextMenu" value='netassistant'}
+						  {elseif $AllowSetupSMS}
+		          			{assign var="nextMenu" value='sms'}
+						  {else}
+		          			{assign var="nextMenu" value='options'}
+						  {/if}
+						  {if $selectedMenu neq $nextMenu}
+						  <td width="9" align="center" class="menu_sp"></td>
+						  {/if}
+						{/if}
+					<!--	
+          			{if $NetstoreControl eq 0 or $CalendarControl eq 0 or $NotebookControl eq 0}
+						{if $selectedMenu eq 'netassistant'}
+						  <td width="100" align="center" class="menu_a">{#netassistant_mnu#}</td>
+						{else}
+						  {assign var="actionScript" value='javascript:#'}
+						  {if $NetstoreControl eq 0}
+		          			{assign var="actionScript" value='javascript:netstore();'}
+		          		  {elseif $CalendarControl eq 0}
+		          			{assign var="actionScript" value='javascript:calendar();'}
+		          		  {elseif $NotebookControl eq 0}
+		          			{assign var="actionScript" value='javascript:notebook();'}
+						  {/if}
+						  <td width="90" align="center" class="menu_bg" onclick="{$actionScript}">{#netassistant_mnu#}</td>
+						  {if $AllowSetupSMS}
+		          			{assign var="nextMenu" value='sms'}
+						  {else}
+		          			{assign var="nextMenu" value='options'}
+						  {/if}
+						  {if $selectedMenu neq $nextMenu}
+						  <td width="9" align="center" class="menu_sp"></td>
+						  {/if}
+						{/if}
+			        {/if}
+					
+        			{if $AllowSetupSMS}
+						{if $selectedMenu eq 'sms'}
+						  <td width="100" align="center" class="menu_a">{#smssetup_mnu#}</td>
+						{else}
+						  <td width="90" align="center" class="menu_bg" onclick="javascript:smssetting();">{#smssetup_mnu#}</td>
+						  {if $selectedMenu neq 'options'}
+						  <td width="9" align="center" class="menu_sp"></td>
+						  {/if}
+						{/if}
+			        {/if}
+					-->
+						
+						{if $selectedMenu eq 'options'}
+						  <td width="100" align="center" class="menu_a">{#options_mnu#}</td>
+						{else}
+						  <td width="90" align="center" class="menu_bg" onclick="javascript:prefs();">{#options_mnu#}</td>
+						  <td width="9" align="center" class="menu_r"></td>
+						{/if}
+						</tr>
+						</table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width=160 align="left">
+				  <form name="searchform" action="search.php" method="POST">
+					<input type=hidden name=tid value="{$Tid}">
+					<input type=hidden name=lid value="{$Lid}">
+					<input type=hidden name=sid value="{$Sid}">
+					<input type=hidden name=searched value="yes">
+                  <table width=100% border="0" cellspacing="0" cellpadding="0">
+                  	<tr><td><input type="text" class="textbox" name="searchtext" value="{$searchtext|escape:"html"}"></td><td><input type=submit value="{#sch_button_text#}" class=button></td></tr>
+                  </table>
+				 </form>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+

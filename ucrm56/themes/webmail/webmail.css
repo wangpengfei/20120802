@@ -1,0 +1,206 @@
+<!--
+BODY {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #333333;  
+}
+
+SELECT 	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #333333;
+}
+
+INPUT {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+}
+TD {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #333333;
+}
+
+.textbox {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #090000;
+	border-top: 1px solid #3E6082;
+	border-left: 1px solid #3E6082;
+	border-right: 1px solid #3E6082;
+	border-bottom: 1px solid #3E6082;
+	padding-top: 3px;
+	padding-bottom: 0px;
+	line-height: 100%;
+}
+
+.button{
+	background-image: url(/themes/xp/images/btbg.gif);
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #090000;
+	border-top: 1px solid #3E6082;
+	border-left: 1px solid #3E6082;
+	border-right: 1px solid #3E6082;
+	border-bottom: 1px solid #3E6082;
+	padding-top: 3px;
+	padding-bottom: 0px;
+	line-height: 100%;
+}
+
+.tablebg { 
+	background-color: #5a9ade; 
+	color:  #333333;  
+}
+.header { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	background-color: #eff7ff; 
+	color:  #004080;  
+	background-image:url(/themes/xp/images/header_bg.gif);
+}
+.title { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	background-color: #eff7ff; 
+	color: #004080; 
+}
+.default { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	background-color: #FFFFFF; 
+	color: #333333; 
+}
+
+a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #333333;
+	text-decoration:underline;
+}
+a:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #333333;
+	text-decoration:underline;
+}
+a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #090e71;
+	text-decoration:none;
+}
+a:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #333333;
+	text-decoration:underline;
+}
+
+.link { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	color: #004080; 
+}
+.link:link { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	color: #004080;  
+	text-decoration: underline; 
+}
+.link:visited { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	color: #004080;  
+	text-decoration: underline; 
+}
+.link:hover { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	color: #004080;  
+	text-decoration: none; 
+}
+.link:active { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 9pt;
+	color: #004080;  
+	text-decoration: underline; 
+}
+
+.blue {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #004080;
+}
+.blue:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #004080;
+	text-decoration: underline;
+}
+.blue:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #004080;
+	text-decoration: underline;
+}
+.blue:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+}
+.blue:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #004080;
+	text-decoration: underline;
+}
+
+.black {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-decoration: none;
+	color: #ffffff;
+}
+.blackb {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.blueb {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #004080;
+	text-decoration: none;
+	font-weight: bold;
+}
+.blueb:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #004080;
+	text-decoration: underline;
+}
+.blueb:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #004080;
+	text-decoration: underline;
+}
+.blueb:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+.blueb:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #004080;
+	text-decoration: underline;
+}	
+-->

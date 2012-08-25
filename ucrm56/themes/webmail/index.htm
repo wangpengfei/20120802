@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+{config_load file=$LanguageFile section="Login"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+	<title>{#common_page_title#} - {#lng_title#|escape:"html"}</title>
+	<link rel="stylesheet" href="themes/xp/webmail.css" type="text/css">
+	<link rel="SHORTCUT ICON" href="/favicon.ico">
+</head>
+
+{literal}
+<script language="Javascript">
+function contact(address){
+	location.href = "mailto:"+address;
+}
+
+function selectLanguage() {
+	sSix		= '';
+	sUser		= '';
+	sDomain		= '';
+	sLanguage	= '';
+	sTheme		= '';
+	
+	frm = document.form1;
+	if(frm.six){
+		if (frm.six.options)
+			sSix = frm.six.options[frm.six.selectedIndex].value;
+		else
+			sSix = frm.six.value;
+	}
+	if(frm.f_user)
+		sUser = frm.f_user.value;
+	if(frm.f_domain)
+		sDomain = frm.f_domain.value;
+	if(frm.tem)
+		sTheme = frm.tem.options[frm.tem.selectedIndex].value;
+	if(frm.lng)
+		sLanguage = frm.lng.options[frm.lng.selectedIndex].value;
+
+	sLocation = 'index.php?lid='+sLanguage+'&tid='+sTheme+'&f_user='+escape(sUser)+'&f_domain='+escape(sDomain)+'&six='+sSix;
+	location.replace(sLocation);
+}
+	
+function loginCheck() {
+	sSix		= '';
+	sUser		= '';
+	sDomain		= '';
+	sPassword		= '';
+	
+	frm = document.form1;
+	if(frm.six){
+		if (frm.six.options)
+			sSix = frm.six.options[frm.six.selectedIndex].value;
+		else
+			sSix = frm.six.value;
+	}
+	if(frm.f_domain)
+		sDomain = frm.f_domain.value;
+	if(frm.f_user)
+		sUser = frm.f_user.value;
+	if(frm.f_pass)
+		sPassword = frm.f_pass.value;
+		
+	if ((sSix == '' && sDomain == '') || sUser == ''
+		|| sPassword == ''){
+{/literal}
+		alert("{#lng_empty#}");
+{literal}
+		return false;
+	}
+	
+	frm.submit();	
+//	return true;
+}
+
+function getPwd() {
+	location.href='getpassword.php';
+}
+
+function keypress(keypressed) {
+	var key;
+	if (document.all) 
+		key = window.event.keyCode
+	else 
+		key = keypressed.which;
+		
+	if (key == 13) loginCheck();
+}
+</script>
+{/literal}
+
+<body bgcolor="#ffffff" leftmargin=0 topmargin=0 marginwidth="0" marginheight="0">
+<table height="100%" cellspacing=0 cellpadding=0 width="100%" border=0>
+  <tr>
+      <td align=center bgcolor="#ffffff">
+      	<table width="744" border=0 align="center" cellpadding=0 cellspacing=0>
+          <td> 
+            <tr> 
+              <td bgcolor="#ffffff">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr> 
+                    <td align="center" valign="top">
+                      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr> 
+                          <td width="29%" height="33" background="themes/xp/images/xp_top001.gif"><img src="themes/xp/images/xp_top002.gif" width="264" height="33"></td>
+                          <td width="69%" align="right" valign="middle" background="themes/xp/images/xp_top001.gif">
+                          	
+                          </td>
+                          <td width="2%" align="right" valign="top" background="themes/xp/images/xp_top001.gif"><img src="themes/xp/images/xp_top003.gif" width="13" height="33"></td>
+                        </tr>
+                      </table>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr> 
+                          <td width="30%"><img src="themes/xp/images/xp_left001.gif" width="264" height="113"></td>
+                          <td width="70%" valign="bottom" background="themes/xp/images/xp_right_bg01.jpg"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr> 
+                    <td valign="top"> 
+                      <table cellspacing=0 cellpadding=0 width=744 border=0>
+                          <tr> 
+                            <td width="171" valign=top bgcolor=#ffffff><img src="themes/xp/images/xp_left_002.jpg" width="171" height="124"></td>
+                            <td width="573" align="right" valign="top" background="themes/xp/images/xp_left_bg002.jpg">
+                              <table cellspacing=0 cellpadding=0 width="95%" border=0>
+                                <form name="form1" action="login.php?retid={$RetID}" method=post>
+                                    <tr height=26> 
+                                      <td class=blackb align=right width="18%">{#lng_user_name#}:&nbsp;</td>
+                                      <td align=left width="22%"><input type="text" size="15" name="f_user" value="{$User}" maxlength=64></td>
+                                      <td width="60%" class=black>
+				 	                    {if $NotDisplayDomains eq 1} 
+				 	                    	@ <input type="text" size="12" name="f_domain" value="{$Domain}" maxlength=64>  
+				                        {else}
+				                        	{if $DomainsCount neq 0}@ {$DomainsList}{/if}
+				                        {/if}
+                                      </td>
+                                    </tr>
+                                    <tr height=26> 
+                                      <td class=blackb align=right>{#lng_user_pwd#}:&nbsp;</td>
+                                      <td align=left><input type="password" size="15" name="f_pass" value="" maxlength=64 autocomplete="OFF"></td>
+                                      <td class=black>
+										{if $AutoLogin}
+					                        <input type=checkbox name=f_autologin value="1"{$AutoLoginCheck}><acronym style="cursor: hand;" OnClick="f_autologin.click()">{#lng_autologin#}</acronym>
+				                        {else}
+				                        	&nbsp;
+				                        {/if}
+                                      </td>
+                                    </tr>
+								  {if $AllowSelectLanguage}
+                                    <tr height=26> 
+                                      <td class=blackb align=right>{#lng_language#}:&nbsp;</td>
+                                      <td align=left colspan=2>{$Languages}</td>
+                                    </tr>
+								  {/if}
+                                    <tr height=26> 
+								  {if $AllowSelectTheme}
+                                      <td class=blackb align=right>{#lng_theme#}:&nbsp;</td>
+                                      <td align=left>{$Themes}</td>
+                                      <td>
+                                  {else}
+                                      <td class=blackb align=right>&nbsp;</td>
+                                      <td colspan=2>
+                                  {/if}
+                                      	<table border="0" cellspacing="0" cellpadding="0">
+                                          <tr> 
+                                            <td onclick="javascript:loginCheck();" onmouseover="style.cursor='hand'" onmouseout="style.cursor='default'">
+                                              <table width="80" border="0" cellpadding="0" cellspacing="1" bgcolor="#1472e8">
+                                                <tr height="20">
+                                                  <td align="center" class="blueb" background="themes/xp/images/bt.gif" nowrap>{#lng_login_btn#}</td>
+                                                </tr>
+                                              </table>
+                                            </td>
+	                                        <td width="15" align="center"></td>
+										 
+                                         </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                </form>
+                              </table>
+                            </td>
+                          </tr>
+                      </table>
+                      <table cellspacing=0 cellpadding=0 width=744 bgcolor=#ffffff border=0>
+                          <tr> 
+                            <td width=170><img src="themes/xp/images/xp_left_003.jpg" width="171" height="38"></td>
+                            <td width="574" align="center" valign="top" background="themes/xp/images/xp_right_bg02.jpg">
+                              
+                            </td>
+                          </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </td>  
+        </table>
+      </td>
+  </tr>
+</table>
+
+<!--
+{#copyright_info#} 
+{$AppVersion} 
+-->
+<script language="JavaScript">
+	document.form1.f_user.focus();
+	document.form1.f_pass.onkeypress = keypress;
+</script>
+</body>
+</html>

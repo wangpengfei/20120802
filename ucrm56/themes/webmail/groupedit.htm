@@ -1,0 +1,455 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Group"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#groupopt_title#}</title>
+</head>
+
+{$JSSource}
+
+<script language="javascript" src="check.js"></script>
+
+{literal}
+<script language="javascript">
+function ok()
+{
+	document.form1.members.value = getMembers('memberlist');
+	document.form1.sendmailmembers.value = getMembers('sendmailmember');
+
+	document.form1.submit();
+}
+
+function show_tab(tabname) {
+	div_basicinfo.style.display = "none";
+	div_memberlist.style.display = "none";
+	div_groupright.style.display = "none";
+	div_sendmailmember.style.display = "none";
+	
+	var targetF = document.form1;
+	targetF.n_basicinfo.disabled = false;
+	targetF.n_memberlist.disabled = false;
+	targetF.n_groupright.disabled = false;
+	targetF.n_sendmailmember.disabled = false;
+	
+	switch (tabname) {
+		case 'basicinfo':
+			div_basicinfo.style.display = "";
+			targetF.n_basicinfo.disabled = true;
+			break;
+		case 'memberlist':
+			div_memberlist.style.display = "";
+			targetF.n_memberlist.disabled = true;
+			break;
+		case 'groupright':
+			div_groupright.style.display = "";
+			targetF.n_groupright.disabled = true;
+			break;
+		case 'sendmailmember':
+			div_sendmailmember.style.display = "";
+			targetF.n_sendmailmember.disabled = true;
+			
+//			initHaveMemberList('havememberlist');
+			break;
+		default:
+	    	div_basicinfo.style.display = "";
+	    	div_memberlist.style.display = "none";
+	    	div_groupright.style.display = "none";
+	    	div_sendmailmember.style.display = "none";
+	}
+}
+
+function addExtMember(oriobject, destlist)  {
+	frm = document.form1;
+	oriobj = eval("frm." + oriobject);
+	destobj = eval("frm." + destlist);
+	address = oriobj.value;
+	if (address == "")
+		return;
+
+   var boxLength = destobj.length;
+   var i;
+   var isNew = true;
+
+   if (boxLength != 0) {
+      for (i = 0; i < boxLength; i++) {
+          thisitem = destobj.options[i].value;
+             if (thisitem == address) {
+                isNew = false;
+                break;
+             }
+      }
+   } 
+   
+   if (isNew) {
+     newoption = new Option(address, address, false, false);
+     destobj.options[boxLength] = newoption;
+   }
+}
+
+function addMember(origlist, destlist)  {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = destobj.length;
+   var selectedItem = origobj.selectedIndex;
+   if (selectedItem == -1) 
+   		return;
+   var selectedText = origobj.options[selectedItem].text;
+   var selectedValue = origobj.options[selectedItem].value;
+   var i;
+   var isNew = true;
+
+   if (boxLength != 0) {
+      for (i = 0; i < boxLength; i++) {
+	      thisitem = destobj.options[i].value;
+         if (thisitem == selectedValue) {
+            isNew = false;
+            break;
+         }
+      }
+   } 
+   
+   if (isNew) {
+     newoption = new Option(selectedText, selectedValue, false, false);
+     destobj.options[boxLength] = newoption;
+   }
+   
+   origobj.selectedIndex=-1;
+}
+
+function addMembers(origlist, destlist) {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = origobj.length;
+   var i;
+  
+   arrSelectedValue = new Array();
+   arrSelectedText = new Array();
+   var count = 0;
+   
+   for (i = 0; i < boxLength; i++) {
+     if (origobj.options[i].selected) {
+        arrSelectedValue[count] = origobj.options[i].value;
+        arrSelectedText[count] = origobj.options[i].text;
+        count++;
+     }
+   }
+   if (arrSelectedValue.length == 0) return;   
+   
+   var isNew ;
+   var x;
+   for (x = 0; x < arrSelectedValue.length; x++) {
+   	boxLength = destobj.length;
+   	isNew = true;
+   	if (boxLength != 0) {
+      		for (i = 0; i < boxLength; i++) {
+          		thisitem = destobj.options[i].value;
+             		if (thisitem == arrSelectedValue[x]) {
+                		isNew = false;
+                		break;
+             		}
+      			}
+   		} 
+   
+   	if (isNew) {
+     		newoption = new Option(arrSelectedText[x], arrSelectedValue[x], false, false);
+     		destobj.options[boxLength] = newoption;
+   		}
+   	}
+   	
+   origobj.selectedIndex=-1;
+}
+
+function delMember(origlist, destlist) {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = destobj.length;
+   arrSelected = new Array();
+   var count = 0;
+   
+   for (i = 0; i < boxLength; i++) {
+     if (destobj.options[i].selected) {
+        arrSelected[count] = destobj.options[i].value;
+     }
+     count++;
+   }
+
+   var x;
+   
+   for (i = 0; i < boxLength; i++) {
+      for (x = 0; x < arrSelected.length; x++) {
+         if (destobj.options[i].value == arrSelected[x]) {
+            destobj.options[i] = null;
+         }
+      }  
+      
+      boxLength = destobj.length;
+   }
+}
+
+function getMembers(destlist) {
+	frm = document.form1;
+	destobj = eval("frm." + destlist)
+
+    var strValues = "";
+    
+    var boxLength = destobj.length;
+    var count = 0;
+
+    if (boxLength > 0) {
+        for (i = 0; i < boxLength; i++) {
+            if (count == 0) {
+                strValues = destobj.options[i].value;
+            }
+            else {
+				strValues = strValues + ";" + destobj.options[i].value;
+            }
+            count++;
+        }
+    }
+    
+    return strValues;
+}
+
+function initHaveMemberList(destlist)
+{
+	origobj = document.form1.memberlist;
+	destobj = eval("document.form1." + destlist)
+   
+	boxLength = destobj.length;
+	for (i = 0; i < boxLength; i++) {
+		destobj.options[i] = null;
+	}
+
+	var origLength = origobj.length;
+	var destLength = 0;
+	if (origLength > 0) {
+        for (i = 0; i < origLength; i++) {
+     		newoption = new Option(origobj.options[i].text, origobj.options[i].value, false, false);
+     		destobj.options[destLength++] = newoption;
+        }
+	}
+}
+
+</script>
+
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+			<form name=form1 method=post action=groupedit.php>
+			<input type=hidden name=opt value="edited">
+			<input type=hidden name=sid value="{$Sid}">
+			<input type=hidden name=lid value="{$Lid}">
+			<input type=hidden name=tid value="{$Tid}">
+			<input type=hidden name=groupid value="{$GroupID}">
+			<input type=hidden name=members value="">
+			<input type=hidden name=sendmailmembers value="">
+			<input type=hidden name=managers value="{$Manager}">
+			<tr><td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr height="30">
+					<td class="tb_btn" align=center height=30>
+						<input type="button" class=button onclick="show_tab('basicinfo')" name=n_basicinfo value="{#groupopt_basicinfo#}">
+						<input type="button" class=button onclick="show_tab('memberlist')" name=n_memberlist value="{#groupopt_memberlist#}">
+						<input type="button" class=button onclick="show_tab('groupright')" name=n_groupright value="{#groupopt_groupright#}">
+						<input type="button" class=button onclick="show_tab('sendmailmember')" name=n_sendmailmember value="{#groupopt_sendmailmember#}">
+					</td>
+				</tr>
+			</table>
+
+			<table width="100%" id=div_basicinfo cellpadding="0" cellspacing="0" border="0">
+			<tr><td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="20">
+						<td width=30% class="tb_field" align="right">{#groupopt_name#}&nbsp;</td>
+						<td width=70% class="tb_value">&nbsp;{$Name}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_field" align="right">{#groupopt_description#}&nbsp;</td>
+						<td class="tb_value">&nbsp;<input type="text" name="description" value="{$Description}" size=50 maxlength=128 class="textbox"></td>
+					</tr>
+				</table>
+			</td></tr>
+			</table>
+			
+			<table width="100%" id=div_memberlist cellpadding="0" cellspacing="0" border="0">
+			<tr><td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="20">
+						<td class="tb_title" align=center width=45%>&nbsp;{#groupopt_userlist#}</td>
+						<td class="tb_title" width=10%>&nbsp;</td>
+						<td class="tb_title" align=center width=45%>&nbsp;{#groupopt_memberlist#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_empty" align=center>
+							<select name="userlist" size=15 style="width: 200px" multiple onDblclick="addMember('userlist', 'memberlist');">
+							{section name=i loop=$UserList}
+								<option value="{$UserList[i].uid}">{$UserList[i].dispname}</option>
+							{/section}
+							</select>
+						</td>
+						<td class="tb_field" valign=middle align=center>
+							<input type=button class=button name="addmemberlist" value="{#groupopt_add#}" onClick="addMembers('userlist', 'memberlist');">
+							<br><br>
+							<input type=button class=button name="delmemberlist" value="{#groupopt_del#}" onClick="delMember('userlist', 'memberlist');">
+							<br>
+						</td>
+						<td class="tb_empty" rowspan=4 align=center>
+							<select name="memberlist" size=18 style="width: 200px" multiple onDblclick="delMember('userlist', 'memberlist');">
+							{section name=i loop=$MemberList}
+								<option value="{$MemberList[i].uid}">{$MemberList[i].dispname}</option>
+							{/section}
+							</select>
+						</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_title" align=center>&nbsp;{#groupopt_extaddress#}</td>
+						<td class="tb_field">&nbsp;</td>
+					</tr>
+					<tr height="20" class="tb_field">
+						<td class="tb_empty" align=center>
+						<input type="text" name="extaddress1" value="" size=32 maxlength=64 class="textbox">&nbsp;
+						</td>
+						<td class="tb_field" valign=middle align=center>
+						<input type=button class=button name="addextmember1" value="{#groupopt_add#}" onClick="addExtMember('extaddress1', 'memberlist');">
+						</td>
+					</tr>
+				</table>
+			</td></tr>
+			</table>
+
+			<table width="100%" id=div_groupright cellpadding="0" cellspacing="0" border="0">
+			<tr><td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="20">
+						<td class="tb_field" align="right" rowspan=3 width=30%>{#groupopt_sendmailright#}&nbsp;</td>
+						<td class="tb_value" width=70%><input type="radio" name="sendmailright" value="0" {if $SendMailRight eq 0}checked{/if}>{#groupopt_sendmailright_0#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="sendmailright" value="1" {if $SendMailRight eq 1}checked{/if}>{#groupopt_sendmailright_1#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="sendmailright" value="2" {if $SendMailRight eq 2}checked{/if}>{#groupopt_sendmailright_2#}</td>
+					</tr>
+					
+					<tr height="20">
+						<td class="tb_field" align="right" rowspan=8 width=30%>{#groupopt_visibleright#}&nbsp;</td>
+						<td class="tb_value" width=70%><input type="radio" name="visibleright" value="0" {if $VisibleRight eq 0}checked{/if}>{#groupopt_visibleright_0#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="1" {if $VisibleRight eq 1}checked{/if}>{#groupopt_visibleright_1#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="2" {if $VisibleRight eq 2}checked{/if}>{#groupopt_visibleright_2#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="3" {if $VisibleRight eq 3}checked{/if}>{#groupopt_visibleright_3#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="4" {if $VisibleRight eq 4}checked{/if}>{#groupopt_visibleright_4#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="5" {if $VisibleRight eq 5}checked{/if}>{#groupopt_visibleright_5#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="radio" name="visibleright" value="6" {if $VisibleRight eq 6}checked{/if}>{#groupopt_visibleright_6#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_value"><input type="checkbox" name="sendervisible" value="1" {if $SenderVisible eq 1}checked{/if}>{#groupopt_sendervisible#}</td>
+					</tr>
+				</table>
+			</td></tr>
+			</table>
+
+			<table width="100%" id=div_sendmailmember cellpadding="0" cellspacing="0" border="0">
+			<tr><td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="20">
+						<td class="tb_title" width=45% align=center>&nbsp;{#groupopt_memberlist#}</td>
+						<td class="tb_title" width=10%>&nbsp;</td>
+						<td class="tb_title" width=45% align=center>&nbsp;{#groupopt_sendmailmember#}</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_empty" align=center>
+							<select name="havememberlist" size=15 style="width: 200px" multiple onDblclick="addMember('havememberlist', 'sendmailmember');">
+							{section name=i loop=$UserList}
+								<option value="{$UserList[i].uid}">{$UserList[i].dispname}</option>
+							{/section}
+							</select>
+						</td>
+						<td class="tb_field" valign=middle align=center>
+							<input type=button class=button name="addsendmailmember" value="{#groupopt_add#}" onClick="addMembers('havememberlist', 'sendmailmember');">
+							<br><br>
+							<input type=button class=button name="delsendmailmember" value="{#groupopt_del#}" onClick="delMember('havememberlist', 'sendmailmember');">
+							<br>
+						</td>
+						<td class="tb_empty" rowspan=4 align=center>
+							<select name="sendmailmember" size=18 style="width: 200px" multiple onDblclick="delMember('havememberlist', 'sendmailmember');">
+							{section name=i loop=$SendMailMemberList}
+								<option value="{$SendMailMemberList[i].uid}">{$SendMailMemberList[i].dispname}</option>
+							{/section}
+							</select>
+						</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_title" align=center>&nbsp;{#groupopt_extaddress#}</td>
+						<td class="tb_field">&nbsp;</td>
+					</tr>
+					<tr height="20">
+						<td class="tb_empty" align=center>
+						<input type="text" name="extaddress2" value="" size=32 maxlength=64 class="textbox">&nbsp;
+						</td>
+						<td class="tb_field" valign=middle align=center>
+						<input type=button class=button name="addextmember2" value="{#groupopt_add#}" onClick="addExtMember('extaddress2', 'sendmailmember');">
+						</td>
+					</tr>
+				</table>
+			</td></tr>
+			</table>
+	
+			<table width="100%" height=30 cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="tb_btn" align=center height=30>
+						<input type="button" class=button onclick="ok()" value="{#groupopt_save#}">		
+						<input type="button" class=button onclick="location = '{$GoBack}'" value="{#groupopt_back#}">		
+					</td>
+				</tr>
+			</table>
+			
+			</td></tr>
+			</form>
+			</table>
+			
+			<br>
+{literal}
+<SCRIPT language="javascript">
+	show_tab('basicinfo');
+</SCRIPT> 
+{/literal}
+	</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

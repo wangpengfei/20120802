@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="NetStore"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#netstore_title#}</title>
+</head>
+
+{literal}
+<script language="javascript">
+function chgftpfolder(folder) { 
+	with(document.form1) { 
+		ftpfolder.value = folder;
+		dest.value = ''; 
+		submit(); 
+	} 
+}
+
+function enterfolder(folder) {
+	with(document.form1) { 
+		enterfolder.value = folder;
+		dest.value = 'enterfolder'; 
+		submit(); 
+	} 
+}
+
+function selattach() {
+	with(document.form1) { 
+		dest.value = 'selattach'; 
+		submit(); 
+	} 
+}
+
+function sel() {
+	with(document.form1) {
+		for(i = 0; i < elements.length; i++) {
+			thiselm = elements[i];
+			if(thiselm.name.substring(0, 8) == 'fileitem'
+				|| thiselm.name.substring(0, 10) == 'folderitem')
+				thiselm.checked = !thiselm.checked
+		}
+	}
+}
+{/literal}
+
+{$ListJSSource}
+</script>
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+<table align="center" width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			{if $errCode eq ""}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<form name=form1 action=litenetstore.php method=post>
+			{$Forms}
+				<tr height="25">
+					<td colspan="4" class="list_header">&nbsp;
+						{#ftplist_curr_folder#} <b>{$FtpFolder|escape:"html"}</b>
+						{#ftplist_usedquota#} <b>{$TotalUsed}</b>
+						{#ftplist_usedfoldercount#} <b>{$FolderCount}</b>
+						{#ftplist_usedfilecount#} <b>{$FileCount}</b>
+					</td>
+					<!--
+					<td class="list_header">&nbsp;{#ftplist_select_folder_tip#}
+					<select name="dest_ftpfolder" onchange="chgftpfolder(this[this.selectedIndex].value)">
+						<option value="" selected>{#ftplist_select_folder#}
+						{section name=i loop=$AvalFtpFolders}
+							<option value="{$AvalFtpFolders[i].id}">{$AvalFtpFolders[i].name|escape:"html"}
+						{/section}
+					</select>
+					</td>
+					-->
+				</tr>
+				<tr height="22">
+					<td width="5%" class="list_title" align=center>&nbsp;<input type=checkbox name=chkall onclick="sel()"></td>
+					<td width="50%" class="list_title" align=center><b><a href="javascript:sortby('name')">{#ftplist_name_hea#}{$NameArrow}</a></b></td>
+					<td width="15%" class="list_title" align=center><b><a href="javascript:sortby('size')">{#ftplist_size_hea#}{$SizeArrow}</a></b></td>
+					<td width="30%" class="list_title" align=center><b><a href="javascript:sortby('date')">{#ftplist_date_hea#}{$DateArrow}</a></b></td>
+				</tr>
+				
+				{if $DispUpFolder eq 1}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value">&nbsp;</td>
+						<td class="list_value">&nbsp;<a href="javascript:enterfolder('..');"><img src="icon/upfolder.gif" width=16 height=16 border=0 align=absmiddle>&nbsp;..</a></td>
+						<td class="list_value">&nbsp;</td>
+						<td class="list_value">&nbsp;</td>
+					</tr>
+				{/if}
+
+				{section name=i loop=$FileList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+					{if $FileList[i].isdir eq 'true'}
+						<td class="list_value" align=center>&nbsp;<input type=checkbox name="folderitem{$smarty.section.i.index}" value="{$FileList[i].id}"></td>
+						<td class="list_value">&nbsp;<a href="javascript:enterfolder('{$FileList[i].id}');" title="{#ftplist_enterfolder_tip#}"><img src="{$FileList[i].iconfile}" width=16 height=16 border=0 align=absmiddle>&nbsp;{$FileList[i].name|truncate:60:"...":true}  </a>
+						{if $FileList[i].isshare eq 'true'}&nbsp;<a href="javascript:unshareit('{$FileList[i].id}')" title="{#ftplist_sharefolder_tip#}"><img src="themes/common/images/ftpshare.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+						</td>
+						<td class="list_value" align=right>&nbsp;{$FileList[i].dispsize}&nbsp;</td>
+						<td class="list_value" align=center>&nbsp;{$FileList[i].date}</td>
+					{else}
+						<td class="list_value" align=center>&nbsp;<input type=checkbox name="fileitem{$smarty.section.i.index}" value="{$FileList[i].id}"></td>
+						<td class="list_value">&nbsp;<a href="{$FileList[i].downlink}" title="{#ftplist_download_tip#}"><img src="{$FileList[i].iconfile}" width=16 height=16 border=0 align=absmiddle>&nbsp;{$FileList[i].name|truncate:60:"...":true}  </a>
+						{if $FileList[i].preview eq 'true'}&nbsp;<a href="javascript:preview('{$FileList[i].id}')" title="{#ftplist_viewfile_tip#}"><img src="themes/common/images/preview.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+						{if $FileList[i].isshare eq 'true'}&nbsp;<a href="javascript:unshareit('{$FileList[i].id}')" title="{#ftplist_sharefile_tip#}"><img src="themes/common/images/ftpshare.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+						</td>
+						<td class="list_value" align=right>&nbsp;{$FileList[i].dispsize}&nbsp;</td>
+						<td class="list_value" align=center>&nbsp;{$FileList[i].date}</td>
+					{/if}
+					</tr>
+				{sectionelse}
+				<tr height="50">
+					<td colspan="4" class="list_value" align="center">
+						{#ftplist_nonefile#} <b>{$FtpFolder|escape:"html"}</b>
+					</td>
+				</tr>
+				{/section}
+
+				<tr height="30">
+					<td colspan="4" class="list_btn" align="center">
+						<input type=button name="okbtn" class=button value="{#ftplist_ok#}" onclick="javascript:selattach()">
+						<input type=button name="canclebtn" class=button value="{#ftplist_close#}" onclick="javascript:window.close()">
+					</td>
+				</tr>
+			</form>
+			</table>
+			{else}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr height=25>
+					<td class="tb_header" align=center></td>
+				</tr>
+				<tr height=100>
+					<td class="tb_value" align=center><br>
+						{if $errCode eq 1}{#netstore_failed#}
+						{elseif $errCode eq 99}{#netstore_connect_failed#}
+						{elseif $errCode eq 100}{#netstore_right_error#}
+						{/if}
+					</td>
+				</tr>
+				<tr height="30">
+					<td class="tb_btn" align="center">
+						<input type=button name="canclebtn" class=button value="{#ftplist_close#}" onclick="javascript:window.close()">
+					</td>
+				</tr>
+			</table>
+			{/if}
+		</td>
+	</tr>
+</table>
+</body>
+</html>

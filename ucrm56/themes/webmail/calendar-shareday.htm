@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#cal_share_title#}</title>
+</head>
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr height="20">
+				<td class="tb_empty">
+					<table width=100% border=0 cellspacing=0 cellpadding=0>
+					<tr>
+						<td width=75%>
+							<table width=100% border=0 cellspacing=0 cellpadding=0>
+							<tr><td align=center colspan=2>
+								<table border=0 width=100% cellspacing=0 cellpadding=0>
+									<tr height=30>
+										<td width=20% class="tb_title" align=center>&nbsp;<a href="{$PreviousDayLink}"><b>&lt;&lt;{#cal_previous_day#}</b></a></td>
+										<td width=*% class="tb_title" align=center><b>{$CurrentDayText}</b></td>
+										<td width=20% class="tb_title" align=center><a href="{$NextDayLink}"><b>{#cal_next_day#}&gt;&gt;</a>&nbsp;</b></td>
+									</tr>
+								</table>
+								</td></tr>									
+							<tr height=40><td width=20% align=center class="tb_field">{#cal_whole_day#}</td>
+								<td class="tb_value">{$WholeDayEventLink}</td></tr>
+							{section name=i loop=$AllDayTime}
+							<tr height=40><td align=center class="tb_field">{$AllDayTime[i].timetext}:00</td>
+								<td class="tb_value">{$AllDayTime[i].eventlink}</td></tr>
+							{/section}
+							<tr><td align=center colspan=2>
+								<table border=0 width=100% cellspacing=0 cellpadding=0>
+									<tr height=30>
+										<td width=20% class="tb_title" align=center>&nbsp;<A HREF="{$PreviousDayLink}"><b>&lt;&lt;{#cal_previous_day#}</b></a></td>
+										<td width=*% class="tb_title" align=center><A HREF="{$CurrentDayLink}">{if $ALLTime eq 1}{#cal_disp_allevent#}{else}{#cal_disp_specialevent#}{/if}</a></td>
+										<td width=20% class="tb_title" align=center><A HREF="{$NextDayLink}"><b>{#cal_next_day#}&gt;&gt;</a>&nbsp;</b></td>
+									</tr>
+								</table>
+								</td></tr>
+							</table>
+						</td>
+						<td width=5><td>
+						<td valign=top align=center>
+							{$AllMonthDay}
+							<br>
+							<a href="{$CurrentDayLink}">{if $ALLTime eq 1}{#cal_disp_allevent#}{else}{#cal_disp_specialevent#}{/if}</a>
+							<br>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

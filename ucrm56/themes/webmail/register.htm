@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Register"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+	<title>{#reg_title#}</title>
+	<link rel="stylesheet" href="themes/xp/webmail.css" type="text/css">
+	<script language="JavaScript" src="themes/common/js/common.js" type="text/javascript"></script>
+	<script language="JavaScript" src="themes/common/js/pwdstrength.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="themes/common/css/pwdstrength.css" type="text/css">
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript">
+	function EvalPwd(Sb){
+		if(ClientSideStrongPassword(Sb, gSimilarityMap, gDictionary)){
+			document.getElementById('weak').className = 'pwd_strong1';
+			document.getElementById('middle').className = 'pwd_strong1';
+			document.getElementById('strong').className = 'pwd_strong';
+		}
+		else if(ClientSideMediumPassword(Sb, gSimilarityMap, gDictionary)){
+			document.getElementById('weak').className = 'pwd_middle1';
+			document.getElementById('middle').className = 'pwd_middle';
+			document.getElementById('strong').className = 'pwd_default';
+		}
+		else if(ClientSideWeakPassword(Sb, gSimilarityMap, gDictionary)){
+			document.getElementById('weak').className = 'pwd_weak';
+			document.getElementById('middle').className = 'pwd_default';
+			document.getElementById('strong').className = 'pwd_default';
+		}
+		else{
+			document.getElementById('weak').className = 'pwd_default';
+			document.getElementById('middle').className = 'pwd_default';
+			document.getElementById('strong').className = 'pwd_default';
+		}
+	}
+
+	function showItemTip(item){
+		for (i = 0; i < reg_field.length; i++) {
+			if (reg_field[i][0] == item){
+				if (reg_field[i][2]){
+					document.writeln('<font color=ff0000>*</font>');
+				}
+			}			
+		}
+	}
+	
+	function itemEmpty(){
+		frm = document.form1;
+		
+		for (i = 0; i < reg_field.length; i++) {
+			if (reg_field[i][2]){
+				ctrlname = reg_field[i][1];
+				eval('bItemEmpty = (frm.'+ctrlname+'.value == "")');
+				if (bItemEmpty)
+					return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	function checkItemLength(){
+		frm = document.form1;
+		
+		for (i = 0; i < reg_field.length; i++) {
+			if (reg_field[i][2]){
+				ctrlname = reg_field[i][1];
+				eval('len = frm.'+ctrlname+'.value.length');
+				if (reg_field[i][3] != 0 && len < reg_field[i][3]){
+					eval('frm.'+ctrlname+'.focus()');
+{/literal}
+					strTip = '{#reg_valueminimum#}';
+{literal}
+					strTip = strTip.replace(/\%d/i, reg_field[i][3]);
+					alert(strTip);
+					
+					return false;
+				}
+				
+				if (reg_field[i][4] != 0 && len > reg_field[i][4]){
+					eval('frm.'+ctrlname+'.focus()');
+{/literal}
+					strTip = '{#reg_valuemaximum#}';
+{literal}
+					strTip = strTip.replace(/\%d/i, reg_field[i][4]);
+					alert(strTip);
+					
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	function checkValue() {
+		sSix		= '';
+		sUser		= '';
+		sDomain		= '';
+		sPassword		= '';
+		sConfirmPwd		= '';
+		
+		frm = document.form1;
+		if(frm.six){
+			if (frm.six.options)
+				sSix = frm.six.options[frm.six.selectedIndex].value;
+			else
+				sSix = frm.six.value;
+		}
+		if(frm.f_domain)
+			sDomain = frm.f_domain.value;
+		if(frm.f_user)
+			sUser = frm.f_user.value;
+		if(frm.f_password)
+			sPassword = frm.f_password.value;
+		if(frm.f_confirmpwd)
+			sConfirmPwd = frm.f_confirmpwd.value;
+			
+		if ((sSix == '' && sDomain == '') || sUser == '' 
+			|| sPassword == '' || sConfirmPwd == ''
+			|| !itemEmpty()){
+{/literal}
+			alert('{#reg_empty#}');
+{literal}
+			return;
+		}
+			
+		if (sPassword != sConfirmPwd){
+{/literal}
+			alert('{#reg_pwdnoequal#}');
+{literal}
+			return;
+		}
+
+		if (!checkItemLength())
+			return;
+			
+		if (CheckNumChar(sUser) == 0){
+{/literal}
+			alert('{#reg_invaildchar#}');
+{literal}
+			return;
+		}
+			
+		frm.submit();
+	}
+	
+	function goBack() {
+{/literal}
+		location.href='{$LogoutLocation}';
+{literal}
+	}
+</script>
+{/literal}
+
+<body bgcolor="#f4f4f4" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+<table align="center" width="758" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="553"><img src="themes/xp/images/reghead.jpg" width="553" height="116"></td>
+      <td background="themes/xp/images/reghead_bg.jpg">{if $RegisterLogo neq ""}<img src="{$RegisterLogo}" width="180" height="116">{/if}</td>
+    </tr>
+    <tr>
+		<td height="18" colspan=2 bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+</table>
+
+{if $ShowType neq 1}
+<table align="center" width="758" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="300" align="center" bgcolor="#FFFFFF">
+			<table align="center" cellspacing=1 cellpadding=0 width="70%" border=0 class="tablebg">
+				<form name=form1 action=register.php method=POST>
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=save value="yes">
+				
+          		<tr height="30"> 
+					<td colspan=2 class="header" align="center"><b>{#reg_title#}</b></td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right" width="25%">{#reg_mailbox#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_user size=16 maxlength=64 value="{$User|escape:"html"}" class="textbox">
+                    {if $NotDisplayDomains eq 1} 
+                    	@ <input type="text" size="12" name="f_domain" value="{$Domain}" maxlength=64> <font color=#ff0000>*</font>  
+                    {else}
+						{if $DomainsCount neq 0}@ {$DomainsList}{/if} <font color=#ff0000>*</font>
+					{/if}
+					</td>
+				</tr>
+          		<tr height="20"> 
+					<td colspan=2 class="title" align="center">{#reg_mailbox_tip#|replace:'%d':$MailboxLength}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_password#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=password name=f_password size=30 maxlength=64 onkeyup="javascript: EvalPwd(this.value);" onchange="javascript: EvalPwd(this.value);" class="textbox"><font color=#ff0000>*</font></td>
+				</tr>
+          		<tr height="20"> 
+					<td colspan=2 class="title" align="center">{#reg_password_tip#|replace:'%d':$PasswordLength}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_pwdstrength#}&nbsp;</td>
+					<td class="default">
+				      <table width=300 border="0" cellspacing="0" cellpadding="0">
+				      	<tr height=20>
+				      		<td width=1%>&nbsp;</td>
+				      		<td width=25% class="pwd_default" id="weak" align=center>{#reg_pwdweak#}</td>
+				      		<td width=25% class="pwd_default" id="middle" align=center>{#reg_pwdmiddle#}</td>
+				      		<td width=25% class="pwd_default" id="strong" align=center>{#reg_pwdstrong#}</td>
+				      		<td width=*%>&nbsp;</td>
+				      	</tr>
+				      </table>
+					</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_confirmpwd#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=password name=f_confirmpwd size=30 maxlength=64 class="textbox"><font color=#ff0000>*</font></td>
+				</tr>
+          		<tr height="20"> 
+					<td colspan=2 class="title" align="center">{#reg_question_tip#}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_pwdquestion#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_pwdquestion size=30 maxlength=120 value="{$PwdQuestion|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('pwdquestion')</script></td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_pwdanswer#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_pwdanswer size=30 maxlength=64 value="{$PwdAnswer|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('pwdanswer')</script></td>
+				</tr>
+          		<tr height="20"> 
+					<td colspan=2 class="title" align="center">{#reg_user_info#}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_fullname#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_fullname size=30 maxlength=120 value="{$FullName|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('fullname')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_homeaddress#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_homeaddress size=30 maxlength=256 value="{$HomeAddress|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('homeaddress')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_homephone#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_homephone size=30 maxlength=32 value="{$HomePhone|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('homephone')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_mobile#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_mobile size=30 maxlength=32 value="{$Mobile|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('mobile')</script></td>
+				</tr>
+				
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_organizationunit#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_organizationunit size=30 maxlength=128 value="{$OrganizationUnit|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('organizationunit')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_jobtitle#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_jobtitle size=30 maxlength=128 value="{$JobTitle|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('jobtitle')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_office#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_office size=30 maxlength=128 value="{$Office|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('office')</script></td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_officephone#}&nbsp;</td>
+					<td class=default>&nbsp;<input type=text name=f_officephone size=30 maxlength=32 value="{$OfficePhone|escape:"html"}" class="textbox"><script language="JavaScript">showItemTip('officephone')</script></td>
+				</tr>
+					
+	      		<tr height="50"> 
+					<td class="title" align="right">{#reg_description#}&nbsp;</td>
+					<td class=default>&nbsp;<textarea name=f_description cols=45 rows=5 class="textbox">{$Description|escape:"html"}</textarea></td>
+				</tr>
+				
+				{if $ErrorCode neq 0}
+	          		<tr height="30"> 
+						<td colspan=2 class="header" align="center"><font color=#ff0000>{#reg_failure#}<br>
+						{if $ErrorCode eq -1}
+							{#reg_dberror#}
+						{elseif $ErrorCode eq -2}
+							{#reg_usernameerror#}
+						{elseif $ErrorCode eq -3}
+							{#reg_passworderror#}
+						{elseif $ErrorCode eq -4}
+							{#reg_domainerror#}
+						{elseif $ErrorCode eq 1}
+							{#reg_existuser#}
+						{elseif $ErrorCode eq 2}
+							{#reg_existaliasuser#}
+						{elseif $ErrorCode eq 3}
+							{#reg_existgroup#}
+						{elseif $ErrorCode eq 4}
+							{#reg_userfull#}
+						{elseif $ErrorCode eq 5}
+							{#reg_domainstoragefull#}
+						{elseif $ErrorCode eq 6}
+							{#reg_domainuserfull#}
+						{elseif $ErrorCode eq 7}
+							{#reg_domainnetstorestoragefull#}
+						{/if}
+						</font></td>
+					</tr>
+				{/if}
+          		<tr height="20"> 
+					<td class=default colspan=2 align=center height=30>
+					<input type=button value="{#reg_register#}" class="button" onclick="javascript:checkValue();">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type=button value="{#reg_back#}" class="button" onclick="javascript:goBack();">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+{else}
+<table align="center" width="758" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="300" align="center" bgcolor="#FFFFFF">
+			<table align="center"  cellspacing=1 cellpadding=0 width="70%"  border=0 class="tablebg">
+				<form name=form1 action=index.php method=POST>
+				
+          		<tr height="30"> 
+					<td colspan=2 class="header" align="center"><b>{#reg_success#}</b></td>
+				</tr>
+				{if $NeedAffirm eq 1}
+	          	<tr height="20"> 
+					<td colspan=2 class=title align="center">{#reg_affirmtip#}</td>
+				</tr>
+				{else}
+	          	<tr height="20"> 
+					<td colspan=2 class=title align="center">{#reg_successtip#}</td>
+				</tr>
+				{/if}
+		      	<tr height="20"> 
+					<td class="title" align="right" width="25%">{#reg_mailbox#}&nbsp;</td>
+					<td class=default>&nbsp;{$User|escape:"html"}@{$Domain|escape:"html"}</td>
+				</tr>
+		      	<tr height="20"> 
+					<td class="title" align="right">{#reg_password#}&nbsp;</td>
+					<td class=default>&nbsp;{#reg_hide_pwd#}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_pwdquestion#}&nbsp;</td>
+					<td class=default>&nbsp;{$PwdQuestion|escape:"html"}</td>
+				</tr>
+          		<tr height="20"> 
+					<td class="title" align="right">{#reg_pwdanswer#}&nbsp;</td>
+					<td class=default>&nbsp;{$PwdAnswer|escape:"html"}</td>
+				</tr>
+          		<tr height="20"> 
+					<td colspan=2 class="title" align="center">{#reg_user_info#}</td>
+				</tr>
+		      	<tr height="20"> 
+					<td class="title" align="right">{#reg_fullname#}&nbsp;</td>
+					<td class=default>&nbsp;{$FullName|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_homeaddress#}&nbsp;</td>
+					<td class=default>&nbsp;{$HomeAddress|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_homephone#}&nbsp;</td>
+					<td class=default>&nbsp;{$HomePhone|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_mobile#}&nbsp;</td>
+					<td class=default>&nbsp;{$Mobile|escape:"html"}</td>
+				</tr>
+				
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_organizationunit#}&nbsp;</td>
+					<td class=default>&nbsp;{$OrganizationUnit|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_jobtitle#}&nbsp;</td>
+					<td class=default>&nbsp;{$JobTitle|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_office#}&nbsp;</td>
+					<td class=default>&nbsp;{$Office|escape:"html"}</td>
+				</tr>
+				<tr height="20"> 
+					<td class="title" align="right">{#reg_officephone#}&nbsp;</td>
+					<td class=default>&nbsp;{$OfficePhone|escape:"html"}</td>
+				</tr>
+				
+		  		<tr height="50"> 
+					<td class="title" align="right">{#reg_description#}&nbsp;</td>
+					<td class=default>&nbsp;{$Description|escape:"html"}</td>
+				</tr>         		
+		      		
+				<tr height="20"> 			
+					<td class=default colspan=2 align=center height=30>
+					<input type=button value="{#reg_back#}" class="button" onclick="javascript:goBack();">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+{/if}
+
+<table align="center" width="758" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+		<td height="18" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+    <tr>
+		<td height="18" background="themes/xp/images/regbt.gif" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+    <tr><td height="50" bgcolor="#AFB2B3">&nbsp;</td></tr>
+    <tr>
+		<td height="30" background="themes/xp/images/regbt2.gif" bgcolor="#FFFFFF" align=center>{#copyright_info#}</td>
+    </tr>
+</table>
+</body>
+</html>
+

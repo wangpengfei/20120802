@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#cal_share_title#}</title>
+</head>
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr height="20">
+				<td class="tb_empty">
+					<table width=100% border=0 cellspacing=0 cellpadding=0>
+					<tr><td valign=top align=center>{$PreviousMonth}</td>
+						<td width="50%" align=center><b>{$MonthName}</b>&nbsp;&nbsp;<a href="{$ThisYearLink}" class="menub">{$ThisYear}</a></td>
+						<td valign=top align=center>{$NextMonth}</td>
+					</tr>
+					<tr><td align=center colspan=3>
+						{$AllMonthDay}
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

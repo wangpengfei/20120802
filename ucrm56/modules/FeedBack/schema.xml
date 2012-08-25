@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_feedback</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_feedback` (
+  `feedbackid` int(11) NOT NULL,
+  `feedbackname` char(255) NOT NULL,
+  `feedbackcont` text NOT NULL,
+  `feedbacknotes` char(255) NOT NULL,
+  PRIMARY KEY  (`feedbackid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_feedbackcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_feedbackcf` (
+  `feedbackid` int(11) NOT NULL,
+  PRIMARY KEY  (`feedbackid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_feedbackgrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_feedbackgrouprel` (
+  `feedbackid` int(11) NOT NULL,
+  `groupname` varchar(100) default NULL,
+  PRIMARY KEY  (`feedbackid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

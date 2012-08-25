@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="NetStore"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#share_title#}</title>
+</head>
+
+{literal}
+<script language=javascript>
+function CloseWin() {
+	window.close();
+}
+</script>
+{/literal}
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{if $errCode eq 0}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr height=25>
+				<td colspan=4 class="list_header" align=center><b>{$User}{#share_tip#}</b></td>
+			</tr>
+			<tr height=22>
+				<td width="60%" class="list_title" align=center><b>{#share_name#}</b></td>
+				<td width="15%" class="list_title" align=center><b>{#share_size#}</b></td>
+				<td width="20%" class="list_title" align=center><b>{#share_mdtime#}</b></td>
+				<td width="5%" class="list_title" align=center><b>{#share_download#}</b></td>
+			</tr>
+
+			{section name=i loop=$ShareFileList}
+				<tr height=20>
+					<td class="list_value">&nbsp;<a href="{$ShareFileList[i].downlink}" title="{#ftplist_download_tip#}"><img src="{$ShareFileList[i].iconfile}" width="16" height="16" border="0"> &nbsp;{$ShareFileList[i].name|escape:"html"}</a>
+					{if $ShareFileList[i].viewlink neq ''}&nbsp;<a href="{$ShareFileList[i].viewlink}" target=_blank  title="{#ftplist_viewfile_tip#}"><img src="themes/common/images/preview.gif" width=16 height=16 border=0></a>{/if}
+					</td>
+					<td class="list_value" align="right">{$ShareFileList[i].size}&nbsp;</td>
+					<td class="list_value" align="center">&nbsp;{$ShareFileList[i].lasttime}</td>
+					<td class="list_value" align="center">&nbsp;<a href="{$ShareFileList[i].downlink}" title="{#ftplist_download_tip#}"><img src="themes/common/images/download.gif" width=16 height=16 border=0></a></td>
+				</tr>
+			{sectionelse}
+			<tr height=30>
+				<td class="list_value" colspan=4>&nbsp;{#share_nofiles#}</td>
+			</tr>
+			{/section}
+			<tr height="30">
+				<td colspan=4 class="list_btn" align=center>
+					<a href="javascript:CloseWin();">{#share_close#}</a>
+				</td>
+			</tr>
+		</table>
+		{else}
+		<br><br><br>
+		<table width="400" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr height=25>
+				<td class="tb_header">&nbsp;&nbsp;<b>{#share_error_title#}</b></td>
+			</tr>
+			<tr height=100><td class="tb_value" align="center"><br>
+				{if $errCode eq -1}
+					{#share_error_1#}
+				{elseif $errCode eq 1}
+					{#share_error1#}
+				{elseif $errCode eq 2}
+					{#share_error2#}
+				{elseif $errCode eq 3}
+					{#share_error3#}
+				{elseif $errCode eq 99}
+					{#share_error99#}
+				{/if}
+				<br><br>
+			</td>
+			<tr height="30">
+				<td colspan=4 class="tb_btn" align=center>
+					<a href="javascript:CloseWin();">{#share_close#}</a>
+				</td>
+			</tr>
+		</table>
+		{/if}
+	</td>
+  </tr>
+</table>
+</body>
+</html>

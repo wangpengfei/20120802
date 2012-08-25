@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Signature"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#sign_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+function save_check()
+{
+	var name = document.form1.name.value;
+	
+	if (name == ""){
+{/literal}
+		alert("{#sign_empty#}");
+{literal}
+		return;
+	}
+		
+	with(document.form1) {
+		if(textmode.value == 0) 
+			content.value = GetHtml();
+		else
+			content.value = texteditor.value;
+		
+		submit();
+	}
+}
+	
+function editormode(mode) {
+	with(document.form1) {
+		if(textmode.value == 0) 
+			content.value = GetHtml();
+		else
+			content.value = texteditor.value;
+			
+		textmode.value = mode;
+		opt.value = 'editor';
+		submit();
+	}
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=signature.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=id value="{$SignID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+				<input type=hidden name=textmode value="{$TextMode}">
+				<input type=hidden name=content value="">
+	
+				<tr height="20">
+					<td class="tb_field" align="right" width="20%">{#sign_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="name" value="{$SignName|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+						&nbsp;<input type=checkbox name=default value=1{if $SignDefault} checked{/if}>{#sign_default#}
+					</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right" width="20%">{#sign_editor#}&nbsp;</td>
+					<td class="tb_value">
+					{if $AdvancedEditor eq 1}
+						&nbsp;<a href="javascript:editormode(1)">{#sign_editor_text#}</a>
+					{else}
+						&nbsp;<a href="javascript:editormode(0)">{#sign_editor_html#}</a>
+					{/if}
+					</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align="right">{#sign_content#}&nbsp;</td>
+					<td class="tb_value">
+						{if $AdvancedEditor eq 1}
+							{include file="common/advanced-editor.htm"}
+							<div id="hiddenEditor" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
+								<textarea rows=10 cols=60 name=rtfeditor class="textbox">{$SignContent|escape:"html"}</textarea>
+							</div>
+						{else}
+							&nbsp;<textarea rows=10 cols=60 name=texteditor class="textbox">{$SignContent|escape:"html"}</textarea>
+						{/if}
+					</td>
+				</tr>
+				<tr height="30">
+					<td colspan=2 class="tb_btn" align=center height=30>
+						<input type=button value="{#sign_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#sign_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

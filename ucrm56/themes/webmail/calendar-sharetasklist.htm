@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#cal_share_title#}</title>
+</head>
+
+{literal}
+<script language="javascript">
+function dispTask(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'disptask';
+	document.form1.submit();
+}
+</script>
+{/literal}
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<form name=form1 method=post action=viewsharecalendar.php>
+			<tr height="22">
+				<td width="30%" class="list_title" align=center><b>{#cal_title#}</b></td>
+				<td width="15%" class="list_title" align=center><b>{#cal_startdate#}</b></td>
+				<td width="15%" class="list_title" align=center><b>{#cal_enddate#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_status#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_type#}</b></td>
+				<td width="10%" class="list_title" align=center><b>{#cal_share#}</b></td>
+			</tr>
+			{section name=i loop=$TaskList}
+				<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+					<td class="list_value">&nbsp;<a href="javascript:dispTask('{$TaskList[i].uid}');">{$TaskList[i].title}</a></td>
+					<td class="list_value" align=center>&nbsp;{$TaskList[i].startdate|date_format:#date_format#}</td>
+					<td class="list_value" align=center>&nbsp;{$TaskList[i].enddate|date_format:#date_format#}</td>
+					<td class="list_value" align=center>
+					{if $TaskList[i].status eq "wait"}
+						&nbsp;{#cal_status_wait#}
+					{elseif $TaskList[i].status eq "reminded"}
+						&nbsp;{#cal_status_reminded#}
+					{elseif $TaskList[i].status eq "doing"}
+						&nbsp;{#cal_status_doing#}
+					{elseif $TaskList[i].status eq "finished"}
+						&nbsp;{#cal_status_finished#}
+					{/if}
+					</td>
+					<td class="list_value" align=center>
+					{if $TaskList[i].type eq "personal"}
+						&nbsp;{#cal_type_personal#}
+					{elseif $TaskList[i].type eq "business"}
+						&nbsp;{#cal_type_business#}
+					{elseif $TaskList[i].type eq "meeting"}
+						&nbsp;{#cal_type_meeting#}
+					{elseif $TaskList[i].type eq "birthday"}
+						&nbsp;{#cal_type_birthday#}
+					{elseif $TaskList[i].type eq "holiday"}
+						&nbsp;{#cal_type_holiday#}
+					{elseif $TaskList[i].type eq "anniversary"}
+						&nbsp;{#cal_type_anniversary#}
+					{elseif $TaskList[i].type eq "appointment"}
+						&nbsp;{#cal_type_appointment#}
+					{elseif $TaskList[i].type eq "gettogether"}
+						&nbsp;{#cal_type_gettogether#}
+					{elseif $TaskList[i].type eq "other"}
+						&nbsp;{#cal_type_other#}
+					{/if}
+					</td>
+					<td class="list_value" align=center>
+					{if $TaskList[i].share eq "private"}
+						&nbsp;{#cal_share_private#}
+					{elseif $TaskList[i].share eq "busy"}
+						&nbsp;{#cal_share_busy#}
+					{elseif $TaskList[i].share eq "public"}
+						&nbsp;{#cal_share_public#}
+					{else}
+						&nbsp;{#cal_share_private#}
+					{/if}
+					</td>
+				</tr>
+			{/section}
+			<input type=hidden name=userid value="{$UserID}">
+			<input type=hidden name=uid value="{$UID}">
+			<input type=hidden name=dest value="">
+			</form>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

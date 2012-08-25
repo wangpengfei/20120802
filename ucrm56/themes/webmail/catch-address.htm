@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Catch"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#ctc_title#}</title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+
+<form name=form1 action="catchaddress.php" method=POST>
+	<input type=hidden name=sid value="{$Sid}">
+	<input type=hidden name=lid value="{$Lid}">
+	<input type=hidden name=ix value="{$Ix}">
+	<input type=hidden name=folder value="{$Folder|escape:"html"}">
+
+	<table align=center width="96%" border="0" cellspacing=0 cellpadding=0>
+		<tr height=25>
+			<td class="tb_header" colspan=2>
+				&nbsp;&nbsp;<b>{#ctc_information#}</b>
+			</td>
+		</tr>
+	
+		{if $AvailableAddresses gt 0 }
+			<tr height=20>
+				<td class="tb_title" align=center width="40%"><b>{#ctc_name#}</b></td>
+				<td class="tb_title" align=center><b>{#ctc_email#}</b></td>
+			</tr>
+			{section name=i loop=$AddressList}
+			<tr height=20>
+				<td class="tb_field">&nbsp;<input type=checkbox name=ckaval[] checked value={$AddressList[i].index}>{$AddressList[i].name|truncate:30:"...":true|escape:"html"}</td>
+				<td class="tb_value">&nbsp;{$AddressList[i].mail}</td>
+			</tr>
+			{/section}
+			<tr height=30>
+				<td class="tb_btn" align=center colspan=2>
+					<input type=submit name=submit class=button value="{#ctc_save#}">
+					<input type=button class=button value="{#ctc_close#}" onclick="javascript:self.close()">
+				</td>
+			</tr>
+		{else}
+			<tr height=100>
+				<td class="tb_value" align=center>{#ctc_no_address#}</td>
+			</tr>
+			<tr height=30>
+				<td class="tb_btn" align=center>
+					<a href="javascript:self.close()">{#ctc_close#}</a>
+				</td>
+			</tr>
+		{/if}
+	
+	</table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#newmsg_title#}</title>
+	<script language="JavaScript" src="themes/common/js/autofilladdress.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="themes/common/css/autofill.css" type="text/css">
+</head>
+
+{$JSSource}
+{$FinishAddressJS}
+{literal}
+<script language="Javascript">
+function cc_bcc_text(item){
+	arrTableCtrl = [document.all('cc_tab'), document.all('bcc_tab')];
+	ob_tab = arrTableCtrl[item];
+
+	if (ob_tab.style.display == "none")
+		ob_tab.style.display = "";
+	else
+		ob_tab.style.display = "none";
+}
+function smime_sign() {
+	if (document.form1.smimesign.checked)
+{/literal}
+		alert("{#smime_sign_tip#}");
+{literal}
+}
+function smime_crypt() {
+	if (document.form1.smimecrypt.checked)
+{/literal}
+		alert("{#smime_crypt_tip#}");
+{literal}
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width="98%" border=0 cellspacing=0 cellpadding=0>
+				<form name=form1 method=post action="newmsg.php" onSubmit="return false;">
+				{$Forms}
+				<tr height=25>
+				    <td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_header" align=left>
+						<input type=button name=bt_sendmail1 value="{#send_text#}" onClick="sendmail()" class=button>
+						<input type=button name=bt_savedraft1 value="{#save_text#}" onClick="savedraft(false)" class=button>
+						<input type=button name=bt_cancel value="{#cancel_text#}" onClick="goinbox(false)" class=button>
+						
+					</td>
+				</tr>
+				{if $HaveMailFrom eq 1}
+				<tr height=25>
+					<td class="tb_field" align="right">{#from_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="from">
+							<option value=""{if $From == ""} selected{/if}>{$UserEmail}</option>
+							{section name=i loop=$MailFromAddress}
+							<option value="{$MailFromAddress[i].email}"{if $From == $MailFromAddress[i].email} selected{/if}>{$MailFromAddress[i].dispname}</option>
+							{/section}
+						</select>
+				</tr>	
+				{/if}
+
+				<tr height="20">
+					<td width="16%" class="tb_field" align="right"><a href="javascript:addrpopup('to')" title="{#address_tip#}"><img src="themes/common/images/addressbook.gif" width="16" height="16" border="0" align=absmiddle alt="{#address_tip#}">&nbsp;{#to_hea#}</a>&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea class=textbox cols=100 rows=1 name=to autocomplete="off" onkeydown="return f_OnKeyDown(this,event)" onkeyup="f_OnKeyUp(this,event)" onblur="f_OnBlur();">{$To}</textarea>
+					</td>
+				</tr>	
+				
+				<tr height="20">
+					<td width="16%" class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value">&nbsp;<a href="javascript:cc_bcc_text(0)">{#cc_hea#}</a>
+					&nbsp;<a href="javascript:cc_bcc_text(1)">{#bcc_hea#}</a>
+					&nbsp;<input type="checkbox" name="splitrcpt" value="1" {if $SplitRcpt eq 1}checked{/if}><acronym style="cursor: hand;" OnClick="splitrcpt.click()">{#split_rcpt#}</acronym>
+					&nbsp;<input type="checkbox" name="requestnotify" value="1" {if $RequestNotify eq 1}checked{/if}><acronym style="cursor: hand;" OnClick="requestnotify.click()">{#request_notify#}</acronym>
+					&nbsp;<acronym style="cursor: hand;">{#priority_text#}</acronym>&nbsp;<select name="priority">
+							<option value="1"{if $Priority eq 1} selected{/if}>{#priority_high#}</option>
+							<option value="3"{if $Priority eq 3} selected{/if}>{#priority_normal#}</option>
+							<option value="5"{if $Priority eq 5} selected{/if}>{#priority_low#}</option>
+						</select>
+						&nbsp;<input type="checkbox" name="sendutf8" value="1" {if $SendUTF8 eq 1}checked{/if}><acronym style="cursor: hand;" OnClick="sendutf8.click()">{#send_by_utf8#}</acronym>
+					
+					</td>
+				</tr>	
+				
+				<tbody id="cc_tab"{if $Cc eq ''} style="display: none"{/if}>
+				<tr height="20">
+					<td class="tb_field" align="right"><a href="javascript:addrpopup('cc')" title="{#address_tip#}"><img src="themes/common/images/addressbook.gif" width="16" height="16" border="0" align=absmiddle alt="{#address_tip#}">&nbsp;{#cc_hea#}</a>&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea class=textbox cols=100 rows=1 name=cc autocomplete="off" onkeydown="return f_OnKeyDown(this,event)" onkeyup="f_OnKeyUp(this,event)" onblur="f_OnBlur();">{$Cc}</textarea>
+					</td>
+				</tr>
+				</tbody>
+					
+				<tbody id="bcc_tab"{if $Bcc eq ''} style="display: none"{/if}>
+				<tr height="20">
+					<td class="tb_field" align="right"><a href="javascript:addrpopup('bcc')" title="{#address_tip#}"><img src="themes/common/images/addressbook.gif" width="16" height="16" border="0" align=absmiddle alt="{#address_tip#}">&nbsp;{#bcc_hea#}</a>&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea class=textbox cols=100 rows=1 name=bcc autocomplete="off" onkeydown="return f_OnKeyDown(this,event)" onkeyup="f_OnKeyUp(this,event)" onblur="f_OnBlur();">{$Bcc}</textarea>
+					</td>
+				</tr>	
+				</tbody>	
+
+				<tr height="20">
+					<td class="tb_field" align="right">{#subject_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input class=textbox type=text size=85 name=subject value="{$Subject|escape:"html"}"></td>
+				</tr>	
+				
+				<tr height="20">
+					<td class="tb_field" align="right"><a href="javascript:upwin()"><img src="themes/common/images/uploadattach.gif" border=0 width=15 height=12 align=absmiddle>&nbsp;{#attach_hea#}</a>&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="attachlist">
+						{if $HaveAttachs eq 1}
+							<option value="">{#newmsg_have_attachment#}</option>
+						{section name=i loop=$AttachList}
+							<option value="{$AttachList[i].name|escape:"html"}">{$AttachList[i].name|escape:"html"} ({$AttachList[i].size}Kb)</option>
+						{/section}
+						{else}
+							<option value="">{#newmsg_no_attachment#}</option>
+						{/if}
+						</select>
+						<a href="javascript:upwin()"><img src="themes/common/images/uploadattach.gif" border=0 width=15 height=12 align=absmiddle>&nbsp;{#attch_add_new#}</a>
+						
+						
+					</td>
+				</tr>
+
+				
+
+				<tr height="20">
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td colspan=2 class="tb_value">							
+						{if $AdvancedEditor eq 1}
+							&nbsp;<a href="javascript:editormode(1)"><img src="themes/common/images/editor.gif" border=0 width=16 height=16 align=absmiddle>&nbsp;{#editor_text_mode#}</a>
+						{else}
+							&nbsp;<a href="javascript:editormode(0)"><img src="themes/common/images/editor.gif" border=0 width=16 height=16 align=absmiddle>&nbsp;{#editor_html_mode#}</a>
+						{/if}
+						&nbsp;<a href="javascript:spellcheck()"><img src="themes/common/images/spellcheck.gif" border=0 width=16 height=16 align=absmiddle>&nbsp;{#spellcheck#}</a>
+					</td>
+				</tr>
+
+				<tr>
+					{if $AdvancedEditor eq 1}
+					<td class="tb_field" align="right">{#content_hea#}&nbsp;</td>
+					<td class="tb_empty">
+						{include file="common/advanced-editor.htm"}
+						<div id="hiddenEditor" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
+							<textarea cols=60 rows=25 name="rtfeditor" id="rtfeditor" class="textbox">{$MsgBody|escape:"html"}</textarea>
+						</div>
+					</td>
+					{else}
+					<td class="tb_field" align="right">{#content_hea#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea cols=100 rows=25 name="texteditor" id="texteditor" class="textbox">{$MsgBody|escape:"html"}</textarea></td>
+					{/if}
+				</tr>
+
+				{if $AddSignature}
+				<tr height="20">
+					<td class="tb_field" align="right">{#signature_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="signitem" onchange="javascript:chgsign();">
+							{section name=i loop=$SignatureList}
+						 		<option value="{$SignatureList[i].content}"{if $SignItem eq $SignatureList[i].name} selected{/if}>{$SignatureList[i].name}</option>
+							{/section}
+						</select>
+					</td>
+				</tr>
+				{/if}
+
+				<tr height=30>
+				    <td class="tb_btn"  align=center>&nbsp;</td>
+					<td class="tb_btn"  align=left>
+						<input type=button name=bt_sendmail2 value="{#send_text#}" onClick="sendmail()" class=button>
+						<input type=button name=bt_savedraft2 value="{#save_text#}" onClick="savedraft(false)" class=button>
+						<input type=button name=bt_cancel value="{#cancel_text#}" onClick="goinbox(false)" class=button>
+					</td>
+				</tr>	
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+<div id="div_sending" style="position:absolute; top:400; left:20; z-index:10; visibility:hidden">
+<table width=100% border=0 cellspacing=0 cellpadding=0>
+  <tr>
+	<td width=40%></td>
+	<td>
+		<table width=100% height=100 border=0 cellspacing=0 cellpadding=0>
+		<tr height=25>
+			<td class="tb_header" align=center></td>
+		</tr>
+		<tr height=100>
+			<td class="tb_value" align=center>
+			<font color=#0000ff>{#mail_sending_tip#}</font>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td width=20%></td>
+  </tr>
+</table>
+</div>
+
+<div id="div_saving" style="position:absolute; top:400; left:20; z-index:10; visibility:hidden">
+<table width=100% border=0 cellspacing=0 cellpadding=0>
+  <tr>
+	<td width=40%></td>
+	<td>
+		<table width=100% height=100 border=0 cellspacing=0 cellpadding=0>
+		<tr height=25>
+			<td class="tb_header" align=center></td>
+		</tr>
+		<tr height=100>
+			<td class="tb_value" align=center>
+			<font color=#0000ff>{#mail_saving_tip#}</font>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td width=20%></td>
+  </tr>
+</table>
+</div>
+
+<div id="div_cover" style="position:absolute; top:0; left:0; z-index:9; visibility:hidden">
+<table width=100% height=400 border=0 cellspacing=0 cellpadding=0>
+  <tr>
+  	<td align=center>
+    &nbsp;
+  	</td>
+  </tr>
+</table>
+</div>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

@@ -1,0 +1,169 @@
+<?php
+/*+**********************************************************************************
+ * The contents of this file are subject to the vtiger CRM Public License Version 1.1
+ * ("License"); You may not use this file except in compliance with the License
+ * The Original Code is:  vtiger CRM Open Source
+ * The Initial Developer of the Original Code is vtiger.
+ * Portions created by vtiger are Copyright (C) vtiger.
+ * All Rights Reserved.
+ ************************************************************************************/
+
+/**
+ * Turn-off PHP error reporting & request max timeout
+ */
+try { 
+	error_reporting(0);
+	set_time_limit(0);
+} catch(Exception $e) { }
+
+chdir( dirname(__FILE__) . '/../../../' );
+
+include_once 'vtlib/Vtiger/Mailer.php';
+include_once 'modules/DART/DART.php';
+include_once 'Smarty_setup.php';
+
+/**
+ * Global configuration
+ */
+global $site_URL, $default_language, $app_strings;
+if (!isset($current_language)) $current_language = $default_language;
+if (!isset($app_strings)) $app_strings = return_application_language($current_language);
+
+class DART_Cron {
+	
+	protected $dart;
+	protected $today;
+	protected $recorded = false;
+	
+	function __construct() {
+		$this->today = date('Y-m-d');
+		
+		$this->dart = new DART();
+	}
+	
+	function viewer() {
+		global $site_URL;
+		
+		$smarty = new vtigerCRM_Smarty();
+		$smarty->assign('BASEURL', "{$site_URL}/");
+		$smarty->assign('DAY', $this->today);
+		$smarty->assign('MODULE', 'DART');
+		return $smarty;
+	}
+	
+	function mailer() {
+		$mailer = new Vtiger_Mailer();
+		$mailer->IsHTML(true);
+
+		$mailer->From = $mailer->Username;
+
+		$mailsendmail = $this->dart->config('mail.sendmail');
+		if ($mailsendmail === true || $mailsendmail == 'true') $mailer->IsSendMail();
+
+		$mailfrom = $this->dart->config('mail.from'); 
+		if (!empty($mailfrom)) $mailer->From = $mailfrom;
+
+		$mailfromname = $this->dart->config('mail.fromname');
+		if (!empty($mailfromname)) $mailer->FromName = $mailfromname;
+
+		$mailreplyto = $this->dart->config('mail.replyto'); 
+		if (!empty($mailreplyto)) $mailer->AddReplyTo($mailreplyto);
+		
+		return $mailer;
+	}
+	
+	function recordNow() {
+		if ($this->recorded) return;
+		
+		// Trigger record changes		
+		$this->dart->record_ChangesForTheDay($this->today);
+		$changes = $this->dart->report_GatherChangedRecordDetails($this->today);
+		$this->recorded = true;
+		
+		return $changes;
+	}
+	
+	function recordAndEmailActivityReport() {
+		global $site_URL;
+		
+		$changes = $this->recordNow();
+		
+		$viewer = $this->viewer();
+		$viewer->assign('CHANGES', $changes);
+		
+		$mailer = $this->mailer();
+		$mailcontent = $viewer->fetch(vtlib_getModuleTemplate('DART', 'emailreport.tpl'));
+		$mailsubject = str_replace('$date$', date('Y-m-d'), $this->dart->config('mail.subject'));
+		
+		$mailer->Subject = $mailsubject;
+		$mailer->Body = $mailcontent;
+		
+		$mailto = $this->dart->config('mail.to'); 
+		if (!empty($mailto)) foreach($mailto as $to) $mailer->AddAddress($to);
+
+		$mailcc = $this->dart->config('mail.cc'); 
+		if (!empty($mailcc)) foreach($mailcc as $cc) $mailer->AddCC($cc);
+
+		$mailer->Send(true);
+
+		if (!empty($mailer->ErrorInfo)) print_r ($mailer->ErrorInfo);	
+		
+		unset($changes);
+		unset($mailer);	
+		unset($viewer);
+	}
+	
+	function sendNoActivityUpdateEmail() {
+		$this->recordNow(); // Making sure the changes has been recorded already.
+		
+		$users = $this->dart->users_noactivityForTheDay($this->today);
+		if (!empty($users)) {
+			$viewer = $this->viewer();
+			$mailer = $this->mailer();
+			
+			$mailcontent = $viewer->fetch(vtlib_getModuleTemplate('DART', 'noactivity.tpl'));
+			$mailsubject = str_replace('$date$', $this->today, $this->dart->config('mail.subject.noactivity'));
+			
+			$to = array();
+			foreach($users as $user) {
+				if (!in_array($user['email'], $to)) {
+					/* Put all users on TO */
+					$mailer->AddAddress($user['email']);
+					
+					/* Want to use BCC instead of TO / CC, comment the line abobe & uncomment line below */
+					//$mailer->AddBCC($user['email']);
+					
+					$to[] = $user['email'];
+				}
+			}
+			
+			$mailer->Subject = $mailsubject;
+			$mailer->Body = $mailcontent;
+			
+			/* Also copy the configured receipents as BCC? */
+			/*
+			$mailto = $this->dart->config('mail.to'); 
+			if (!empty($mailto)) foreach($mailto as $to) $mailer->AddBCC($to);
+			
+			$mailcc = $this->dart->config('mail.cc'); 
+			if (!empty($mailcc)) foreach($mailcc as $cc) $mailer->AddBCC($cc);
+			*/
+			
+			$mailer->Send(true);
+
+			if (!empty($mailer->ErrorInfo)) print_r ($mailer->ErrorInfo);
+		}
+		
+		unset($users);
+		unset($mailer);
+		unset($viewer);
+	}
+}
+
+$dartCron = new DART_Cron();
+$dartCron->recordAndEmailActivityReport();
+
+// Uncomment the line below to send reminder to user with no activity
+//$dartCron->sendNoActivityUpdateEmail();
+
+?>

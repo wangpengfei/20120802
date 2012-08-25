@@ -1,0 +1,26 @@
+div {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.autofill{
+	font-family: arial;
+	font-size: 12px;
+	background: #FFFFE1;
+	border: 1px solid #6c6c6c;
+	padding: 2px;
+	color: #0000CC;
+}
+
+.autofill_over{
+	background:#0A246A;
+	font-size: 12px;
+	margin: 5px;
+	color: #FFFFFF
+}
+
+.autofill td{
+	font-size: 12px;
+}
+

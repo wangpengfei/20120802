@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset={$PageCharset}">
+<TITLE>{#upimg_title#}</TITLE>
+
+{literal}
+<STYLE>
+ td {font-size: 10pt}
+ body {font-size: 10pt}
+ BUTTON {width: 5em}
+</STYLE>
+{/literal}
+</head>
+
+{literal}
+<script language=javascript>
+function CloseWin(){
+	window.close();
+}
+
+function Uploading(){
+	document.form1.submit();
+}
+
+</script>
+{/literal}
+
+<BODY bgColor="#d6d3ce" leftMargin="0" topMargin="10" marginheight="0" marginwidth="0">
+	<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<form name=form1 enctype="multipart/form-data" action="upimage.php" method=POST>
+			{$Forms}
+			<tr height="25">
+				<td align="center" colspan=2><b>{#upimg_information_text#}</b></td>
+			</tr>
+			<tr height="25">
+				<td align="right" width=25%>{#upimg_file#}&nbsp;</td>
+				<td>&nbsp;<input type=file name=userfile size=25></td>
+			</tr>
+			<tr height="30">
+				<td class="header" align="center" colspan=2>
+					<input type=hidden value="true" name="uploaded">
+					<input type=button value="{#upimg_upload_button_text#}" name=upbtn class=button onClick="javascript:Uploading();">
+					<input type=button value="{#upimg_close_button_text#}" name=close class=button onClick="javascript:CloseWin();">
+				</td>
+			</tr>
+		</form>
+	</table>
+</body>
+</html>

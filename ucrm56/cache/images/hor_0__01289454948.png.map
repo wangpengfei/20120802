@@ -1,0 +1,5 @@
+<img src="cache/images/hor_0__01289454948.png" border="0" usemap="#cache/images/hor_0__01289454948.png">
+<map name="cache/images/hor_0__01289454948.png">
+	<area shape="rect" coords="66,52,759,237" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=+&search_field=leadsource&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="没有被分配 - 43" title="没有被分配 - 43">
+	<area shape="rect" coords="66,272,130,457" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=--None--&search_field=leadsource&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="无 - 4" title="无 - 4">
+</map>

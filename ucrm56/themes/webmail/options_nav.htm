@@ -1,0 +1,59 @@
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr height="28">
+    <td>
+	  <table border="0" cellspacing="0" cellpadding="0">
+	  <tr height="28">
+		<td class=toolbar_l width=5></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:prefs()">{#prefs_mnu#}</a>&nbsp;
+		</td>
+		<!--
+        {if $ModifyUserInfo eq 0}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:userinfo()">{#userinfo_mnu#}</a>&nbsp;
+		</td>
+		{/if}
+		-->
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:signatures()">{#signature_mnu#}</a>&nbsp;
+		</td>
+        {if $ExternalPop3 eq 0}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:externalpop3()">{#externalpop3_mnu#}</a>&nbsp;
+		</td>
+		{/if}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:mailfilter()">{#mailfilter_mnu#}</a>&nbsp;
+		</td>
+		<!--
+        {if $AutoForward eq 0}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:autoforward()">{#autoforward_mnu#}</a>&nbsp;
+		</td>
+		{/if}
+        {if $AutoReply eq 0}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:autoreply()">{#autoreply_mnu#}</a>&nbsp;
+		</td>
+		{/if}
+		
+        {if $ChgPassword eq 0}
+		<td class=toolbar_sp width=4></td>
+		<td class=toolbar_bg align=center>
+			&nbsp;<a class="navigation" href="javascript:chgpassword()">{#chgpassword_mnu#}</a>&nbsp;
+		</td>
+		{/if}
+		-->
+		<td class=toolbar_r width=5></td>
+	  <tr>
+	  </table>
+    </td>
+    <td></td>
+  </tr>
+</table>

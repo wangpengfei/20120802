@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height=20>
+					<td class="tb_field" align="right" width="20%">{#cal_title#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Title|escape:"html"}</td>
+				</tr>
+				<tr height=40>
+					<td class="tb_field" align="right">{#cal_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$Content}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_startdate#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$StartDate|date_format:#date_format#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_enddate#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$EndDate|date_format:#date_format#}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_status#}&nbsp;</td>
+					<td class="tb_value">
+					{if $Status eq "wait"}
+						&nbsp;{#cal_status_wait#}
+					{elseif $Status eq "reminded"}
+						&nbsp;{#cal_status_reminded#}
+					{elseif $Status eq "doing"}
+						&nbsp;{#cal_status_doing#}
+					{elseif $Status eq "finished"}
+						&nbsp;{#cal_status_finished#}
+					{/if}	
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_type#}&nbsp;</td>
+					<td class="tb_value">
+					{if $Type eq "personal"}
+						&nbsp;{#cal_type_personal#}
+					{elseif $Type eq "business"}
+						&nbsp;{#cal_type_business#}
+					{elseif $Type eq "meeting"}
+						&nbsp;{#cal_type_meeting#}
+					{elseif $Type eq "birthday"}
+						&nbsp;{#cal_type_birthday#}
+					{elseif $Type eq "holiday"}
+						&nbsp;{#cal_type_holiday#}
+					{elseif $Type eq "anniversary"}
+						&nbsp;{#cal_type_anniversary#}
+					{elseif $Type eq "appointment"}
+						&nbsp;{#cal_type_appointment#}
+					{elseif $Type eq "gettogether"}
+						&nbsp;{#cal_type_gettogether#}
+					{elseif $Type eq "other"}
+						&nbsp;{#cal_type_other#}
+					{/if}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_priority#}&nbsp;</td>
+					<td class="tb_value">
+					{if $Priority eq "normal"}
+						&nbsp;{#cal_priority_normal#}
+					{elseif $Priority eq "exigence"}
+						&nbsp;{#cal_priority_exigence#}
+					{elseif $Priority eq "importance"}
+						&nbsp;{#cal_priority_importance#}
+					{/if}	
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_share#}&nbsp;</td>
+					<td class="tb_value">
+					{if $Share eq "private"}
+						&nbsp;{#cal_share_private#}
+					{elseif $Share eq "busy"}
+						&nbsp;{#cal_share_busy#}
+					{elseif $Share eq "public"}
+						&nbsp;{#cal_share_public#}
+					{/if}	
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_reminder#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{if $Reminder eq 1}{#cal_reminder_enable#}{else}{#cal_reminder_disable#}{/if}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindermailbox#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$ReminderMailbox|escape:"html"}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindertime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{#cal_remindertime_tip#}&nbsp;
+						{if $ReminderTime eq 0}
+							{#cal_remindertime_0#}
+						{elseif $ReminderTime eq 1440}
+							{#cal_remindertime_1_24_60#}
+						{elseif $ReminderTime eq 2880}
+							{#cal_remindertime_2_24_60#}
+						{elseif $ReminderTime eq 4320}
+							{#cal_remindertime_3_24_60#}
+						{elseif $ReminderTime eq 5760}
+							{#cal_remindertime_4_24_60#}
+						{elseif $ReminderTime eq 7200}
+							{#cal_remindertime_5_24_60#}
+						{elseif $ReminderTime eq 8640}
+							{#cal_remindertime_6_24_60#}
+						{elseif $ReminderTime eq 10080}
+							{#cal_remindertime_7_24_60#}
+						{/if}
+					</td>
+				</tr>
+			
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<a href="{$GoBack}">{#cal_back#}</a>
+					</td>
+				</tr>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

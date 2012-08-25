@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Notebook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#note_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="javascript">
+function sel() {
+	with(document.form1) {
+		for(i = 0; i < elements.length; i++) {
+			thiselm = elements[i];
+			if(thiselm.name.substring(0, 5) == 'item_')
+				thiselm.checked = !thiselm.checked
+		}
+	}
+}
+function addNote()
+{
+	document.form1.dest.value = 'add';
+	document.form1.submit();
+}
+
+function editNote(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'edit';
+	document.form1.submit();
+}
+
+function dispNote(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'disp';
+	document.form1.submit();
+}
+
+function delNote(uid)
+{
+{/literal}
+	if (confirm('{#confirm_delete_note#}'))
+{literal}
+	{
+		document.form1.uid.value = uid;
+		document.form1.dest.value = 'del';
+		document.form1.submit();
+	}
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+				<form name=form1 method=post action=notebook.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=uid value="{$UID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=dest value="{$Dest}">
+				<input type=hidden name=notecount value="{$NoteCount}">
+				
+				<tr height="22">
+					<td width="3%" class="list_title" align="center"><input type=checkbox name=chkall onclick="sel()"></td>
+					<td width="60%" class="list_title" align=center><b>{#note_content#}</b></td>
+					<td width="20%" class="list_title" align=center><b>{#note_modifytime#}</b></td>
+					<td width="8%" class="list_title" align=center><b>{#note_edit#}</b></td>
+					<td width="8%" class="list_title" align=center><b>{#note_dele#}</b></td>
+				</tr>
+				{section name=i loop=$NoteList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value" align="center"><input type="checkbox" name="item_{$smarty.section.i.index}" value="{$NoteList[i].uid}"></td>
+						<td class="list_value">&nbsp;<a href="javascript:dispNote('{$NoteList[i].uid}');">{$NoteList[i].content|truncate:30:"...":true|escape:"html"}</a></td>
+						<td class="list_value" align="center">&nbsp;{$NoteList[i].modifytime}</td>
+						<td class="list_value" align="center"><a href="javascript:editNote('{$NoteList[i].uid}');"><img src="themes/common/images/edit.gif" width=15 height=12 border=0 alt="{#note_edit#}"></a></td>
+						<td class="list_value" align="center"><a href="javascript:delNote('{$NoteList[i].uid}');"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#note_dele#}"></a></td>
+					</tr>
+				{/section}
+				<tr height="30">
+					<td colspan=5 class="list_btn" align=center>
+						&nbsp;<input type=button value="{#note_add#}" class=button onClick="javascript:addNote();">
+						&nbsp;<input type=button value="{#note_dele#}" class=button onClick="javascript:delNote('');">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

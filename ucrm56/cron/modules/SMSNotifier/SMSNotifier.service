@@ -1,0 +1,31 @@
+<?php
+
+require_once ('modules/SMSNotifier/SMSNotifier.php');
+
+global $adb;
+
+$date = date('m-d');
+
+$sql="SELECT cd.contactid, cd.mobile 
+	FROM vtiger_contactdetails cd
+	INNER JOIN vtiger_crmentity c ON cd.contactid = c.crmid AND c.deleted = 0 
+	INNER JOIN vtiger_contactsubdetails csd ON csd.contactsubscriptionid =  cd.contactid
+      WHERE csd.birthday like '%$date'";
+
+$result = $adb->pquery($sql, array());
+$no_of_rows = $adb->num_rows($result);
+if($no_of_rows > 0) {
+	while($row = $adb->fetch_array($result)){
+		$tonumbers[] = $row['mobile'];
+		$recordids[] = $row['contactid'];
+	}
+}
+
+$result = $adb->pquery('select * from vtiger_smstemplates where subject like "%生日短信%" limit 1', array());
+$message= $adb->query_result($result, $i,'body');
+
+if(!empty($tonumbers) && $message) {
+	SMSNotifier::sendsms($message, $tonumbers, 1, $recordids, 'Contacts',date('Y-m-d H:i'));	
+}
+
+?>

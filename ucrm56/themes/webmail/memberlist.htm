@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Group"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#group_list_title#}</title>
+</head>
+
+{literal}
+<script>
+function compose(name, mail)
+{
+{/literal}
+	opener.location.href = "newmsg.php?sid={$Sid}&tid={$Tid}&lid={$Lid}&nameto="+(name)+"&mailto="+(mail);
+	this.close();
+{literal}
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+<table align="center" width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr height=22>
+	     <td class="list_title" align=center width="30%"><b>{#group_list_name#}</b></td>
+	     <td class="list_title" align=center width="60%"><b>{#group_list_mail#}</b></td>
+	     <td class="list_title" align=center width="10%">&nbsp;</td>
+	</tr>
+	{section name=i loop=$mlist}
+	<tr height=20>
+	     <td class="list_value">&nbsp;{$mlist[i].name}</a></td>
+	     <td class="list_value">&nbsp;<a href="{$mlist[i].composelink}" title="{#group_mailto#}">{$mlist[i].mail}</a></td>
+	     <td class="list_value" align=center><a href="{$mlist[i].addlink}" title="{#group_addcontact#}"><img src="themes/common/images/address.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+	</tr>
+	{/section}
+	<tr height=30>
+		<td class="list_btn" colspan=3 align=center>
+			<input type=button value="{#group_list_close#}" class=button onclick="javascript:window.close();">
+		</td>
+	</tr>
+</table>
+</body>
+</html> 

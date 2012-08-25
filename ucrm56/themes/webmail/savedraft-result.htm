@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Newmessage"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#savedraft_title#}</title>
+</head>
+
+{if $DispResult eq 1}
+{literal}
+<script>
+function closeWin() 
+{
+	if (window.opener.document.form1){
+{/literal}
+{if $MsgIndex neq -1}
+		window.opener.document.form1.ix.value = {$MsgIndex}
+		window.opener.document.form1.saved.value = "yes"
+{/if}
+{literal}
+	}
+	window.close();
+}
+
+setTimeout("closeWin()", 1000*5); 
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+	<table align=center width="96%" border="0" cellspacing=0 cellpadding=0>
+		<tr height=25>
+	    	<td class="tb_header"></td>
+		</tr>
+		<tr height=45>
+			<td class="tb_value" align=center>
+				{if $MsgIndex neq -1}
+					{#savedraft_success#}
+				{else}
+					{#savedraft_failure#}
+				{/if}
+			</td>
+		</tr>
+		<tr height=25>
+	    	<td class="tb_btn" align=center> 
+				<a href="javascript:closeWin();">{#savedraft_close_button#}</a>
+		    </td>
+		</tr>
+	</table>
+</body>
+{else}
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+	<table align=center width="96%" border="0" cellspacing=0 cellpadding=0>
+		<tr height=25>
+	    	<td class="tb_header" align=center></td>
+		</tr>
+		<tr height=50>
+			<td class=tb_value align=center>
+				{#savedraft_saving#}
+			</td>
+		</tr>
+	</table>
+</body>
+{/if}
+</html>

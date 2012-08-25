@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#cal_share_title#}</title>
+</head>
+
+<body leftmargin=0 topmargin=10 marginwidth=0 marginheight=0>
+<table width="760" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+	<td>
+		{include file="xp/calendar_sharenav.htm"}
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr height="20">
+				<td class="tb_empty" align=center>
+					<table width=100% border=0 cellspacing=0 cellpadding=0>
+					<tr><td colspan=2>
+						<table width=100% border="0" cellspacing="0" cellpadding="0">
+							<tr height=30>
+								<td width=20% align=center class="tb_title">&nbsp;<a href="{$PreviousWeekLink}"><b>&lt;&lt;{#cal_previous_week#}</b></a></td>
+								<td width=*% align=center class="tb_title"><b>{$StartWeekText} ---- {$EndWeekText}</b></td>
+								<td width=20% align=center class="tb_title"><a href="{$NextWeekLink}"><b>{#cal_next_week#}&gt;&gt;</b></a>&nbsp;</td>
+							</tr>
+						</table>
+					</td></tr>
+					{section name=i loop=$AllWeekTime}
+					<tr height=60><td width=20% class="tb_field" align=center>&nbsp;<a href="{$AllWeekTime[i].daylink}"><b>{$AllWeekTime[i].daytext}</b></a>&nbsp;<b>{$AllWeekTime[i].weekname}</b></td>
+					<td class="tb_value">{$AllWeekTime[i].eventlink}</td></tr>
+					{/section}
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

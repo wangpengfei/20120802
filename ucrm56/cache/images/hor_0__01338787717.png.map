@@ -1,0 +1,9 @@
+<img src="cache/images/hor_0__01338787717.png" border="0" usemap="#cache/images/hor_0__01338787717.png">
+<map name="cache/images/hor_0__01338787717.png">
+	<area shape="rect" coords="68,43,569,99" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=--None--&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="无 - 13" title="无 - 13">
+	<area shape="rect" coords="68,116,762,173" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Technology&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="技术 - 18" title="技术 - 18">
+	<area shape="rect" coords="68,190,183,246" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Communications&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="通信 - 3" title="通信 - 3">
+	<area shape="rect" coords="68,263,222,319" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Transportation&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="交通运输 - 4" title="交通运输 - 4">
+	<area shape="rect" coords="68,336,183,393" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Telecommunications&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="电信 - 3" title="电信 - 3">
+	<area shape="rect" coords="68,410,145,466" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=+&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="没有被分配 - 2" title="没有被分配 - 2">
+</map>

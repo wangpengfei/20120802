@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+	function save_check()
+	{
+		var title = document.form1.title.value;
+		
+		if (title == ""){
+{/literal}
+			alert("{#cal_empty#}");
+{literal}
+			return;
+		}
+		
+		document.form1.submit();
+	}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=calendar.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=uid value="{$UID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=dest value="{$Dest}">
+	
+				<tr height=20>
+					<td class="tb_field" align="right" width="20%">{#cal_title#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="title" value="{$Title|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<textarea name="content" cols=50 rows=5 class="textbox">{$Content|escape:"html"}</textarea></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_startdate#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$StartDateCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_enddate#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$EndDateCtrl}&nbsp;{$EndTimeCtrl}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_status#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=status>
+						<option value="wait"{if $Status eq "wait"} selected{/if}>{#cal_status_wait#}</option>
+						<option value="reminded"{if $Status eq "reminded"} selected{/if}>{#cal_status_reminded#}</option>
+						<option value="doing"{if $Status eq "doing"} selected{/if}>{#cal_status_doing#}</option>
+						<option value="finished"{if $Status eq "finished"} selected{/if}>{#cal_status_finished#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_type#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=type>
+						<option value="personal"{if $Type eq "personal"} selected{/if}>{#cal_type_personal#}</option>
+						<option value="business"{if $Type eq "business"} selected{/if}>{#cal_type_business#}</option>
+						<option value="meeting"{if $Type eq "meeting"} selected{/if}>{#cal_type_meeting#}</option>
+						<option value="birthday"{if $Type eq "birthday"} selected{/if}>{#cal_type_birthday#}</option>
+						<option value="holiday"{if $Type eq "holiday"} selected{/if}>{#cal_type_holiday#}</option>
+						<option value="anniversary"{if $Type eq "anniversary"} selected{/if}>{#cal_type_anniversary#}</option>
+						<option value="appointment"{if $Type eq "appointment"} selected{/if}>{#cal_type_appointment#}</option>
+						<option value="gettogether"{if $Type eq "gettogether"} selected{/if}>{#cal_type_gettogether#}</option>
+						<option value="other"{if $Type eq "other"} selected{/if}>{#cal_type_other#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_priority#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=priority>
+						<option value="normal"{if $Priority eq "normal"} selected{/if}>{#cal_priority_normal#}</option>
+						<option value="exigence"{if $Priority eq "exigence"} selected{/if}>{#cal_priority_exigence#}</option>
+						<option value="importance"{if $Priority eq "importance"} selected{/if}>{#cal_priority_importance#}</option>
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="center" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_share#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name=share>
+						<option value="private"{if $Share eq "private"} selected{/if}>{#cal_share_private#}</option>
+						<option value="busy"{if $Share eq "busy"} selected{/if}>{#cal_share_busy#}</option>
+						<option value="public"{if $Share eq "public"} selected{/if}>{#cal_share_public#}</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr height=20>
+					<td class="tb_field" colspan=2>&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_reminder#}&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="reminder" value="1" {$Reminder}><acronym style="cursor: hand;" OnClick="reminder.click()">{#cal_reminder_tip#}</acronym>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindermailbox#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="remindermailbox" value="{$ReminderMailbox|escape:"html"}" class="textbox">
+						<br>&nbsp;{#cal_remindermailbox_tip#}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#cal_remindertime#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{#cal_remindertime_tip#}&nbsp;<select name=remindertime>
+						<option value="0"{if $ReminderTime eq 0} selected{/if}>{#cal_remindertime_0#}</option>
+						<option value="1440"{if $ReminderTime eq 1440} selected{/if}>{#cal_remindertime_1_24_60#}</option>
+						<option value="2880"{if $ReminderTime eq 2880} selected{/if}>{#cal_remindertime_2_24_60#}</option>
+						<option value="4320"{if $ReminderTime eq 4320} selected{/if}>{#cal_remindertime_3_24_60#}</option>
+						<option value="5760"{if $ReminderTime eq 5760} selected{/if}>{#cal_remindertime_4_24_60#}</option>
+						<option value="7200"{if $ReminderTime eq 7200} selected{/if}>{#cal_remindertime_5_24_60#}</option>
+						<option value="8640"{if $ReminderTime eq 8640} selected{/if}>{#cal_remindertime_6_24_60#}</option>
+						<option value="10080"{if $ReminderTime eq 10080} selected{/if}>{#cal_remindertime_7_24_60#}</option>
+						</select>
+					</td>
+				</tr>
+			
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#cal_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#cal_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

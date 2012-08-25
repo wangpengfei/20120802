@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="MailFilter"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#filter_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+	function save_check()
+	{
+		var filtername = document.form1.filtername.value;
+		
+		if (filtername == ""){
+{/literal}
+			alert("{#filter_empty#}");
+{literal}
+			return;
+		}
+		
+		document.form1.submit();
+	}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=mailfilter.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=id value="{$FilterID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+				<input type=hidden name=orderid value="{$OrderID}">
+	
+				<tr height=20>
+					<td class="tb_field" align="right" width="20%">{#filter_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="filtername" value="{$FilterName|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_field#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="filterfield">
+							<option value="From" {if $FilterField eq "from"}selected{/if}>{#filter_field_0#}</option>
+							<option value="To" {if $FilterField eq "to"}selected{/if}>{#filter_field_1#}</option>
+							<option value="Cc" {if $FilterField eq "cc"}selected{/if}>{#filter_field_2#}</option>
+							<option value="Subject" {if $FilterField eq "subject"}selected{/if}>{#filter_field_3#}</option>
+							<option value="Received" {if $FilterField eq "received"}selected{/if}>{#filter_field_4#}</option>
+							<option value="Header" {if $FilterField eq "header"}selected{/if}>{#filter_field_5#}</option>
+							<option value="Content" {if $FilterField eq "content"}selected{/if}>{#filter_field_6#}</option>
+						</select>
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_type#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<select name="filtertype">
+							<option value="empty" {if $FilterType eq "empty"}selected{/if}>{#filter_type_0#}</option>
+							<option value="missing" {if $FilterType eq "missing"}selected{/if}>{#filter_type_1#}</option>
+							<option value="contain" {if $FilterType eq "contain"}selected{/if}>{#filter_type_2#}</option>
+							<option value="containnocase" {if $FilterType eq "containnocase"}selected{/if}>{#filter_type_3#}</option>
+							<option value="notcontain" {if $FilterType eq "notcontain"}selected{/if}>{#filter_type_4#}</option>
+							<option value="notcontainnocase" {if $FilterType eq "notcontainnocase"}selected{/if}>{#filter_type_5#}</option>
+							<option value="equal" {if $FilterType eq "equal"}selected{/if}>{#filter_type_6#}</option>
+							<option value="equalnocase" {if $FilterType eq "equalnocase"}selected{/if}>{#filter_type_7#}</option>
+							<option value="notequal" {if $FilterType eq "notequal"}selected{/if}>{#filter_type_8#}</option>
+							<option value="notequalnocase" {if $FilterType eq "notequalnocase"}selected{/if}>{#filter_type_9#}</option>
+						</select>
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="filtercontent" value="{$FilterContent|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_enable#}&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="enable" value="1" {$Enable}><acronym style="cursor: hand;" OnClick="enable.click()">{#filter_enable_text#}</acronym></td>
+				</tr>
+				
+				<tr height=20>
+					<td class="tb_field" align=center colspan=2>{#filter_matchfilter#}&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=radio name="action" value="0" {$Action0}>{#filter_action_0#}
+						<br><input type=radio name="action" value="1" {$Action1}>{#filter_action_1#}
+						<br><input type=radio name="action" value="2" {$Action2}>{#filter_action_2#}
+						<select name="mailfolder">
+						{section name=i loop=$AvalFolders}
+							<option value="{$AvalFolders[i].path|escape:"html"}" {if $AvalFolders[i].path == $MailFolder}selected{/if}>{$AvalFolders[i].display|escape:"html"}
+						{/section}
+						</select>
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="deliverto" value="1" {$DeliverTo}>
+						<acronym style="cursor: hand;" OnClick="deliverto.click()">{#filter_deliverto#}</acronym>
+						<input size="40" type=text name="delivertoaddr" value="{$DeliverToAddr|escape:"html"}" class="textbox">
+					</td>
+				</tr>
+			
+				<tr height=20>
+					<td class="tb_field" align=center colspan=2>{#filter_notmatchfilter#}&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value"><input type=checkbox name="continuenext" value="1" {$Continue}>
+						<acronym style="cursor: hand;" OnClick="continuenext.click()">{#filter_continue_text#}</acronym>
+					</td>
+				</tr>
+				<tr  height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#filter_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#filter_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

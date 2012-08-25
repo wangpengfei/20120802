@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#adr_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="4" marginheight="3">
+<table align="center" width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr height=25>
+		<td class="tb_header" colspan=2>&nbsp;</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right" width="30%">{#netadr_sn#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].sn}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_mail#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].mail}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_cn#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].cn}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_homeaddress#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].homeaddress}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_homephone#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].homephone}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_mobile#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].mobile}</td>
+	</tr>
+	
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_ou#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].ou}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_jobtitle#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].title}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_officename#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].physicaldeliveryofficename}</td>
+	</tr>
+	<tr height=20>
+	     <td class="tb_field" align="right">{#netadr_telephonenumber#}&nbsp;</td>
+	     <td class="tb_value">&nbsp;{$userinfo[0].telephonenumber}</td>
+	</tr>
+	
+	<tr  height=30>
+		<td class="tb_btn" colspan=2 align=center>
+			<input type=button value="{#netadr_close#}" class=button onclick="javascript:window.close();">
+		</td>
+	</tr>
+</table>
+	
+</body>
+</html> 

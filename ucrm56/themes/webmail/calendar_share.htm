@@ -1,0 +1,40 @@
+<br>
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+	<tr height="25">
+		<td class="list_header" align="center"><b>{#cal_share_title#}</b></td>
+	</tr>
+	<tr height="150">
+		<td class="list_value" align=center>
+			{#cal_share_link#}<br>
+			<a href="{$CalShareLink}" target="_blank">{$CalShareLink}</a><br>
+			<a href="javascript:sendlink();">{#cal_send_share#}<img src="themes/common/images/sendlink.gif" width=16 height=16 border=0><a>
+			<br><br>
+			<table border="0" cellspacing="1" cellpadding="0">
+				<form name=form2 method=post action=calendar.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=uid value="{$UID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=dest value="setpwd">
+				<input type=hidden name=fromdest value="{$FromDest}">
+				<tr>
+					<td align=center colspan=3>{#cal_share_access_tip#}</td>
+				</tr>
+				<tr>
+					<td align=right>{#cal_share_expire#}&nbsp;</td>
+					<td>&nbsp;{$EndDateCtrl}&nbsp;</td>
+					<td>&nbsp;<input type=button name=setpwd value="{#cal_share_setup#}" onclick="document.form2.submit()" class=button></td>
+				</tr>
+				<tr>
+					<td align=right>{#cal_share_user#}&nbsp;</td>
+					<td colspan=2>&nbsp;<input type=text name=listuser value="{$ListUser|escape:"html"}" class="textbox" size=20 maxlength=32></td>
+				</tr>
+				<tr>
+					<td align=right>{#cal_share_pwd#}&nbsp;</td>
+					<td colspan=2>&nbsp;<input type=password name=listpwd value="{$ListPwd|escape:"html"}" class="textbox" size=20 maxlength=32></td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>

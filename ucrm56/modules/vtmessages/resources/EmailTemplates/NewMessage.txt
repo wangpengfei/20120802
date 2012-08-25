@@ -1,0 +1,14 @@
+<p style="font: 12px Verdana, Arial, sans-serif;">
+尊敬的 $MESSAGETO_USERNAME$,
+</p>
+
+<p style="font: 12px Verdana, Arial, sans-serif;">
+$MESSAGEFROM_USERNAME$ 给您发送了一条信息.
+</p>
+
+<div style="font: 12px Verdana, Arial, sans-serif; margin-left: 10px; padding: 0 0 5px 5px ; border-left: 2px solid #D7D7D7;"><b>$MESSAGE_SUBJECT$</b></div>
+<div style="font: 12px Verdana, Arial, sans-serif; margin-left: 10px; padding-left: 5px; border-left: 2px solid #D7D7D7;">$MESSAGE_CONTENT$</div>
+
+<p style="font: 12px Verdana, Arial, sans-serif;">
+您可以通过点击 <a href="$MESSAGE_URL$">这里</a> 进行恢复或查看信息.
+</p>

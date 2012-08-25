@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Readmsg"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{if $PageTitle neq ""}{$PageTitle|escape:"html"}{else}{#readmsg_title#}{/if}  </title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width="98%" border=0 cellspacing=0 cellpadding=0>
+				{$NewMsgForm}			
+				<tr height="25">
+					<td class="tb_btn" colspan=2>&nbsp; 
+						<b>{$MsgNumString}</b> 
+						{if $HavePrevious eq 1}
+						:: &nbsp;<a class="navigation" href="{$PreviousLink}" title="{$PreviousSubject|escape:"html"}  ">{#previous_mnu#}</a>
+						{else}
+						:: &nbsp;{#previous_mnu#}
+						{/if}
+						{if $HaveNext eq 1}
+						:: &nbsp;<a class="navigation" href="{$NextLink}" title="{$NextSubject|escape:"html"}  ">{#next_mnu#}</a>
+						{else}
+						:: &nbsp;{#next_mnu#}
+						{/if}
+						:: &nbsp;<a class="navigation" href="javascript:goback();">{#back_mnu#}</a>
+						:: &nbsp;<a class="navigation" href="javascript:reply();">{#reply_mnu#}</a>
+						:: &nbsp;<a class="navigation" href="javascript:replyall();">{#reply_all_mnu#}</a>
+						:: &nbsp;<a class="navigation" href="javascript:forward();">{#forward_mnu#}</a>
+						:: &nbsp;<a class="navigation" href="javascript:deletemsg()">{#delete_mnu#}</a> 
+						:: &nbsp;<a class="navigation" href="javascript:catch_addresses();">{#catch_address_mnu#}</a>
+						{if $Folder neq "sent" and $Folder neq "draft"}
+						:: &nbsp;<a class="navigation" href="javascript:filterit();">{#filter_mnu#}</a>
+						{/if}
+						{if $Folder eq "inbox"}
+						:: &nbsp;<a class="navigation" href="javascript:spammsg();">{#spammsg_mnu#}</a>
+						{/if}
+						{if $Folder eq "spam"}
+						:: &nbsp;<a class="navigation" href="javascript:hammsg();">{#hammsg_mnu#}</a>
+						{/if}
+						:: &nbsp;<a class="navigation" href="javascript:printit();">{#print_mnu#}</a>
+					</td>
+				</tr>
+
+				<tr height="20">
+					<td width="20%" class="tb_field" align="right">{#from_hea#}&nbsp;</td>
+					<td class="tb_value">
+					{section name=i loop=$FromList}
+					 &nbsp;<a href="{$FromList[i].link}" title="{$FromList[i].title|escape:"html"}">{$FromList[i].title|default:#no_sender_text#|escape:"html"}</a>&nbsp;
+					{/section}
+					{if $NotifyJS neq ""}
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:sendnotify();" class="navigation">{#readnotify_mnu#}</a>
+					{/if}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					{if $SmimeCrypt eq 1}<img src="images/smimecrypt.gif" width=16 height=16 border=0 align="absmiddle" alt="{#smime_crypt#}">{/if}
+					&nbsp;
+					{if $SmimeSign eq 1}<img src="images/smimesign.gif" width=16 height=16 border=0 align="absmiddle" alt="{#smime_sign#}">{/if}
+					</td>
+				</tr>
+				<tr height="20">
+					<td class="tb_field" align=right>{#to_hea#}&nbsp;</td>
+					<td class="tb_value">
+					{section name=i loop=$TOList}
+					&nbsp;<a href="{$TOList[i].link}" title="{$TOList[i].title|escape:"html"}">{$TOList[i].title|escape:"html"}</a>&nbsp;
+					{sectionelse}
+					&nbsp;{#no_recipient_text#}
+					{/section}
+					</td>
+				</tr>	
+
+				{if $HaveCC}
+					<tr height="20">
+						<td class="tb_field" align="right">{#cc_hea#}&nbsp;</td>
+						<td class="tb_value">
+						{section name=i loop=$CCList}
+						&nbsp;<a href="{$CCList[i].link}" title="{$CCList[i].title|escape:"html"}">{$CCList[i].title|escape:"html"}</a>&nbsp;
+						{/section}
+						</td>
+					</tr>	
+				{/if}
+
+				<tr height="20">
+					<td class="tb_field" align="right">{#subject_hea#}&nbsp;</td>
+					<td class="tb_value"> &nbsp;{$Subject|default:#no_subject_text#|escape:"html"}  </td>
+				</tr>	
+				
+				<tr height="20">
+					<td class="tb_field" align="right">{#date_hea#}&nbsp;</td>
+					<td class="tb_value"> &nbsp;{$Date}</td>
+				</tr>	
+
+				{if $HaveAttachments}
+				<tr>
+					<td class="tb_field" align="right">{#attach_hea#}&nbsp;</td>
+					<td class="tb_empty">
+						<table width="100%" border=0 cellspacing=0 cellpadding=0>
+							<tr height="22">
+								<td class="list_title" align=center width="85%"><b>{#attch_name_hea#}</b> ({#attch_force_hea#})</td>
+								<td class="list_title" align=center width="15%"><b>{#attch_size_hea#}</b></td>
+							</tr>
+							{section name=i loop=$AttachList}
+							<tr height="20">
+								<td class="list_value">&nbsp;
+								{if $AttachList[i].normlink eq ""}
+									<img src="{$AttachList[i].iconfile}" width="16" height="16" border="0" align=absmiddle>&nbsp;{$AttachList[i].name|escape:"html"}
+								{else} 
+									<a href="{$AttachList[i].normlink}"><img src="{$AttachList[i].iconfile}" width="16" height="16" border="0" align=absmiddle>&nbsp;{$AttachList[i].name|escape:"html"}</a>
+								{/if}
+								&nbsp;<a href="{$AttachList[i].downlink}" title="{#attch_download_tip#}"><img src="themes/common/images/download.gif" width="16" height="16" border="0" alt="{#attch_download_tip#}" align=absmiddle></a>
+								{if $AttachList[i].savelink neq ""}
+								&nbsp;<a href="{$AttachList[i].savelink}" title="{#attch_savetonetdisk_tip#}"><img src="themes/common/images/netdisk.gif" width="16" height="16" border="0" alt="{#attch_savetonetdisk_tip#}" align=absmiddle></a>
+								{/if}
+								{if $AttachList[i].playlink neq ""}
+								&nbsp;<a href="{$AttachList[i].playlink}" title="{#attch_mediaplay_tip#}"><img src="themes/common/images/mediaplay.gif" width="16" height="16" border="0" alt="{#attch_mediaplay_tip#}" align=absmiddle></a>
+								{/if}
+								</td>
+								<td class="list_value" align="right">{$AttachList[i].size}Kb &nbsp;</td>
+							</tr>
+							{/section}
+						</table>
+					</td>
+				</tr>	
+				{/if}
+				<tr height="400">
+					<td colspan=2 valign=top>
+						<table width="100%" height="100%" border=0 cellspacing=1 cellpadding=0 class="tablebg">
+							<tr>
+								<td{$BackImg}{$BackColor}><font color=black>{$MessageBody}</font></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<table width="100%" border=0 cellspacing=0 cellpadding=0>
+							<tr height="25">
+								<form name=msglist action="msglist.php" method=POST>
+								{$MsgListForm}
+								<td class="tb_btn">&nbsp;
+									<a class="navigation" href="javascript:deletemsg()">{#delete_mnu#}</a> 
+									:: &nbsp;<select name="moveto_folder" onchange="movemsg(this[this.selectedIndex].value)">
+										<option value="" selected>{#move_mnu#}</option>
+										{section name=i loop=$AvalFolders}
+											<option value="{$AvalFolders[i].path|escape:"html"}">{$AvalFolders[i].display|escape:"html"}</option>
+										{/section}
+									</select>
+									:: &nbsp;<select name="copyto_folder" onchange="copymsg(this[this.selectedIndex].value)">
+										<option value="" selected>{#copy_mnu#}</option>
+										{section name=i loop=$AvalFolders}
+											<option value="{$AvalFolders[i].path|escape:"html"}">{$AvalFolders[i].display|escape:"html"}</option>
+										{/section}
+									</select> 
+								</td>
+								</form>
+								<td class="tb_btn" align=right>
+									<a class="navigation" href="javascript:headers();">{#headers_mnu#}</a>
+									:: &nbsp;<a class="navigation" href="javascript:msgbody();">{#msgbody_mnu#}</a>
+									:: &nbsp;<a class="navigation" href="{$SaveMsg}">{#savemsg_mnu#}</a>&nbsp;
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{$NotifyJS}	
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

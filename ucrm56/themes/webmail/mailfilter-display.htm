@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="MailFilter"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#filter_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/options_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<tr height=20>
+					<td class="tb_field" align="right" width="30%">{#filter_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$FilterName|escape:"html"}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_field#}&nbsp;</td>
+					<td class="tb_value">
+						{if $FilterField == "from"}
+						&nbsp;{#filter_field_0#}
+						{elseif $FilterField == "to"}
+						&nbsp;{#filter_field_1#}
+						{elseif $FilterField == "cc"}
+						&nbsp;{#filter_field_2#}
+						{elseif $FilterField == "subject"}
+						&nbsp;{#filter_field_3#}
+						{elseif $FilterField == "received"}
+						&nbsp;{#filter_field_4#}
+						{elseif $FilterField == "header"}
+						&nbsp;{#filter_field_5#}
+						{elseif $FilterField == "content"}
+						&nbsp;{#filter_field_6#}
+						{/if}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_type#}&nbsp;</td>
+					<td class="tb_value">
+						{if $FilterType == "empty"}
+						&nbsp;{#filter_type_0#}
+						{elseif $FilterType == "missing"}
+						&nbsp;{#filter_type_1#}
+						{elseif $FilterType == "contain"}
+						&nbsp;{#filter_type_2#}
+						{elseif $FilterType == "containnocase"}
+						&nbsp;{#filter_type_3#}
+						{elseif $FilterType == "notcontain"}
+						&nbsp;{#filter_type_4#}
+						{elseif $FilterType == "notcontainnocase"}
+						&nbsp;{#filter_type_5#}
+						{elseif $FilterType == "equal"}
+						&nbsp;{#filter_type_6#}
+						{elseif $FilterType == "equalnocase"}
+						&nbsp;{#filter_type_7#}
+						{elseif $FilterType == "notequal"}
+						&nbsp;{#filter_type_8#}
+						{elseif $FilterType == "notequalnocase"}
+						&nbsp;{#filter_type_9#}
+						{/if}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_content#}&nbsp;</td>
+					<td class="tb_value">&nbsp;{$FilterContent|escape:"html"}</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">{#filter_enable#}&nbsp;</td>
+					<td class="tb_value">
+						{if $Enable neq 1}
+						&nbsp;{#status_disabled_text#}
+						{else}
+						&nbsp;{#status_enable_text#}
+						{/if}
+					</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align=center colspan=2>{#filter_matchfilter#}&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value">
+						{if $Action eq 0}
+						&nbsp;{#filter_action_0#}
+						{elseif $Action eq 1}
+						&nbsp;{#filter_action_1#}
+						{elseif $Action eq 2}
+						&nbsp;{#filter_action_2#}&nbsp;[{$MailFolder|escape:"html"}]
+						{/if}
+					</td>
+				</tr>
+				{if $DeliverTo eq 1}
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value">&nbsp;{#filter_deliverto#}&nbsp;{$DeliverToAddr|escape:"html"}
+					</td>
+				</tr>
+				{/if}
+
+				<tr height=20>
+					<td class="tb_field" align=center colspan=2>{#filter_notmatchfilter#}&nbsp;</td>
+				</tr>
+				<tr height=20>
+					<td class="tb_field" align="right">&nbsp;</td>
+					<td class="tb_value">
+						{if $Continue neq 1}
+						&nbsp;{#filter_break_text#}
+						{else}
+						&nbsp;{#filter_continue_text#}
+						{/if}
+					</td>
+				</tr>
+				<tr height=30>
+					<td class="tb_btn" colspan=2 align="center" valign="middle">
+					<a href="{$GoBack}">{#filter_back#}</a>
+					</td>
+				</tr>
+			</table>
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

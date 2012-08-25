@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="NetStore"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#netstore_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="javascript">
+function chgftpfolder(folder) { 
+	if (folder == '')
+		return;
+
+	with(document.form1) { 
+		ftpfolder.value = folder;
+		dest.value = ''; 
+		submit(); 
+	} 
+}
+
+function enterfolder(folder) {
+	with(document.form1) { 
+		enterfolder.value = folder;
+		dest.value = 'enterfolder'; 
+		submit(); 
+	} 
+}
+
+function uploadfile() {
+	div_uploading.style.visibility = "visible";
+	div_cover.style.visibility = "visible";
+	with(document.form1) { 
+		dest.value = 'upload'; 
+		submit(); 
+	} 
+}
+
+function create() {
+	with(document.form1) { 
+		dest.value = 'create'; 
+		strName = newftpfolder.value;
+		
+		if (strName == '' || checkSpecialChar(strName) == 0) {
+{/literal}
+			alert('{#netstore_invalid_name#}');
+{literal}
+			return;
+		}
+		else
+			submit();
+	} 
+}
+
+function rename() {
+	with(document.form1) { 
+		dest.value = 'rename'; 
+		strName = newftpfolder.value;
+		
+		if (strName == '' || checkSpecialChar(strName) == 0) {
+{/literal}
+			alert('{#netstore_invalid_name#}');
+{literal}
+			return;
+		}
+		else
+			submit();
+	} 
+}
+
+function deletefile() {
+	with(document.form1) { 
+		dest.value = 'delete'; 
+		submit(); 
+	} 
+}
+
+function writeattachmail() {
+	with(document.form1) { 
+		dest.value = 'writeattachmail'; 
+		submit(); 
+	} 
+}
+
+function writelinkmail() {
+	with(document.form1) { 
+		dest.value = 'writelinkmail'; 
+		submit(); 
+	} 
+}
+
+function compose(file) {
+	with(document.form1) { 
+		filename.value = file;
+		dest.value = 'compose'; 
+		submit(); 
+	} 
+}
+
+function copyfile(folder) {
+	if (folder == '')
+		return;
+		
+	with(document.form1) { 
+		toftpfolder.value = folder; 
+		dest.value = 'copy'; 
+		submit(); 
+	} 
+}
+
+function movefile(folder) {
+	if (folder == '')
+		return;
+
+	with(document.form1) { 
+		toftpfolder.value = folder; 
+		dest.value = 'move'; 
+		submit(); 
+	} 
+}
+
+function share() {
+	with(document.form1) { 
+		dest.value = 'share'; 
+		submit(); 
+	} 
+}
+
+function unshare() {
+	with(document.form1) { 
+		dest.value = 'unshare'; 
+		submit(); 
+	} 
+}
+
+function unshareit(file) {
+	with(document.form1) { 
+		filename.value = file;
+		dest.value = 'unshareit'; 
+		submit(); 
+	} 
+}
+
+function viewshare() {
+{/literal}	
+	url = '{$ShareLink}';
+	window.open(url, 'ViewShare'); 
+{literal}
+}
+
+function sendlink(file, dirflag) {
+	with(document.form1) { 
+		action = "newmsg.php"
+		dest.value = 'viewshare'; 
+		file = encodeURIComponent(file);
+{/literal}
+		if (file == '')
+			msgbody.value = '<a href="{$ShareLink}">{$ShareLink}</a>';
+		else
+			msgbody.value = '<a href="{$ShareLink}&filename='+file+'&isdir='+dirflag+'">{$ShareLink}&filename='+file+'&isdir='+dirflag+'</a>';
+{literal}
+		submit(); 
+	} 
+}
+
+function setsharepwd() {
+	with(document.form1) { 
+		dest.value = 'setpwd'; 
+		submit(); 
+	} 
+}
+
+function sel() {
+	with(document.form1) {
+		for(i = 0; i < elements.length; i++) {
+			thiselm = elements[i];
+			if(thiselm.name.substring(0, 8) == 'fileitem'
+				|| thiselm.name.substring(0, 10) == 'folderitem')
+				thiselm.checked = !thiselm.checked
+		}
+	}
+}
+{/literal}
+
+{$ListJSSource}
+</script>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			<table width=98% align=center cellspacing=0 cellpadding=0 border=0>	
+			  <tr>
+				<td>
+				<form enctype="multipart/form-data" name=form1 action=netstore.php method=post>
+				{$Forms}
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="25">
+						<td colspan="3" class="list_header">&nbsp;
+							{#ftplist_curr_folder#} <b>{$FtpFolder|escape:"html"}</b>
+							{#ftplist_usedquota#} <b>{$TotalUsed}</b>
+							{#ftplist_usedfoldercount#} <b>{$FolderCount}</b>
+							{#ftplist_usedfilecount#} <b>{$FileCount}</b>
+						</td>
+						<td colspan="6" class="list_header">&nbsp;{#ftplist_select_folder_tip#}
+						<select name="dest_ftpfolder" onchange="chgftpfolder(this[this.selectedIndex].value)">
+							<option value="" selected>{#ftplist_select_folder#}
+							{section name=i loop=$AvalFtpFolders}
+								<option value="{$AvalFtpFolders[i].id}">{$AvalFtpFolders[i].name|escape:"html"}
+							{/section}
+						</select>
+						</td>
+					</tr>
+					<tr height="22">
+						<td width="4%" class="list_title" align=center>&nbsp;<input type=checkbox name=chkall onclick="sel()"></td>
+						<td width="*%" class="list_title" align=center><b><a href="javascript:sortby('name')">{#ftplist_name_hea#}{$NameArrow}</a></b></td>
+						<td width="12%" class="list_title" align=center><b><a href="javascript:sortby('size')">{#ftplist_size_hea#}{$SizeArrow}</a></b></td>
+						<td width="20%" class="list_title" align=center><b><a href="javascript:sortby('date')">{#ftplist_date_hea#}{$DateArrow}</a></b></td>
+						<td width="4%" class="list_title" align=center>&nbsp;</td>
+						<td width="4%" class="list_title" align=center>&nbsp;</td>
+						<td width="4%" class="list_title" align=center>&nbsp;</td>
+						<td width="4%" class="list_title" align=center>&nbsp;</td>
+					</tr>
+					
+					{if $DispUpFolder eq 1}
+						<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;<a href="javascript:enterfolder('..');"><img src="icon/upfolder.gif" width=16 height=16 border=0 align=absmiddle>&nbsp;..</a></td>
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;</td>
+							<td class="list_value">&nbsp;</td>
+						</tr>
+					{/if}
+	
+					{section name=i loop=$FileList}
+						<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						{if $FileList[i].isdir eq 'true'}
+							<td class="list_value" align=center>&nbsp;<input type=checkbox name="folderitem{$smarty.section.i.index}" value="{$FileList[i].id}"></td>
+							<td class="list_value">&nbsp;<a href="javascript:enterfolder('{$FileList[i].id}');" title="{#ftplist_enterfolder_tip#}"><img src="{$FileList[i].iconfile}" width=16 height=16 border=0 align=absmiddle>&nbsp;{$FileList[i].name|truncate:60:"...":true}  </a>
+							{if $FileList[i].isshare eq 'true'}&nbsp;<a href="javascript:unshareit('{$FileList[i].id}')" title="{#ftplist_sharefolder_tip#}"><img src="themes/common/images/ftpshare.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+							</td>
+							<td class="list_value" align=right>&nbsp;{$FileList[i].dispsize}&nbsp;</td>
+							<td class="list_value" align=center>&nbsp;{$FileList[i].date}</td>
+							<td class="list_value" align=center>&nbsp;{if $FileList[i].isshare eq 'true'}<a href="javascript:sendlink('{$FileList[i].fullid}', 1);" title="{#ftplist_sendlink_tip#}"><img src="themes/common/images/sendlink.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}</td>
+							<td class="list_value" align=center>&nbsp;</td>
+							<td class="list_value" align=center>&nbsp;</td>
+							<td class="list_value" align=center>&nbsp;<a href="javascript:viewproperty('{$FileList[i].id}', 1);" title="{#ftplist_property_tip#}"><img src="themes/common/images/property.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+						{else}
+							<td class="list_value" align=center>&nbsp;<input type=checkbox name="fileitem{$smarty.section.i.index}" value="{$FileList[i].id}"></td>
+							<td class="list_value">&nbsp;<a href="{$FileList[i].downlink}" title="{#ftplist_download_tip#}"><img src="{$FileList[i].iconfile}" width=16 height=16 border=0 align=absmiddle>&nbsp;{$FileList[i].name|truncate:60:"...":true}  </a>
+							{if $FileList[i].preview eq 'true'}&nbsp;<a href="javascript:preview('{$FileList[i].id}')" title="{#ftplist_viewfile_tip#}"><img src="themes/common/images/preview.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+							{if $FileList[i].isshare eq 'true'}&nbsp;<a href="javascript:unshareit('{$FileList[i].id}')" title="{#ftplist_sharefile_tip#}"><img src="themes/common/images/ftpshare.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}
+							</td>
+							<td class="list_value" align=right>&nbsp;{$FileList[i].dispsize}&nbsp;</td>
+							<td class="list_value" align=center>&nbsp;{$FileList[i].date}</td>
+							<td class="list_value" align=center>&nbsp;{if $FileList[i].isshare eq 'true'}<a href="javascript:sendlink('{$FileList[i].fullid}', 0);" title="{#ftplist_sendlink_tip#}"><img src="themes/common/images/sendlink.gif" width=16 height=16 border=0 align=absmiddle></a>{/if}</td>
+							<td class="list_value" align=center>&nbsp;<a href="javascript:compose('{$FileList[i].id}');" title="{#ftplist_compose_tip#}"><img src="themes/common/images/writemail.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+							<td class="list_value" align=center>&nbsp;<a href="{$FileList[i].downlink}" title="{#ftplist_download_tip#}"><img src="themes/common/images/download.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+							<td class="list_value" align=center>&nbsp;<a href="javascript:viewproperty('{$FileList[i].id}', 0);" title="{#ftplist_property_tip#}"><img src="themes/common/images/property.gif" width=16 height=16 border=0 align=absmiddle></a></td>
+						{/if}
+						</tr>
+					{sectionelse}
+					<tr height="50">
+						<td colspan="8" class="list_value" align="center">
+							{#ftplist_nonefile#} <b>{$FtpFolder|escape:"html"}</b>
+						</td>
+					</tr>
+					{/section}
+	
+					{if $NumFtpFiles gt 0}
+						<tr height="25">
+							<td colspan="3" class="list_btn">&nbsp;<a class="navigation" href="javascript:deletefile()">{#ftplist_delete#}</a> 
+							:: &nbsp;<a class="navigation" href="javascript:writeattachmail()">{#ftplist_writemail_attach#}</a> 
+							:: &nbsp;<a class="navigation" href="javascript:writelinkmail()">{#ftplist_writemail_link#}</a> 
+							:: &nbsp;<a class="navigation" href="javascript:share()">{#ftplist_share#}</a> 
+							:: &nbsp;<a class="navigation" href="javascript:unshare()">{#ftplist_unshare#}</a> 
+							:: &nbsp;<a class="navigation" href="javascript:viewshare()">{#ftplist_viewshare#}</a> 
+							</td>
+							<td colspan="5" class="list_btn">&nbsp;{$PageInfo}&nbsp;
+							{if $NavBar}
+								{if $FirstLink}
+									&nbsp;<a href="{$FirstLink}" title="{#page_first_text#}"><img src="themes/common/images/firstpg.gif" width="10" height="12" alt="{#page_first_text#}" border=0></a>
+								{else}
+									&nbsp;<img src="themes/common/images/firstpgd.gif" width="10" height="12" alt="{#page_first_text#}" border=0>
+								{/if}
+								{if $PreviousLink}
+									&nbsp;<a href="{$PreviousLink}" title="{#page_prev_text#}"><img src="themes/common/images/prevpg.gif" width="7" height="12" alt="{#page_prev_text#}" border=0></a>
+								{else}
+									&nbsp;<img src="themes/common/images/prevpgd.gif" width="7" height="12" alt="{#page_prev_text#}" border=0>
+								{/if}
+								&nbsp;{$NavBar}
+								{if $NextLink}
+									&nbsp;<a href="{$NextLink}" title="{#page_next_text#}"><img src="themes/common/images/nextpg.gif" width="7" height="12" alt="{#page_next_text#}" border=0></a>
+								{else}
+			 						&nbsp;<img src="themes/common/images/nextpgd.gif" width="7" height="12" alt="{#page_next_text#}" border=0>
+								{/if}
+								{if $LastLink}
+									&nbsp;<a href="{$LastLink}" title="{#page_last_text#}"><img src="themes/common/images/lastpg.gif" width="10" height="12" alt="{#page_last_text#}" border=0></a>
+								{else}
+			 						&nbsp;<img src="themes/common/images/lastpgd.gif" width="10" height="12" alt="{#page_last_text#}" border=0>
+								{/if}
+								&nbsp;
+							{/if}
+							</td>
+						</tr>
+					{/if}
+					<tr height="25">
+						<td colspan="8" class="list_btn">&nbsp;<input type=text name=newftpfolder value="" class="textbox" size=20 maxlength=64>
+						<a class="navigation" href="javascript:create()">{#ftplist_create#}</a> 
+						{if $NumFtpFiles gt 0}
+						:: &nbsp;<a class="navigation" href="javascript:rename()">{#ftplist_rename#}</a> 
+						:: &nbsp;<select name="moveto_ftpfolder" onchange="movefile(this[this.selectedIndex].value)">
+							<option value="" selected>{#ftplist_move#}</option>
+							{section name=i loop=$AvalFtpFolders}
+								<option value="{$AvalFtpFolders[i].id}">{$AvalFtpFolders[i].name|escape:"html"}</option>
+							{/section}
+						</select>
+						:: &nbsp;<select name="copyto_ftpfolder" onchange="copyfile(this[this.selectedIndex].value)">
+							<option value="" selected>{#ftplist_copy#}</option>
+							{section name=i loop=$AvalFtpFolders}
+								<option value="{$AvalFtpFolders[i].id}">{$AvalFtpFolders[i].name|escape:"html"}</option>
+							{/section}
+						</select>
+						{/if}
+						</td>
+					</tr>
+					
+					<tr height=40>
+						<td class="list_value" align="center" colspan=8>
+							{#quota_usage_info#}: {#quota_usage_used#} <b>{$QuotaUsed}</b>MB {#quota_usage_avail#} {if $QuotaEnabled eq 1}<b>{$QuotaLimit}</b>MB{else}<b>{#quota_usage_unlimited#}</b>{/if}<br>
+							{if $QuotaEnabled eq 1}{$UsageGraph}{/if}
+						</td>
+					</tr>
+				</table>
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="22">
+						<td width=50% class="list_title">&nbsp;<b>{#ftplist_upload_tip#}</b></td>
+						<td width=50% class="list_title" align="right"><input type=button name=upload value="{#ftplist_upload#}" onclick="uploadfile()" class=button>&nbsp;&nbsp;</td>
+					</tr>
+					<tr height="20">
+						<td class="list_value">&nbsp;<input type=file name=uploadfile1 class="textbox" size=35></td>
+						<td class="list_value">&nbsp;<input type=file name=uploadfile2 class="textbox" size=35></td>
+					</tr>
+					<tr height="20">
+						<td class="list_value">&nbsp;<input type=file name=uploadfile3 class="textbox" size=35></td>
+						<td class="list_value">&nbsp;<input type=file name=uploadfile4 class="textbox" size=35></td>
+					</tr>
+				</table>
+				
+				{if $ShareLink neq ""}
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr height="25">
+						<td class="list_header" align=center>&nbsp;<b>{#ftplist_share_tip#}</b></td>
+					</tr>
+					<tr height="80">
+						<td class="list_value" align=center>
+							{#ftplist_browser_share#}<br>
+							<a href="{$ShareLink}" target="_blank">{$ShareLink}</a><br>
+							<a href="javascript:sendlink('', 0);">{#ftplist_send_share#}<img src="themes/common/images/sendlink.gif" width=16 height=16 border=0><a><br><br>
+							<table border="0" cellspacing="1" cellpadding="0">
+								<tr>
+									<td align=center colspan=3>{#ftplist_share_access_tip#}</td>
+								</tr>
+								<tr>
+									<td align=right>{#ftplist_share_expire#}&nbsp;</td>
+									<td>&nbsp;{$EndDateCtrl}&nbsp;</td>
+									<td>&nbsp;<input type=button name=setpwd value="{#ftplist_setup#}" onclick="setsharepwd()" class=button></td>
+								</tr>
+								<tr>
+									<td align=right>{#ftplist_share_user#}&nbsp;</td>
+									<td colspan=2>&nbsp;<input type=text name=listuser value="{$ListUser|escape:"html"}" class="textbox" size=20 maxlength=32></td>
+								</tr>
+								<tr>
+									<td align=right>{#ftplist_share_pwd#}&nbsp;</td>
+									<td colspan=2>&nbsp;<input type=password name=listpwd value="{$ListPwd|escape:"html"}" class="textbox" size=20 maxlength=32></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				{/if}
+				</form>
+			    </td>
+			  </tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<div id="div_uploading" style="position:absolute; top:400; left:20; z-index:10; visibility:hidden">
+<table width=100% border=0 cellspacing=0 cellpadding=0>
+<tr>
+	<td width=40%></td>
+	<td>
+		<table width=100% height=100 border=0 cellspacing=0 cellpadding=0>
+		<tr height=25>
+			<td class="tb_header" align=center></td>
+		</tr>
+		<tr height=80>
+			<td class="tb_value" align=center>
+				<img src="themes/common/images/uploading.gif" width=17 height=18 border=0>
+				&nbsp;<font color=#0000ff>{#ftplist_uploading_tip#}</font>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td width=20%></td>
+</tr>
+</table>
+</div>
+
+<div id="div_cover" style="position:absolute; top:0; left:0; z-index:9; visibility:hidden">
+<table width=100% height=400 border=0 cellspacing=0 cellpadding=0>
+<tr>
+	<td align=center>&nbsp;</td>
+</tr>
+</table>
+</div>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

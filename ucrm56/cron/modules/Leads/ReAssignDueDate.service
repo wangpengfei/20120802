@@ -1,0 +1,49 @@
+<?php
+
+require_once('config.inc.php');
+
+/** Verify the script call is from trusted place. */
+global $application_unique_key;
+if($_REQUEST['app_key'] != $application_unique_key) {
+	echo "Access denied!";
+	exit;
+}
+
+/**
+ * Check if instance of this service is already running?
+ */
+$svcname = $_REQUEST['service'];
+// We need to make sure the PIDfile name is unqique
+$servicePIDFile = "logs/$svcname-service.pid";
+
+if(file_exists($servicePIDFile)) {
+	echo "Service $svcname already running! Check $servicePIDFile";
+	exit;
+} else {
+	$servicePIDFp = fopen($servicePIDFile, 'a');
+}
+
+/**
+ * Turn-off PHP error reporting.
+ */
+try { error_reporting(0); } catch(Exception $e) { }
+
+require_once('include/utils/utils.php');
+require_once('include/logging.php');
+
+// ... REST OF YOUR CODE ...
+
+global $adb,$log;
+$sql="update vtiger_leaddetails l,vtiger_crmentity c 
+set l.assigndue_date =NULL ,c.smownerid=1 WHERE l.assigndue_date <= '".date('Y-m-d')."' AND c.smcreatorid != c.smownerid AND c.crmid=l.leadid  AND c.deleted=0";
+$result =$adb->pquery($sql, array());
+//$log->fatal($result);
+
+// AT END
+/** Close and remove the PID file. */
+if($servicePIDFp) {
+	fclose($servicePIDFp);
+	unlink($servicePIDFile);
+}
+
+?>

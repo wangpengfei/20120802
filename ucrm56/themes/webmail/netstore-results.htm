@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="NetStore"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#netstore_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br><br><br>
+			<table width="400" border="0" cellspacing="0" cellpadding="0">
+				<tr height=25>
+					<td class="tb_header" align=center></td>
+				</tr>
+				<tr height=100>
+					<td class="tb_value" align=center><br>
+						{if $errCode eq 0}{#netstore_success#}
+						{elseif $errCode eq 1}{#netstore_failed#}
+						{elseif $errCode eq 99}{#netstore_connect_failed#}
+						{/if}
+						<br><br>
+						<a href="{$GoBack}">{#netstore_back#}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

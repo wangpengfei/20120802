@@ -1,0 +1,277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#grp_title#}</title>
+</head>
+
+{$JSSource}
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+function save_check()
+{
+	var name = document.form1.name.value;
+	
+	if (name == ""){
+{/literal}
+		alert("{#grp_empty#}");
+{literal}
+		return;
+	}
+	
+	document.form1.member.value = getMembers('memberlist');
+	document.form1.submit();
+}
+	
+function addExtMember(oriobject, destlist)  {
+	frm = document.form1;
+	oriobj = eval("frm." + oriobject);
+	destobj = eval("frm." + destlist);
+	address = oriobj.value;
+	if (address == "")
+		return;
+
+   var boxLength = destobj.length;
+   var i;
+   var isNew = true;
+
+   if (boxLength != 0) {
+      for (i = 0; i < boxLength; i++) {
+	      thisitem = destobj.options[i].value;
+	         if (thisitem == address) {
+	            isNew = false;
+	            break;
+	      }
+      }
+   } 
+   
+   if (isNew) {
+     newoption = new Option(address, address, false, false);
+     destobj.options[boxLength] = newoption;
+   }
+}
+
+function addMember(origlist, destlist)  {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = destobj.length;
+   var selectedItem = origobj.selectedIndex;
+   if (selectedItem == -1) 
+   		return;
+   var selectedText = origobj.options[selectedItem].text;
+   var selectedValue = origobj.options[selectedItem].value;
+   var i;
+   var isNew = true;
+
+   if (boxLength != 0) {
+      for (i = 0; i < boxLength; i++) {
+          thisitem = destobj.options[i].value;
+             if (thisitem == selectedValue) {
+                isNew = false;
+                break;
+             }
+      }
+   } 
+   
+   if (isNew) {
+     newoption = new Option(selectedText, selectedValue, false, false);
+     destobj.options[boxLength] = newoption;
+   }
+   
+   origobj.selectedIndex=-1;
+}
+
+function addMembers(origlist, destlist) {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = origobj.length;
+   var i;
+  
+   arrSelectedValue = new Array();
+   arrSelectedText = new Array();
+   var count = 0;
+   
+   for (i = 0; i < boxLength; i++) {
+     if (origobj.options[i].selected) {
+        arrSelectedValue[count] = origobj.options[i].value;
+        arrSelectedText[count] = origobj.options[i].text;
+        count++;
+     }
+   }
+   if (arrSelectedValue.length == 0) return;   
+   
+   var isNew ;
+   var x;
+   for (x = 0; x < arrSelectedValue.length; x++) {
+   	boxLength = destobj.length;
+   	isNew = true;
+   	if (boxLength != 0) {
+      		for (i = 0; i < boxLength; i++) {
+          		thisitem = destobj.options[i].value;
+             		if (thisitem == arrSelectedValue[x]) {
+                		isNew = false;
+                		break;
+             		}
+      			}
+   		} 
+   
+   	if (isNew) {
+     		newoption = new Option(arrSelectedText[x], arrSelectedValue[x], false, false);
+     		destobj.options[boxLength] = newoption;
+   		}
+   	}
+   	
+   origobj.selectedIndex=-1;
+}
+
+function delMember(origlist, destlist) {
+	frm = document.form1;
+	origobj = eval("frm." + origlist)
+	destobj = eval("frm." + destlist)
+
+   var boxLength = destobj.length;
+   arrSelected = new Array();
+   var count = 0;
+   
+   for (i = 0; i < boxLength; i++) {
+     if (destobj.options[i].selected) {
+        arrSelected[count] = destobj.options[i].value;
+     }
+     count++;
+   }
+
+   var x;
+   
+   for (i = 0; i < boxLength; i++) {
+      for (x = 0; x < arrSelected.length; x++) {
+         if (destobj.options[i].value == arrSelected[x]) {
+            destobj.options[i] = null;
+         }
+      }  
+      
+      boxLength = destobj.length;
+   }
+}
+
+function getMembers(destlist) {
+	frm = document.form1;
+	destobj = eval("frm." + destlist)
+
+    var strValues = "";
+    
+    var boxLength = destobj.length;
+    var count = 0;
+
+    if (boxLength > 0) {
+        for (i = 0; i < boxLength; i++) {
+            if (count == 0) {
+                strValues = destobj.options[i].value;
+            }
+            else {
+				strValues = strValues + ";" + destobj.options[i].value;
+            }
+            count++;
+        }
+    }
+    
+    return strValues;
+}
+	
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/address_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=addressgroup.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=id value="{$GrpID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=opt value="{$Opt}">
+				<input type=hidden name=member value="">
+	
+				<tr height=20>
+					<td class="tb_field" align="right" width="30%">{#grp_name#}&nbsp;</td>
+					<td class="tb_value">&nbsp;<input size="40" type=text name="name" value="{$GrpName|escape:"html"}" class="textbox">
+						<font color=red>*</font>
+					</td>
+				</tr>
+				<tr height=20>
+					<td colspan=2>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+							<tr height="20">
+								<td class="tb_title" width=45% align=center>&nbsp;{#grp_addresslist#}</td>
+								<td class="tb_title" width=10%>&nbsp;</td>
+								<td class="tb_title" width=45% align=center>&nbsp;{#grp_memberlist#}</td>
+							</tr>
+							<tr height="20">
+								<td class="tb_empty" align=center>
+									<select name="addresslist" size=15 style="width: 200px" multiple onDblclick="addMember('addresslist', 'memberlist');">
+									{section name=i loop=$AddressList}
+										<option value="{$AddressList[i].uid}">{$AddressList[i].dispname}</option>
+									{/section}
+									</select>
+								</td>
+								<td class="tb_field" align="center" valign=middle>
+									<input type=button class=button name="addmemberlist" value="{#grp_add#}" onClick="addMembers('addresslist', 'memberlist');">
+									<br><br>
+									<input type=button class=button name="delmemberlist" value="{#grp_del#}" onClick="delMember('addresslist', 'memberlist');">
+								</td>
+								<td class="tb_empty" rowspan=4 align=center>
+									<select name="memberlist" size=18 style="width: 200px" multiple onDblclick="delMember('addresslist', 'memberlist');">
+									{section name=i loop=$MemberList}
+										<option value="{$MemberList[i].uid}">{$MemberList[i].dispname}</option>
+									{/section}
+									</select>
+								</td>
+							</tr>
+							<tr height="20" align="center">
+								<td class="tb_title" align=center>&nbsp;{#grp_extaddress#}</td>
+								<td class="tb_field" align="center">&nbsp;</td>
+							</tr>
+							<tr height="20" align="center">
+								<td class="tb_empty" align=center>
+								<input type="text" name="extaddress" value="" size=32 maxlength=64 class="textbox">&nbsp;
+								</td>
+								<td class="tb_field" align="center" valign=middle align=center>
+								<input type=button class=button name="addextmember" value="{#grp_add#}" onClick="addExtMember('extaddress', 'memberlist');">
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr  height=30>
+					<td class="tb_btn" colspan=2 align=center>
+						<input type=button value="{#grp_save#}" class=button onclick="javascript:save_check();">
+						&nbsp;
+						<input type=button value="{#grp_back#}" class=button onClick="location = '{$GoBack}'">
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 

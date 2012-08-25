@@ -1,0 +1,9 @@
+<img src="cache/images/pie_0__01338787717.png" border="0" usemap="#cache/images/pie_0__01338787717.png">
+<map name="cache/images/pie_0__01338787717.png">
+	<area shape="polygon" coords="444,282,607,282,585,364,526,423,444,445,394,437" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=--None--&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="无 - 13" title="无 - 13">
+	<area shape="polygon" coords="444,282,394,437,323,391,284,316,289,232,335,161,410,122,413,122" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Technology&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="技术 - 18" title="技术 - 18">
+	<area shape="polygon" coords="444,282,413,122,483,124" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Communications&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="通信 - 3" title="通信 - 3">
+	<area shape="polygon" coords="444,282,483,124,557,165,565,173" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Transportation&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="交通运输 - 4" title="交通运输 - 4">
+	<area shape="polygon" coords="444,282,565,173,600,234" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=Telecommunications&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="电信 - 3" title="电信 - 3">
+	<area shape="polygon" coords="444,282,600,234,607,282" href="index.php?module=Leads&action=index&from_dashboard=true&search_text=+&search_field=industry&searchtype=BasicSearch&query=true&type=entchar&operator=e&viewname=1" alt="没有被分配 - 2" title="没有被分配 - 2">
+</map>

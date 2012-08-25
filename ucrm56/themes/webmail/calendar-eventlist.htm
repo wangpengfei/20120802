@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="Calendar"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+    <title>{#calendar_title#}</title>
+</head>
+
+{$JSSource}
+{$ListJSSource}
+
+{literal}
+<script language="javascript">
+function sel() {
+	with(document.form1) {
+		for(i = 0; i < elements.length; i++) {
+			thiselm = elements[i];
+			if(thiselm.name.substring(0, 5) == 'item_')
+				thiselm.checked = !thiselm.checked
+		}
+	}
+}
+
+function addEvent()
+{
+	document.form1.dest.value = 'addevent';
+	document.form1.submit();
+}
+
+function editEvent(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'editevent';
+	document.form1.submit();
+}
+
+function dispEvent(uid)
+{
+	document.form1.uid.value = uid;
+	document.form1.dest.value = 'dispevent';
+	document.form1.submit();
+}
+
+function delEvent(uid)
+{
+{/literal}
+	if (confirm('{#confirm_delete_event#}'))
+{literal}
+	{
+		document.form1.uid.value = uid;
+		document.form1.dest.value = 'delevent';
+		document.form1.submit();
+	}
+}
+
+function sendlink() {
+	with(document.form1) { 
+		action = "newmsg.php"
+		dest.value = 'viewshare'; 
+{/literal}
+		msgbody.value = '<a href="{$CalShareLink}">{$CalShareLink}</a>';
+{literal}
+		submit(); 
+	} 
+}
+</script>
+{/literal}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br>
+			{include file="xp/calendar_nav.htm"}
+			<table width="98%" border="0" cellspacing="0" cellpadding="0">
+				<form name=form1 method=post action=calendar.php>
+				<input type=hidden name=sid value="{$Sid}">
+				<input type=hidden name=uid value="{$UID}">
+				<input type=hidden name=lid value="{$Lid}">
+				<input type=hidden name=tid value="{$Tid}">
+				<input type=hidden name=msgbody value="">
+				<input type=hidden name=dest value="{$Dest}">
+				<input type=hidden name=eventcount value="{$EventCount}">
+
+				<tr height="22">
+					<td width="3%" class="list_title" align="center"><input type=checkbox name=chkall onclick="sel()"></td>
+					<td width="30%" class="list_title" align=center><b><a href="javascript:sortby('title')">{#cal_title#}{$TitleArrow}</a></b></td>
+					<td width="12%" class="list_title" align=center><b><a href="javascript:sortby('tododate')">{#cal_tododate#}{$TodoDateArrow}</a></b></td>
+					<td width="12%" class="list_title" align=center><b><a href="javascript:sortby('starttime')">{#cal_startendtime#}{$StartTimeArrow}</a></b></td>
+					<td width="12%" class="list_title" align=center><b><a href="javascript:sortby('status')">{#cal_status#}{$StatusArrow}</a></b></td>
+					<td width="8%" class="list_title" align=center><b><a href="javascript:sortby('type')">{#cal_type#}{$TypeArrow}</a></b></td>
+					<td width="12%" class="list_title" align=center><b><a href="javascript:sortby('share')">{#cal_share#}{$ShareArrow}</a></b></td>
+					<td width="5%" class="list_title" align=center><b>{#cal_edit#}</b></td>
+					<td width="5%" class="list_title" align=center><b>{#cal_dele#}</b></td>
+				</tr>
+				{section name=i loop=$EventList}
+					<tr height="20" class="list_line" onmouseover="this.className='list_line_over'" onmouseout="this.className='list_line'">
+						<td class="list_value" align="center"><input type="checkbox" name="item_{$smarty.section.i.index}" value="{$EventList[i].uid}"></td>
+						<td class="list_value">&nbsp;<a href="javascript:dispEvent('{$EventList[i].uid}');">{$EventList[i].title}</a></td>
+						<td class="list_value" align=center>&nbsp;{$EventList[i].tododate|date_format:#date_format#}</td>
+						<td class="list_value" align=center>&nbsp;{$EventList[i].starttime|date_format:#time_format#} - {$EventList[i].endtime|date_format:#time_format#}</td>
+						<td class="list_value" align=center>
+						{if $EventList[i].status eq "wait"}
+							&nbsp;{#cal_status_wait#}
+						{elseif $EventList[i].status eq "waitnext"}
+							&nbsp;{#cal_status_waitnext#}
+						{elseif $EventList[i].status eq "reminded"}
+							&nbsp;{#cal_status_reminded#}
+						{elseif $EventList[i].status eq "doing"}
+							&nbsp;{#cal_status_doing#}
+						{elseif $EventList[i].status eq "finished"}
+							&nbsp;{#cal_status_finished#}
+						{/if}
+						</td>
+						<td class="list_value" align=center>
+						{if $EventList[i].type eq "personal"}
+							&nbsp;{#cal_type_personal#}
+						{elseif $EventList[i].type eq "business"}
+							&nbsp;{#cal_type_business#}
+						{elseif $EventList[i].type eq "meeting"}
+							&nbsp;{#cal_type_meeting#}
+						{elseif $EventList[i].type eq "birthday"}
+							&nbsp;{#cal_type_birthday#}
+						{elseif $EventList[i].type eq "holiday"}
+							&nbsp;{#cal_type_holiday#}
+						{elseif $EventList[i].type eq "anniversary"}
+							&nbsp;{#cal_type_anniversary#}
+						{elseif $EventList[i].type eq "appointment"}
+							&nbsp;{#cal_type_appointment#}
+						{elseif $EventList[i].type eq "gettogether"}
+							&nbsp;{#cal_type_gettogether#}
+						{elseif $EventList[i].type eq "other"}
+							&nbsp;{#cal_type_other#}
+						{/if}
+						</td>
+						<td class="list_value" align=center>
+						{if $EventList[i].share eq "private"}
+							&nbsp;{#cal_share_private#}
+						{elseif $EventList[i].share eq "busy"}
+							&nbsp;{#cal_share_busy#}
+						{elseif $EventList[i].share eq "public"}
+							&nbsp;{#cal_share_public#}
+						{else}
+							&nbsp;{#cal_share_private#}
+						{/if}
+						</td>
+						<td class="list_value" align="center"><a href="javascript:editEvent('{$EventList[i].uid}');"><img src="themes/common/images/edit.gif" width=15 height=12 border=0 alt="{#cal_edit#}"></a></td>
+						<td class="list_value" align="center"><a href="javascript:delEvent('{$EventList[i].uid}');"><img src="themes/common/images/delete.gif" width=11 height=12 border=0 alt="{#cal_dele#}"></a></td>
+					</tr>
+				{/section}
+				<tr height="30">
+					<td class="list_btn" colspan=9 align=left>
+						&nbsp;<input type=button value="{#cal_add#}" class=button onClick="javascript:addEvent();">
+						&nbsp;<input type=button value="{#cal_dele#}" class=button onClick="javascript:delEvent('');">
+					</td>
+				</tr>
+				</form>
+			</table>
+			{include file="xp/calendar_share.htm"}
+			<br>
+		</td>
+	</tr>
+</table>
+
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html>

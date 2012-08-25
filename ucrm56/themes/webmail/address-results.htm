@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{config_load file=$LanguageFile section="AddressBook"}
+{config_load file=$CustomerLanguageFile}
+<html>
+<head>
+	{include file="xp/common.htm"}
+	<title>{#adr_title#}</title>
+</head>
+
+{$JSSource}
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+
+{include file="xp/pageheader.htm"}
+
+<table align="center" width="{$PageWidth}" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td width="185" height="487" align="center" valign="top" class="left_menu_bg">
+			{include file="xp/menu.htm"}
+		</td>
+		<td valign="top" align=center>
+			<br><br><br>
+			<table width="400" align=center border="0" cellspacing="0" cellpadding="0">
+				<tr height=25>
+					<td class="tb_header"></td>
+				</tr>
+				<tr height=100>
+					<td class="tb_value" align=center><br>
+						{if $Opt eq 0}{#addr_failed#}
+						{elseif $Opt eq 1}{#addr_saved#}
+						{elseif $Opt eq 2}{#addr_added#}
+						{elseif $Opt eq 3}{#addr_deleted#}
+						{elseif $Opt eq 4}{#addr_import_err#}
+						{elseif $Opt eq 5}{#addr_import_failed#}
+						{elseif $Opt eq 6}
+							{#addr_import_success#}<br>
+							{if $OverFull}<font color=blue>{#addr_full#}</font><br>{/if}
+							<br>{#adr_imported_added#}<font color=red>{$AddedNum}</font>
+							<br>{#adr_imported_updated#}<font color=red>{$UpdatedNum}</font>
+							<br>{#adr_imported_failed#}<font color=red>{$FailedNum}</font>
+						{elseif $Opt eq -1}{#addr_full#}
+						{/if}
+						<br><br>
+						<a href="{$GoBack}">{#adr_back#}</a>
+						<br><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+{include file="xp/pagefooter.htm"}
+
+</body>
+</html> 
